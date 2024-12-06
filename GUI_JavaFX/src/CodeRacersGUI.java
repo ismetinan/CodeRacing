@@ -46,6 +46,8 @@ public class CodeRacersGUI extends Application {
         lightIconImage = new Image("file:/C:/Users/Ege/Desktop/CodeRacing/GUI_JavaFX/src/Images/LightIcon.png");
         profileIconImage = new Image("file:/C:/Users/Ege/Desktop/CodeRacing/GUI_JavaFX/src/Images/ProfilIcon.png");
         homeIconImage = new Image("file:/C:/Users/Ege/Desktop/CodeRacing/GUI_JavaFX/src/Images/HomeIcon.png");
+        
+
     }
     private StackPane createLogInPane(Stage primaryStage) {
         StackPane logInPane = new StackPane();
@@ -111,41 +113,57 @@ public class CodeRacersGUI extends Application {
     private StackPane createLeaderboardPane(Stage primaryStage) {
         StackPane leaderboardPane = new StackPane();
         leaderboardPane.setStyle("-fx-background-color: seashell;");
+    
+        // Back Button
         Button backButton = new Button();
         ImageView homeIcon = createImageView(homeIconImage, 50, 50);
         backButton.setGraphic(homeIcon);
-        backButton.setStyle("-fx-background-color: transparent;");
-        backButton.setOnAction(e -> primaryStage.setScene(mainGameScene)); 
+        backButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+        backButton.setOnAction(e -> {
+            System.out.println("Back button clicked!");
+            primaryStage.setScene(mainGameScene); // Navigate back to Main Game Scene
+        });
+    
+        // Leaderboard Box
         VBox leaderboardBox = new VBox(30);
-        leaderboardBox.setAlignment(Pos.TOP_CENTER);
+        leaderboardBox.setAlignment(Pos.CENTER);
         leaderboardBox.setPadding(new Insets(20));
+    
         Label leaderboardTitle = new Label("Leaderboard");
         leaderboardTitle.setStyle("-fx-font-size: 32px; -fx-font-family: 'Arial Black'; -fx-text-fill: #8B0000;");
-        HBox topIcons = new HBox(30);
-        topIcons.setAlignment(Pos.TOP_RIGHT);
-        ImageView lightIcon = createImageView(lightIconImage, 50, 50);
-        ImageView profileIcon = createImageView(profileIconImage, 72, 72);
-        topIcons.getChildren().addAll(lightIcon, profileIcon);
+    
         ScrollPane scrollPane = new ScrollPane();
         VBox playerList = new VBox(10);
         playerList.setStyle("-fx-background-color: #8B0000; -fx-background-radius: 10;");
         playerList.setPadding(new Insets(10));
-        String[] players = { "Ege Hamilton", "Vettel Emre", "Eren Uçak", "İsmet Skywalker", "Aybüke Leclerc","AHMET","DNED","JKDHEJKE" };
+    
+        String[] players = { "Ege Hamilton", "Vettel Emre", "Eren Uçak", "İsmet Skywalker", "Aybüke Leclerc", "Ahmet", "Dened", "Jkde" };
+        int rank = 1;
         for (String player : players) {
-            Label playerLabel = new Label(player);
+            Label playerLabel = new Label(rank + ". " + player);
             playerLabel.setStyle("-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial';");
             playerList.getChildren().add(playerLabel);
+            rank++;
         }
+
+    
         scrollPane.setContent(playerList);
         leaderboardBox.getChildren().addAll(leaderboardTitle, scrollPane);
+    
+        // Logo
         ImageView logoView = createImageView(logoIconImage, 375, -1);
+    
+        // Add elements to StackPane
         StackPane.setAlignment(logoView, Pos.TOP_CENTER);
         StackPane.setAlignment(backButton, Pos.TOP_LEFT);
-        StackPane.setAlignment(topIcons, Pos.TOP_RIGHT);
         StackPane.setAlignment(leaderboardBox, Pos.CENTER);
-        leaderboardPane.getChildren().addAll(logoView,leaderboardBox, backButton,topIcons);
+        leaderboardPane.getChildren().addAll(logoView, leaderboardBox, backButton);
+
+        
+    
         return leaderboardPane;
     }
+    
     private ImageView createImageView(Image image, double width, double height) {
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(width);

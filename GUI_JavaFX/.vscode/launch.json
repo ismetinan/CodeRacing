@@ -6,12 +6,28 @@
     "configurations": [
         {
             "type": "java",
+            "name": "x",
+            "request": "launch",
+            "mainClass": "x",
+            "projectName": "GUI_JavaFX_174545ee",
+            "vmArgs": "--module-path \"C:\\Users\\Ege\\Desktop\\JavaFX\\javafx-sdk-22\\lib\" --add-modules javafx.controls,javafx.fxml"
+
+        },
+        {
+            "type": "java",
+            "name": "MediaTest",
+            "request": "launch",
+            "mainClass": "MediaTest",
+            "projectName": "GUI_JavaFX_174545ee",
+            "vmArgs": "--module-path \"C:\\Users\\Ege\\Desktop\\JavaFX\\javafx-sdk-22\\lib\" --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
             "name": "DynamicSceneExample",
             "request": "launch",
             "mainClass": "DynamicSceneExample",
             "projectName": "GUI_JavaFX_174545ee",
             "vmArgs": "--module-path \"C:\\Users\\Ege\\Desktop\\JavaFX\\javafx-sdk-22\\lib\" --add-modules javafx.controls,javafx.fxml"
-
         },
         {
             "type": "java",
