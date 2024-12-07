@@ -12,5 +12,7 @@ public class TrueFalseQuestion extends MultipleChoiceQuestion {
         return super.isAnswerCorrect();
     }
 
+    
+
   
 }
