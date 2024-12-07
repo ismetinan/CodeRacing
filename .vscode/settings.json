@@ -1,0 +1,33 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\Ege\\Desktop\\JavaFX\\javafx-sdk-23.0.1\\lib\\javafx.base.jar",
+        "c:\\Users\\Ege\\Desktop\\JavaFX\\javafx-sdk-23.0.1\\lib\\javafx.controls.jar",
+        "c:\\Users\\Ege\\Desktop\\JavaFX\\javafx-sdk-23.0.1\\lib\\javafx.fxml.jar",
+        "c:\\Users\\Ege\\Desktop\\JavaFX\\javafx-sdk-23.0.1\\lib\\javafx.graphics.jar",
+        "c:\\Users\\Ege\\Desktop\\JavaFX\\javafx-sdk-23.0.1\\lib\\javafx.media.jar",
+        "c:\\Users\\Ege\\Desktop\\JavaFX\\javafx-sdk-23.0.1\\lib\\javafx.swing.jar",
+        "c:\\Users\\Ege\\Desktop\\JavaFX\\javafx-sdk-23.0.1\\lib\\javafx.web.jar",
+        "c:\\Users\\Ege\\Desktop\\JavaFX\\javafx-sdk-23.0.1\\lib\\javafx-swt.jar"
+    ],
+    "cSpell.words": [
+        "Ahmet",
+        "Aybüke",
+        "Dened",
+        "Emre",
+        "Eren",
+        "fgejhdke",
+        "fşlkşfk",
+        "gdhcekjhdwe",
+        "İsmet",
+        "Jkde",
+        "kfbvjke",
+        "Leclerc",
+        "lightgray",
+        "Profil",
+        "scrollpane",
+        "Skywalker",
+        "Uçak",
+        "Vettel"
+    ]
+}
