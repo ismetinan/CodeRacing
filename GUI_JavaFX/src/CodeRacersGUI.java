@@ -65,13 +65,12 @@ public class CodeRacersGUI extends Application {
     }
 
     private void loadImages() {
-
-        roadIconImage = new Image("file:/C:/Users/Ege/Desktop/CodeRacing/GUI_JavaFX/src/Images/Roads.png");
-        logoIconImage = new Image("file:/C:/Users/Ege/Desktop/CodeRacing/GUI_JavaFX/src/Images/GameLogo.png");
-        lightIconImage = new Image("file:/C:/Users/Ege/Desktop/CodeRacing/GUI_JavaFX/src/Images/LightIcon.png");
-        profileIconImage = new Image("file:/C:/Users/Ege/Desktop/CodeRacing/GUI_JavaFX/src/Images/ProfilIcon.png");
-        homeIconImage = new Image("file:/C:/Users/Ege/Desktop/CodeRacing/GUI_JavaFX/src/Images/HomeIcon.png");
-        trophyIconImage= new Image("file:/C:/Users/Ege/Desktop/CodeRacing/GUI_JavaFX/src/Images/Trophy.png");
+        roadIconImage = new Image("Images/Roads.png");
+        logoIconImage = new Image("Images/GameLogo.png");
+        lightIconImage = new Image("Images/LightIcon.png");
+        profileIconImage = new Image("Images/ProfilIcon.png");
+        homeIconImage = new Image("Images/HomeIcon.png");
+        trophyIconImage= new Image("Images/Trophy.png");
         
 
     }
@@ -203,7 +202,7 @@ public class CodeRacersGUI extends Application {
         ImageView profileIcon = createImageView(profileIconImage, 72, 72);
         topIcons.getChildren().addAll(lightIcon, profileIcon);
 
-        scrollPane.getStylesheets().add("file:/C:/Users/Ege/Desktop/CodeRacing/GUI_JavaFX/src/Styles/scrollpane-style.css");
+        scrollPane.getStylesheets().add("Styles/scrollpane-style.css");
 
     
     
