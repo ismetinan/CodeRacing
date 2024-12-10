@@ -8,6 +8,27 @@
         "javafx-sdk-23.0.1\\lib\\javafx.media.jar",
         "javafx-sdk-23.0.1\\lib\\javafx.swing.jar",
         "javafx-sdk-23.0.1\\lib\\javafx.web.jar",
-        "javafx-sdk-23.0.1\\lib\\javafx-swt.jar"
+        "javafx-sdk-23.0.1\\lib\\javafx-swt.jar",
+        "javafx-sdk-23.0.1/lib/javafx.base.jar",
+        "javafx-sdk-23.0.1/lib/javafx.controls.jar",
+        "javafx-sdk-23.0.1/lib/javafx.fxml.jar",
+        "javafx-sdk-23.0.1/lib/javafx.graphics.jar",
+        "javafx-sdk-23.0.1/lib/javafx.media.jar",
+        "javafx-sdk-23.0.1/lib/javafx.swing.jar",
+        "javafx-sdk-23.0.1/lib/javafx.web.jar",
+        "javafx-sdk-23.0.1/lib/javafx-swt.jar"
+    ],
+    "cSpell.words": [
+        "Aybüke",
+        "Emre",
+        "Eren",
+        "guicoderacers",
+        "İsmet",
+        "Leclerc",
+        "lightgray",
+        "scrollpane",
+        "Skywalker",
+        "Uçak",
+        "Vettel"
     ]
 }
