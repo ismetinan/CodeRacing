@@ -17,10 +17,12 @@ public class CodeRacersGUI extends Application {
     protected static Image profileIconImage;
     protected static Image homeIconImage;
     protected static Image trophyIconImage;
+    protected static Image settingsIconImage;
     protected static Scene logInScene;
     protected static Scene mainGameScene;
     protected static Scene leaderboardScene;
     protected static Scene settingsScene;
+    protected static Scene lobbiesScene;
 
     // Default sizes of screens
     protected static final int defaultWidth = 1000;
@@ -34,11 +36,13 @@ public class CodeRacersGUI extends Application {
         StackPane mainGamePane = new MainScreen().createMainGamePane(primaryStage);
         StackPane leaderboardPane = new LeaderboardScreen().createLeaderboardPane(primaryStage);
         StackPane settingsPane = new SettingsScreen().createSettingsPane(primaryStage);
+        StackPane lobbiesPane = new LobbiesScreen().createLobbiesPane(primaryStage);
 
         logInScene = new Scene(logInPane, defaultWidth, defaultHeight);
         mainGameScene = new Scene(mainGamePane, defaultWidth, defaultHeight);
         leaderboardScene = new Scene(leaderboardPane, defaultWidth, defaultHeight);
         settingsScene = new Scene(settingsPane, defaultWidth, defaultHeight);
+        lobbiesScene = new Scene(lobbiesPane, defaultWidth, defaultHeight); 
 
         Button startButton = (Button) logInPane.lookup("#startButton");
         startButton.setOnAction(e -> primaryStage.setScene(mainGameScene));
@@ -56,6 +60,7 @@ public class CodeRacersGUI extends Application {
         profileIconImage = new Image("Images/ProfileIcon.png");
         homeIconImage = new Image("Images/HomeIcon.png");
         trophyIconImage = new Image("Images/Trophy.png");
+        settingsIconImage = new Image("Images/SettingsIcon.png");
     }
 
     protected static ImageView createImageView(Image image, int width, int height) {

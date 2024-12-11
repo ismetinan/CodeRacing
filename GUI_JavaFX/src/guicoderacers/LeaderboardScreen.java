@@ -20,10 +20,14 @@ public class LeaderboardScreen {
 
         ImageView homeIcon = CodeRacersGUI.createImageView(CodeRacersGUI.homeIconImage, 50, 50);
 
+        ImageView roadView = CodeRacersGUI.createImageView(CodeRacersGUI.roadIconImage, CodeRacersGUI.defaultWidth, 500);
+
+
         Button backButton = new Button();
         backButton.setGraphic(homeIcon);
         backButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
         backButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.mainGameScene));
+        
 
         VBox leaderboardBox = new VBox(30);
         leaderboardBox.setAlignment(Pos.CENTER);
@@ -74,12 +78,13 @@ public class LeaderboardScreen {
         leaderboardBox.getChildren().addAll(titleBox, scrollPane);
 
         ImageView logoView = CodeRacersGUI.createImageView(CodeRacersGUI.logoIconImage, 375, -1);
+        StackPane.setAlignment(roadView, Pos.BOTTOM_CENTER);
         StackPane.setAlignment(logoView, Pos.TOP_CENTER);
         StackPane.setAlignment(backButton, Pos.TOP_LEFT);
         StackPane.setAlignment(leaderboardBox, Pos.CENTER);
         StackPane.setAlignment(topIcons, Pos.TOP_RIGHT);
 
-        leaderboardPane.getChildren().addAll(logoView, topIcons, leaderboardBox, backButton);
+        leaderboardPane.getChildren().addAll(roadView,logoView, topIcons, leaderboardBox, backButton);
         return leaderboardPane;
     }
 

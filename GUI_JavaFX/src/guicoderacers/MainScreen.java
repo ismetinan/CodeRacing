@@ -1,9 +1,12 @@
 package guicoderacers;
 
+import java.util.Stack;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -27,9 +30,11 @@ public class MainScreen {
             new ProfileScreen().display(primaryStage);
         });
         topIcons.getChildren().addAll(lightIcon, profileButton);
+
+
         VBox buttonBox = new VBox(50);
         buttonBox.setAlignment(Pos.CENTER);
-        Button fullThrottleButton = createStyledButton("Full Throttle");
+        Button fullThrottleButton = createStyledButton("Full Throttle !");
         Button leaderboardButton = createStyledButton("Leaderboard");
         Button settingsButton = createStyledButton("Settings");
         fullThrottleButton.setMinSize(375, 90);
@@ -37,12 +42,18 @@ public class MainScreen {
         settingsButton.setMinSize(375, 90);
         leaderboardButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.leaderboardScene)); 
         settingsButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.settingsScene));
+        fullThrottleButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.lobbiesScene));
         buttonBox.getChildren().addAll(fullThrottleButton, leaderboardButton, settingsButton);
+
+        VBox mainContent = new VBox(20);
+        mainContent.setAlignment(Pos.CENTER);
+        mainContent.getChildren().addAll(  buttonBox);
+
+        StackPane.setAlignment(mainContent, Pos.CENTER);
         StackPane.setAlignment(logoView, Pos.TOP_CENTER);
         StackPane.setAlignment(topIcons, Pos.TOP_RIGHT);
-        StackPane.setAlignment(buttonBox, Pos.CENTER);
         StackPane.setAlignment(roadView, Pos.BOTTOM_CENTER);
-        mainGamePane.getChildren().addAll(roadView, logoView, topIcons, buttonBox);
+        mainGamePane.getChildren().addAll(roadView, topIcons, mainContent,logoView);
         return mainGamePane;
     }
 
@@ -51,6 +62,4 @@ public class MainScreen {
         button.setStyle("-fx-font-size: 24px; -fx-background-color: #700000 ; -fx-text-fill: seashell; -fx-font-family: 'Arial Black'; -fx-background-radius: 30");
         return button;
     }
-
-    
 }

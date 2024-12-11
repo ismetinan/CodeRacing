@@ -22,7 +22,7 @@ public class LogInScreen {
         Rectangle centerBackground = new Rectangle(375, 250, Color.rgb(112, 0, 0));
         centerBackground.setArcWidth(50);
         centerBackground.setArcHeight(50);
-        Label titleLabel = new Label("Set Your Car!");
+        Label titleLabel = new Label("Set Your Car !");
         titleLabel.setStyle("-fx-font-size: 24px; -fx-text-fill: seashell; -fx-font-family: 'Arial Black';");
         TextField usernameField = new TextField();
         usernameField.setPromptText("Enter your username");
