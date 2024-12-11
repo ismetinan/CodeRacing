@@ -1,12 +1,10 @@
 package guicoderacers;
 
-import java.util.Stack;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -14,6 +12,7 @@ import javafx.stage.Stage;
 public class MainScreen {
 
     public StackPane createMainGamePane(Stage primaryStage) {
+
         StackPane mainGamePane = new StackPane();
         mainGamePane.setStyle("-fx-background-color: seashell;");
         ImageView roadView = CodeRacersGUI.createImageView(CodeRacersGUI.roadIconImage, CodeRacersGUI.defaultWidth, 500);
@@ -25,10 +24,7 @@ public class MainScreen {
         Button profileButton = new Button();
         profileButton.setGraphic(profileIcon);
         profileButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
-        profileButton.setOnAction(e -> {
-            System.out.println("Profile button clicked"); // Debugging line
-            new ProfileScreen().display(primaryStage);
-        });
+        profileButton.setOnMouseClicked(e -> ProfileScreen.showProfile(primaryStage));        ;
         topIcons.getChildren().addAll(lightIcon, profileButton);
 
 
@@ -53,7 +49,12 @@ public class MainScreen {
         StackPane.setAlignment(logoView, Pos.TOP_CENTER);
         StackPane.setAlignment(topIcons, Pos.TOP_RIGHT);
         StackPane.setAlignment(roadView, Pos.BOTTOM_CENTER);
-        mainGamePane.getChildren().addAll(roadView, topIcons, mainContent,logoView);
+        mainGamePane.getChildren().addAll(roadView, logoView,topIcons);
+        mainGamePane.getChildren().add(mainContent);
+        VBox combinedBox = new VBox(130);
+        combinedBox.setAlignment(Pos.TOP_CENTER);
+        combinedBox.getChildren().addAll(topIcons, mainContent);
+        mainGamePane.getChildren().add(combinedBox);
         return mainGamePane;
     }
 

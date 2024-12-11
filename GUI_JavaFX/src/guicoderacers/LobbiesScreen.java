@@ -1,7 +1,6 @@
 package guicoderacers;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -9,7 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 
 public class LobbiesScreen {
 
@@ -17,35 +17,41 @@ public class LobbiesScreen {
         StackPane lobbiesPane = new StackPane();
         lobbiesPane.setStyle("-fx-background-color: seashell;");
 
-        // Road view
+        ImageView homeIcon = CodeRacersGUI.createImageView(CodeRacersGUI.homeIconImage, 50, 50);
         ImageView roadView = CodeRacersGUI.createImageView(CodeRacersGUI.roadIconImage, CodeRacersGUI.defaultWidth, 500);
 
-        // Logo view
-        ImageView logoView = CodeRacersGUI.createImageView(CodeRacersGUI.logoIconImage, 375, -1);
-
-        // Back button
         Button backButton = new Button();
-        ImageView homeIcon = CodeRacersGUI.createImageView(CodeRacersGUI.homeIconImage, 50, 50);
         backButton.setGraphic(homeIcon);
         backButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
         backButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.mainGameScene));
 
-        // Top right icons
-        HBox topRightIcons = new HBox(30);
-        topRightIcons.setAlignment(Pos.TOP_RIGHT);
+        HBox topIcons = new HBox(30);
+        topIcons.setAlignment(Pos.TOP_RIGHT);
         ImageView lightIcon = CodeRacersGUI.createImageView(CodeRacersGUI.lightIconImage, 50, 50);
         ImageView profileIcon = CodeRacersGUI.createImageView(CodeRacersGUI.profileIconImage, 72, 72);
-        topRightIcons.getChildren().addAll(lightIcon, profileIcon);
+        Button profileButton = new Button();
+        profileButton.setGraphic(profileIcon);
+        profileButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+        profileButton.setOnMouseClicked(e -> ProfileScreen.showProfile(primaryStage));
+        topIcons.getChildren().addAll(lightIcon, profileButton);
 
-        // Lobbies box
-        VBox lobbiesBox = new VBox(20);
-        lobbiesBox.setAlignment(Pos.CENTER);
-        lobbiesBox.setPadding(new Insets(20));
+        HBox topBar = new HBox(775);
+        topBar.setAlignment(Pos.TOP_LEFT);
+        topBar.getChildren().addAll(backButton, topIcons);
 
-        Label lobbiesTitle = new Label("Lobbies");
-        lobbiesTitle.setStyle("-fx-font-size: 32px; -fx-font-family: 'Arial Black'; -fx-text-fill: seashell;");
+        VBox playerList = new VBox(10);
+        playerList.setStyle("-fx-background-color: #700000; -fx-background-radius: 30;");
+        playerList.setPadding(new Insets(10));
 
-        // ScrollPane for lobby list
+        String[] players = { "Ege Hamilton", "Vettel Emre", "Eren Uçak", "İsmet Skywalker", "Aybüke Leclerc", "1", "1", "2", "2", "1", "1" };
+        int rank = 1;
+        for (String player : players) {
+            Label playerLabel = new Label(rank + ". " + player);
+            playerLabel.setStyle("-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black';");
+            playerList.getChildren().add(playerLabel);
+            rank++;
+        }
+
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setMaxSize(500, 300);
         scrollPane.setStyle(
@@ -57,32 +63,23 @@ public class LobbiesScreen {
             "-fx-background-radius: 30;"
         );
         scrollPane.getStylesheets().add("Styles/scrollpane-style.css");
+        scrollPane.setContent(playerList);
 
-        VBox lobbyList = new VBox(10);
-        lobbyList.setAlignment(Pos.CENTER);
-        lobbyList.setPadding(new Insets(10));
-        lobbyList.setStyle("-fx-background-color: #700000; -fx-background-radius: 15;");
+        VBox lobbiesBox = new VBox(30);
+        lobbiesBox.setAlignment(Pos.CENTER);
+        lobbiesBox.setPadding(new Insets(80));
+        lobbiesBox.getChildren().add(scrollPane);
 
-        // Dummy lobby data
-        String[] lobbies = {  "Ege Hamilton", "Vettel Emre", "Eren Uçak", "İsmet Skywalker", "Aybüke Leclerc","1","1","2","2","1","1" };
-        for (String lobby : lobbies) {
-            Label lobbyLabel = new Label(lobby);
-            lobbyLabel.setStyle("-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black';");
-            lobbyList.getChildren().add(lobbyLabel);
-        }
+        VBox mainBox = new VBox(60);
+        mainBox.setAlignment(Pos.TOP_CENTER);
+        mainBox.getChildren().addAll(topBar, lobbiesBox);
 
-        scrollPane.setContent(lobbyList);
-
-        // Add title and scroll pane to lobbies box
-        lobbiesBox.getChildren().addAll(lobbiesTitle, scrollPane);
-
-        // Add all elements to the main StackPane
-        lobbiesPane.getChildren().addAll(roadView, logoView, backButton, topRightIcons, lobbiesBox);
-        StackPane.setAlignment(roadView, Pos.BOTTOM_CENTER);
+        ImageView logoView = CodeRacersGUI.createImageView(CodeRacersGUI.logoIconImage, 375, -1);
         StackPane.setAlignment(logoView, Pos.TOP_CENTER);
-        StackPane.setAlignment(backButton, Pos.TOP_LEFT);
-        StackPane.setAlignment(lobbiesBox, Pos.CENTER);
+        StackPane.setAlignment(mainBox, Pos.CENTER);
+        StackPane.setAlignment(roadView, Pos.BOTTOM_CENTER);
 
+        lobbiesPane.getChildren().addAll(roadView,logoView, mainBox);
         return lobbiesPane;
     }
 }

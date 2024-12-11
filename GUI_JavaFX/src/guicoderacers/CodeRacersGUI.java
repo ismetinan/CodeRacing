@@ -1,10 +1,12 @@
 package guicoderacers;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -45,7 +47,14 @@ public class CodeRacersGUI extends Application {
         lobbiesScene = new Scene(lobbiesPane, defaultWidth, defaultHeight); 
 
         Button startButton = (Button) logInPane.lookup("#startButton");
-        startButton.setOnAction(e -> primaryStage.setScene(mainGameScene));
+        startButton.setOnAction(event -> primaryStage.setScene(mainGameScene));
+
+        logInPane.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                primaryStage.setScene(mainGameScene);
+            }
+        });
+
 
         primaryStage.setTitle("Code Racers");
         primaryStage.setScene(logInScene);

@@ -12,10 +12,14 @@ import javafx.stage.Stage;
 
 public class ProfileScreen {
 
-    public void display(Stage primaryStage) {
+    protected static void showProfile(Stage primaryStage) {
         Stage profileStage = new Stage();
         profileStage.initModality(Modality.APPLICATION_MODAL);
         profileStage.initOwner(primaryStage);
+
+        // Set position of profileStage to top right of primaryStage
+        profileStage.setX(primaryStage.getX() + primaryStage.getWidth() - 375);
+        profileStage.setY(primaryStage.getY());
 
         StackPane profilePane = new StackPane();
         profilePane.setStyle("-fx-background-color: lightgray;");

@@ -101,7 +101,7 @@ public class SettingsScreen {
         StackPane.setAlignment(mainContent, Pos.CENTER);
         StackPane.setAlignment(roadView, Pos.BOTTOM_CENTER);
 
-        settingsPane.getChildren().addAll(roadView,topLeftBox, topIcons, logoView, mainContent);
+        settingsPane.getChildren().addAll(roadView, topIcons, logoView, mainContent,topLeftBox);
         return settingsPane;
     }
 }
