@@ -20,6 +20,7 @@ public class CodeRacersGUI extends Application {
     protected static Image homeIconImage;
     protected static Image trophyIconImage;
     protected static Image settingsIconImage;
+    protected static Image carIconImage;
     protected static Scene logInScene;
     protected static Scene mainGameScene;
     protected static Scene leaderboardScene;
@@ -70,6 +71,7 @@ public class CodeRacersGUI extends Application {
         homeIconImage = new Image("Images/HomeIcon.png");
         trophyIconImage = new Image("Images/Trophy.png");
         settingsIconImage = new Image("Images/SettingsIcon.png");
+        carIconImage = new Image("Images/CarIcon.png");
     }
 
     protected static ImageView createImageView(Image image, int width, int height) {

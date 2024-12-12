@@ -1,5 +1,6 @@
 package guicoderacers;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -31,16 +32,22 @@ public class SettingsScreen {
         backButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.mainGameScene));
 
         Label settingsTitle = new Label("Settings");
-        settingsTitle.setStyle("-fx-font-size: 32px; -fx-font-family: 'Arial Black'; -fx-text-fill: #700000;");
-
-        VBox topLeftBox = new VBox(30);
-        topLeftBox.getChildren().addAll(backButton, settingsTitle);
+        settingsTitle.setStyle("-fx-font-size: 32px; -fx-font-family: 'Arial Black'; -fx-text-fill: #700000;");        
 
         HBox topIcons = new HBox(30);
         topIcons.setAlignment(Pos.TOP_RIGHT);
         ImageView lightIcon = CodeRacersGUI.createImageView(CodeRacersGUI.lightIconImage, 50, 50);
         ImageView profileIcon = CodeRacersGUI.createImageView(CodeRacersGUI.profileIconImage, 72, 72);
-        topIcons.getChildren().addAll(lightIcon, profileIcon);
+        Button profileButton = new Button();
+        profileButton.setGraphic(profileIcon);
+        profileButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+        profileButton.setOnMouseClicked(e -> ProfileScreen.showProfile(primaryStage));
+        topIcons.setAlignment(Pos.TOP_RIGHT);
+        topIcons.getChildren().addAll(lightIcon, profileButton);
+
+        HBox topBar = new HBox(775);
+        topBar.setAlignment(Pos.TOP_LEFT);
+        topBar.getChildren().addAll(backButton, topIcons);
 
         VBox contentBox = new VBox(20);
         contentBox.setAlignment(Pos.CENTER);
@@ -73,7 +80,7 @@ public class SettingsScreen {
 
         // ScrollPane for content box
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setMaxSize(500, 300);
+        scrollPane.setMaxSize(650, 350);
         scrollPane.setStyle(
             "-fx-background: #700000;" +
             "-fx-background-color: #700000;" +
@@ -91,17 +98,19 @@ public class SettingsScreen {
         titleBox.setAlignment(Pos.CENTER);
         titleBox.getChildren().addAll(settingsIcon, settingsTitle);
 
-        VBox mainContent = new VBox(20);
+        VBox mainContent = new VBox(40);
         mainContent.setAlignment(Pos.CENTER);
         mainContent.getChildren().addAll(titleBox, scrollPane);
 
-        StackPane.setAlignment(topLeftBox, Pos.TOP_LEFT);
-        StackPane.setAlignment(topIcons, Pos.TOP_RIGHT);
+        VBox mainBox = new VBox(110);
+        mainBox.setAlignment(Pos.TOP_CENTER);
+        mainBox.getChildren().addAll(topBar, mainContent);
+
         StackPane.setAlignment(logoView, Pos.TOP_CENTER);
-        StackPane.setAlignment(mainContent, Pos.CENTER);
+        StackPane.setAlignment(mainBox, Pos.TOP_CENTER);
         StackPane.setAlignment(roadView, Pos.BOTTOM_CENTER);
 
-        settingsPane.getChildren().addAll(roadView, topIcons, logoView, mainContent,topLeftBox);
+        settingsPane.getChildren().addAll(roadView, logoView, mainBox);
         return settingsPane;
     }
 }

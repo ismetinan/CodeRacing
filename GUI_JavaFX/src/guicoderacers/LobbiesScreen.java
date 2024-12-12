@@ -65,9 +65,19 @@ public class LobbiesScreen {
         scrollPane.getStylesheets().add("Styles/scrollpane-style.css");
         scrollPane.setContent(playerList);
 
+        ImageView carIcon = CodeRacersGUI.createImageView(CodeRacersGUI.carIconImage, 65, 65);
+        Label lobbiesTitle = new Label("Lobbies");
+        lobbiesTitle.setStyle("-fx-font-size: 32px; -fx-font-family: 'Arial Black'; -fx-text-fill: #700000;");
+
+        HBox titleBox = new HBox(30);
+        titleBox.setAlignment(Pos.CENTER);
+        titleBox.getChildren().addAll(carIcon, lobbiesTitle);
+
+
         VBox lobbiesBox = new VBox(30);
         lobbiesBox.setAlignment(Pos.CENTER);
         lobbiesBox.setPadding(new Insets(80));
+        lobbiesBox.getChildren().add(titleBox);
         lobbiesBox.getChildren().add(scrollPane);
 
         VBox mainBox = new VBox(60);

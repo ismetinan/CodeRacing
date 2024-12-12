@@ -36,6 +36,7 @@ public class LogInScreen {
             "-fx-background-radius: 15;" +
             "-fx-border-radius: 15;"
         );
+        
         Button startButton = new Button("Race!");
         startButton.setStyle("-fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: seashell;-fx-font-family: 'Arial Black';;-fx-background-radius: 30");
         startButton.setId("startButton");

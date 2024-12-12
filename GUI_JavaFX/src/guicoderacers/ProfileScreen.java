@@ -1,5 +1,6 @@
 package guicoderacers;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,20 +26,27 @@ public class ProfileScreen {
         profilePane.setStyle("-fx-background-color: lightgray;");
         profilePane.setPrefSize(375, 250);
 
-        ImageView profileIcon = CodeRacersGUI.createImageView(CodeRacersGUI.profileIconImage, 72, 72);
-        Label usernameLabel = new Label("Username: YourUsername");
-        usernameLabel.setStyle("-fx-font-size: 18px; -fx-font-family: 'Arial Black';");
-        Label rankingLabel = new Label("Current Ranking: 1");
-        rankingLabel.setStyle("-fx-font-size: 18px; -fx-font-family: 'Arial Black';");
+        ImageView roadView = CodeRacersGUI.createImageView(CodeRacersGUI.roadIconImage, 375, 185);
 
-        Button backButton = new Button("Back");
-        backButton.setStyle("-fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: seashell; -fx-font-family: 'Arial Black'; -fx-background-radius: 30");
+        ImageView profileIcon = CodeRacersGUI.createImageView(CodeRacersGUI.profileIconImage, 72, 72);
+        Label usernameLabel = new Label("\s\sUsername: YourUsername\s\s");
+        usernameLabel.setStyle("-fx-font-size: 18px; -fx-font-family: 'Arial Black';-fx-text-fill: seashell;-fx-background-color:  #700000;-fx-background-radius: 30");
+        usernameLabel.setMinSize(280, 40);
+        Label rankingLabel = new Label("\s\sCurrent Ranking: 1\s\s");
+        rankingLabel.setStyle("-fx-font-size: 18px; -fx-font-family: 'Arial Black';-fx-text-fill: seashell;-fx-background-color:  #700000;-fx-background-radius: 30");
+        rankingLabel.setMinSize(200, 40);
+
+
+        Button backButton = new Button("\s\sBack\s\s");
+        backButton.setStyle("-fx-font-size: 18px; -fx-text-fill: seashell;-fx-background-color:  #700000; -fx-font-family: 'Arial Black'; -fx-background-radius: 30");
         backButton.setOnAction(e -> profileStage.close());
 
         VBox contentBox = new VBox(20);
-        contentBox.setAlignment(Pos.CENTER);
+        contentBox.setAlignment(Pos.CENTER_LEFT);
+        contentBox.setPadding(new Insets(20));
         contentBox.getChildren().addAll(profileIcon, usernameLabel, rankingLabel, backButton);
 
+        profilePane.getChildren().add(roadView);
         profilePane.getChildren().add(contentBox);
 
         Scene profileScene = new Scene(profilePane);
