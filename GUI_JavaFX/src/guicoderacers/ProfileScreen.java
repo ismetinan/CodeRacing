@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -29,17 +30,23 @@ public class ProfileScreen {
         ImageView roadView = CodeRacersGUI.createImageView(CodeRacersGUI.roadIconImage, 375, 185);
 
         ImageView profileIcon = CodeRacersGUI.createImageView(CodeRacersGUI.profileIconImage, 72, 72);
-        Label usernameLabel = new Label("\s\sUsername: YourUsername\s\s");
+        Label usernameLabel = new Label("\s\sUsername: Ege\s\s");
         usernameLabel.setStyle("-fx-font-size: 18px; -fx-font-family: 'Arial Black';-fx-text-fill: seashell;-fx-background-color:  #700000;-fx-background-radius: 30");
-        usernameLabel.setMinSize(280, 40);
+        usernameLabel.setMinSize(-1, 40);
         Label rankingLabel = new Label("\s\sCurrent Ranking: 1\s\s");
         rankingLabel.setStyle("-fx-font-size: 18px; -fx-font-family: 'Arial Black';-fx-text-fill: seashell;-fx-background-color:  #700000;-fx-background-radius: 30");
-        rankingLabel.setMinSize(200, 40);
+        rankingLabel.setMinSize(-1, 40);
 
 
         Button backButton = new Button("\s\sBack\s\s");
         backButton.setStyle("-fx-font-size: 18px; -fx-text-fill: seashell;-fx-background-color:  #700000; -fx-font-family: 'Arial Black'; -fx-background-radius: 30");
         backButton.setOnAction(e -> profileStage.close());
+
+        profilePane.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                profileStage.close();
+            }
+        });
 
         VBox contentBox = new VBox(20);
         contentBox.setAlignment(Pos.CENTER_LEFT);
