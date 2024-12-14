@@ -24,7 +24,7 @@ public class ProfileScreen {
         profileStage.setY(primaryStage.getY());
 
         StackPane profilePane = new StackPane();
-        profilePane.setStyle("-fx-background-color: lightgray;");
+        profilePane.setStyle("-fx-background-color: seashell;");
         profilePane.setPrefSize(375, 250);
 
         ImageView roadView = CodeRacersGUI.createImageView(CodeRacersGUI.roadIconImage, 375, 185);
@@ -39,7 +39,7 @@ public class ProfileScreen {
 
 
         Button backButton = new Button("\s\sBack\s\s");
-        backButton.setStyle("-fx-font-size: 18px; -fx-text-fill: seashell;-fx-background-color:  #700000; -fx-font-family: 'Arial Black'; -fx-background-radius: 30");
+        backButton.setStyle("-fx-font-size: 18px; -fx-text-fill: seashell;-fx-background-color:  #100000; -fx-font-family: 'Arial Black'; -fx-background-radius: 30");
         backButton.setOnAction(e -> profileStage.close());
 
         profilePane.setOnKeyPressed(event -> {
@@ -49,12 +49,18 @@ public class ProfileScreen {
         });
 
         VBox contentBox = new VBox(20);
-        contentBox.setAlignment(Pos.CENTER_LEFT);
+        contentBox.setAlignment(Pos.CENTER_RIGHT);
         contentBox.setPadding(new Insets(20));
-        contentBox.getChildren().addAll(profileIcon, usernameLabel, rankingLabel, backButton);
+        contentBox.getChildren().addAll(profileIcon, usernameLabel, rankingLabel);
+
+        VBox buttonBox = new VBox(20);
+        buttonBox.setAlignment(Pos.BOTTOM_LEFT);
+        buttonBox.setPadding(new Insets(20));
+        buttonBox.getChildren().add(backButton);
 
         profilePane.getChildren().add(roadView);
         profilePane.getChildren().add(contentBox);
+        profilePane.getChildren().add(buttonBox);
 
         Scene profileScene = new Scene(profilePane);
         profileStage.setScene(profileScene);

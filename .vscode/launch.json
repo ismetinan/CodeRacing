@@ -17,7 +17,7 @@
             "request": "launch",
             "mainClass": "guicoderacers.CodeRacersGUI",
             "projectName": "CodeRacing_7075d419",
-            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media"
         },
         {
             "type": "java",
@@ -25,7 +25,7 @@
             "request": "launch",
             "mainClass": "CodeRacersGUI",
             "projectName": "CodeRacing_7075d419",
-            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media"
         },
         {
             "type": "java",
@@ -33,14 +33,14 @@
             "request": "launch",
             "mainClass": "x",
             "projectName": "CodeRacing_d9fb6c8f",
-            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media"
         },
         {
             "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}",
-            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media"
         },
         {
             "type": "java",
@@ -48,7 +48,7 @@
             "request": "launch",
             "mainClass": "CodeRacersGUI",
             "projectName": "CodeRacing_d9fb6c8f",
-            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media"
         }
     ]
 }

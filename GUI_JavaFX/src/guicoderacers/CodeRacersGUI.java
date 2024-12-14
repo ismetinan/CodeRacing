@@ -1,5 +1,11 @@
 package guicoderacers;
 
+import java.io.File;
+import java.net.URI;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -7,6 +13,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class CodeRacersGUI extends Application {
@@ -54,6 +62,17 @@ public class CodeRacersGUI extends Application {
                 primaryStage.setScene(mainGameScene);
             }
         });
+
+       
+        try {
+            Media media=new Media(getClass().getResource("/Musics/ALIZADE & BEGE - 247 (Official Music Video).mp3").toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.play();
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         primaryStage.setTitle("Code Racers");
