@@ -30,5 +30,6 @@
         "Skywalker",
         "Uçak",
         "Vettel"
-    ]
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
 }

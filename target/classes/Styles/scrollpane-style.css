@@ -1,0 +1,28 @@
+/* Style the ScrollPane content area */
+.scroll-pane > .viewport {
+    -fx-background: #700000; /* Content area background */
+}
+
+/* Style the vertical scrollbar track */
+.scroll-pane > .scroll-bar:vertical {
+    -fx-background-color: rgb(0, 0, 0); /* Track background */
+    -fx-border-radius: 15px;        /* Rounded edges for the track */
+    -fx-background-radius: 15px;   /* Rounded edges for the track */
+    -fx-pref-width: 20px;          /* Track width */
+}
+
+/* Style the horizontal scrollbar track */
+.scroll-pane > .scroll-bar:horizontal {
+    -fx-background-color: rgb(0, 0, 0); /* Track background */
+    -fx-border-radius: 15px;        /* Rounded edges for the track */
+    -fx-background-radius: 15px;   /* Rounded edges for the track */
+    -fx-pref-height: 20px;         /* Track height */
+}
+
+/* Style the scrollbar thumb (the draggable bar) */
+.scroll-pane > .scroll-bar:vertical > .thumb,
+.scroll-pane > .scroll-bar:horizontal > .thumb {
+    -fx-background-color: #700000; /* Thumb color */
+    -fx-background-radius: 15px;   /* Rounded corners for the thumb */
+    -fx-padding: 5px;              /* Slimmer thumb inside the track */
+}
