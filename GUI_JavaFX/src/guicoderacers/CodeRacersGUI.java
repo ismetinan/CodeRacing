@@ -21,6 +21,7 @@ public class CodeRacersGUI extends Application {
     protected static Image homeIconImage;
     protected static Image trophyIconImage;
     protected static Image settingsIconImage;
+    protected static Image autoBahnIconImage;
     protected static Image redCarIconImage;
     protected static Image darkBlueCarIconImage;
     protected static Image greenCarIconImage;
@@ -84,6 +85,7 @@ public class CodeRacersGUI extends Application {
         homeIconImage = new Image("Images/HomeIcon.png");
         trophyIconImage = new Image("Images/Trophy.png");
         settingsIconImage = new Image("Images/SettingsIcon.png");
+        autoBahnIconImage = new Image("Images/AutoBahn.png");
         redCarIconImage = new Image("Images/Cars/RedRaceCar.png");
         darkBlueCarIconImage = new Image("Images/Cars/DarkBlueRaceCar.png");
         greenCarIconImage = new Image("Images/Cars/GreenRaceCar.png");
@@ -100,6 +102,7 @@ public class CodeRacersGUI extends Application {
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop the music
         mediaPlayer.play();
+        mediaPlayer.setVolume(0.18);
     }
 
     public static void setVolume(double volume) {

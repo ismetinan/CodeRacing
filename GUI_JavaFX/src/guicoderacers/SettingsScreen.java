@@ -14,6 +14,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class SettingsScreen {
+
+    protected static double gameSoundVolume = 50;
+
     
     public StackPane createSettingsPane(Stage primaryStage) {
         StackPane settingsPane = new StackPane();
@@ -53,11 +56,16 @@ public class SettingsScreen {
         contentBox.setAlignment(Pos.CENTER);
         contentBox.setPrefSize(400, 360);
 
-        Label gameAudioLabel = new Label("Game Audio");
-        gameAudioLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: seashell; -fx-font-family: 'Arial Black';");
-        Slider gameAudioSlider = new Slider(0, 100, 50);
-        gameAudioSlider.setMaxSize(300, -1);
-        gameAudioSlider.getStylesheets().add(getClass().getResource("/Styles/slider-style.css").toExternalForm());
+        Label gameSoundLabel = new Label("Game Sound Volume");
+        gameSoundLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: seashell; -fx-font-family: 'Arial Black';");
+        Slider gameSoundSlider = new Slider(0, 100, 50);
+        gameSoundSlider.setMaxSize(300, -1);
+        gameSoundSlider.getStylesheets().add(getClass().getResource("/Styles/slider-style.css").toExternalForm());
+
+        gameSoundSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            GameScreen gameScreen = new GameScreen();
+            gameScreen.setGameSoundVolume(newValue.doubleValue() / 100);
+        });
 
         Label musicAudioLabel = new Label("Music Audio");
         musicAudioLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: seashell; -fx-font-family: 'Arial Black';");
@@ -69,17 +77,7 @@ public class SettingsScreen {
             CodeRacersGUI.setVolume(newValue.doubleValue() / 100);
         });
 
-        Label ege = new Label("Ege çok sıkıldı!!! :(");
-        ege.setStyle("-fx-font-size: 18px; -fx-text-fill: seashell; -fx-font-family: 'Arial Black';");
-        Slider egeL = new Slider(0, 100, 50);
-        egeL.setMaxSize(300, -1);
-        egeL.getStylesheets().add(getClass().getResource("/Styles/slider-style.css").toExternalForm());
-
-        Label ural = new Label("Bana selam verin");
-        ural.setStyle("-fx-font-size: 18px; -fx-text-fill: seashell; -fx-font-family: 'Arial Black';");
-        Slider uralL = new Slider(0, 100, 50);
-        uralL.setMaxSize(300, -1);
-        uralL.getStylesheets().add(getClass().getResource("/Styles/slider-style.css").toExternalForm());
+        
 
         // ComboBox for selecting background color
         Label backgroundColorLabel = new Label("Background Color");
@@ -93,8 +91,15 @@ public class SettingsScreen {
             CodeRacersGUI.updateBackgroundColor(selectedColor);
         });
 
+        Label carColorLabel = new Label("Car Color");
+        carColorLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: seashell; -fx-font-family: 'Arial Black';");
+        ComboBox<String> carColorComboBox = new ComboBox<>();
+        carColorComboBox.getItems().addAll("Red", "Dark Blue", "Green", "Yellow", "Pink", "Orange", "Cyan");
+        carColorComboBox.setValue("Red");
+        carColorComboBox.getStylesheets().add(getClass().getResource("/Styles/combobox-style.css").toExternalForm());
+
         // Add components to the content box
-        contentBox.getChildren().addAll(gameAudioLabel, gameAudioSlider, musicAudioLabel, musicAudioSlider, ege, egeL, ural, uralL, backgroundColorLabel, backgroundColorComboBox);
+        contentBox.getChildren().addAll(gameSoundLabel, gameSoundSlider, musicAudioLabel, musicAudioSlider,  backgroundColorLabel, backgroundColorComboBox, carColorLabel, carColorComboBox);
         contentBox.setAlignment(Pos.TOP_LEFT);
 
         // ScrollPane for content box
