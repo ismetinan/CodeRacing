@@ -3,15 +3,43 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SimpleApp",
+            "request": "launch",
+            "mainClass": "SimpleApp",
+            "projectName": "code-racing"
+        },
+        {
+            "type": "java",
+            "name": "CodeRacersGUI",
+            "request": "launch",
+            "mainClass": "guicoderacers.CodeRacersGUI",
+            "projectName": "code-racing"
+        },
+        {
+            "type": "java",
+            "name": "CodeRacersGUI",
+            "request": "launch",
+            "mainClass": "CodeRacersGUI",
+            "projectName": "CodeRacing_f92afffd"
+        },
+        {
+            "type": "java",
+            "name": "CodeRacersGUI",
+            "request": "launch",
+            "mainClass": "guicoderacers.CodeRacersGUI",
+            "projectName": "CodeRacing_f92afffd"
+        },
+        {
+            "type": "java",
             "name": "Launch CodeRacersGUI",
             "request": "launch",
             "mainClass": "guicoderacers.CodeRacersGUI",
-            "projectName": "code-racing",  // Replace with your correct project name
+            "projectName": "CodeRacing_7075d419",
             "vmArgs": "--module-path ${workspaceFolder}/lib/javafx-sdk-23.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.media",
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
             "env": {
-                "JAVA_HOME": "C:/Program Files/Java/jdk-21"  // Adjust this path as needed
+                "JAVA_HOME": "C:/Program Files/Java/jdk-21"
             }
         }
     ]
