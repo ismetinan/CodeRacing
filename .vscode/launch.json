@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GamePlayFx",
+            "request": "launch",
+            "mainClass": "guicoderacers.GamePlayFx",
+            "projectName": "CodeRacing_7075d419"
+        },
+        {
+            "type": "java",
             "name": "LogInScreen",
             "request": "launch",
             "mainClass": "guicoderacers.LogInScreen",

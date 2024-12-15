@@ -21,18 +21,13 @@ public class CodeRacersGUI extends Application {
     protected static Image homeIconImage;
     protected static Image trophyIconImage;
     protected static Image settingsIconImage;
-    protected static Image cyanF1CarImage;
-    protected static Image redF1CarImage;
-    protected static Image greenF1CarImage;
-    protected static Image yellowF1CarImage;
-    protected static Image blueF1CarImage;
-    protected static Image orangeF1CarImage;
-    protected static Image pinkF1CarImage;
+    protected static Image carIconImage;
     protected static Scene logInScene;
     protected static Scene mainGameScene;
     protected static Scene leaderboardScene;
     protected static Scene settingsScene;
     protected static Scene lobbiesScene;
+    protected static Scene gamePlayScene;
 
     // Default sizes of screens
     protected static final int defaultWidth = 1000;
@@ -50,12 +45,14 @@ public class CodeRacersGUI extends Application {
         StackPane leaderboardPane = new LeaderboardScreen().createLeaderboardPane(primaryStage);
         StackPane settingsPane = new SettingsScreen().createSettingsPane(primaryStage);
         StackPane lobbiesPane = new LobbiesScreen().createLobbiesPane(primaryStage);
+        StackPane gamePlayPane = new GamePlayFx().createGamePlayPane(primaryStage);
 
         logInScene = new Scene(logInPane, defaultWidth, defaultHeight);
         mainGameScene = new Scene(mainGamePane, defaultWidth, defaultHeight);
         leaderboardScene = new Scene(leaderboardPane, defaultWidth, defaultHeight);
         settingsScene = new Scene(settingsPane, defaultWidth, defaultHeight);
-        lobbiesScene = new Scene(lobbiesPane, defaultWidth, defaultHeight); 
+        lobbiesScene = new Scene(lobbiesPane, defaultWidth, defaultHeight);
+        gamePlayScene = new Scene(gamePlayPane, defaultWidth, defaultHeight);
 
         Button startButton = (Button) logInPane.lookup("#startButton");
         startButton.setOnAction(event -> primaryStage.setScene(mainGameScene));
@@ -81,14 +78,7 @@ public class CodeRacersGUI extends Application {
         homeIconImage = new Image("Images/HomeIcon.png");
         trophyIconImage = new Image("Images/Trophy.png");
         settingsIconImage = new Image("Images/SettingsIcon.png");
-        cyanF1CarImage = new Image("Images/Cars/CyanRaceCar.png");
-        redF1CarImage = new Image("Images/Cars/RedRaceCar.png");
-        greenF1CarImage = new Image("Images/Cars/GreenRaceCar.png");
-        yellowF1CarImage = new Image("Images/Cars/YellowRaceCar.png");
-        blueF1CarImage = new Image("Images/Cars/DarkBlueRaceCar.png");
-        orangeF1CarImage = new Image("Images/Cars/OrangeRaceCar.png");
-        pinkF1CarImage = new Image("Images/Cars/PinkRaceCar.png");
-
+        carIconImage = new Image("Images/CarIcon.png");
     }
 
     private void playBackgroundMusic() {
@@ -111,6 +101,7 @@ public class CodeRacersGUI extends Application {
         leaderboardScene.getRoot().setStyle("-fx-background-color: " + color + ";");
         settingsScene.getRoot().setStyle("-fx-background-color: " + color + ";");
         lobbiesScene.getRoot().setStyle("-fx-background-color: " + color + ";");
+        gamePlayScene.getRoot().setStyle("-fx-background-color: " + color + ";");
     }
 
     protected static ImageView createImageView(Image image, int width, int height) {
