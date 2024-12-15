@@ -39,18 +39,18 @@ public class LobbiesScreen {
         topBar.setAlignment(Pos.TOP_LEFT);
         topBar.getChildren().addAll(backButton, topIcons);
 
-        VBox playerList = new VBox(10);
+        VBox playerList = new VBox(15);
         playerList.setStyle("-fx-background-color: #700000; -fx-background-radius: 30;");
-        playerList.setPadding(new Insets(10));
+        playerList.setPadding(new Insets(15));
 
-        String[] players = { "Ege Hamilton", "Vettel Emre", "Eren Uçak", "İsmet Skywalker", "Aybüke Leclerc", "1", "1", "2", "2", "1", "1" };
-        int rank = 1;
-        for (String player : players) {
-            Label playerLabel = new Label(rank + ". " + player);
-            playerLabel.setStyle("-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black';");
-            playerList.getChildren().add(playerLabel);
-            rank++;
+        String[] lobbies = { "Lobby 1", "Lobby 2", "Lobby 3", "Lobby 4", "Lobby 5", "Lobby 6", "Lobby 7", "Lobby 8", "Lobby 9", "Lobby 10" };
+        for (String lobby : lobbies) {
+            Button lobbyButton = new Button(lobby);
+            lobbyButton.setStyle("-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black'; -fx-background-color: #100000; -fx-background-radius: 30;");
+            playerList.getChildren().add(lobbyButton);
         }
+
+
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setMaxSize(500, 300);
@@ -65,7 +65,7 @@ public class LobbiesScreen {
         scrollPane.getStylesheets().add("Styles/scrollpane-style.css");
         scrollPane.setContent(playerList);
 
-        ImageView carIcon = CodeRacersGUI.createImageView(CodeRacersGUI.carIconImage, 65, 65);
+        ImageView carIcon = CodeRacersGUI.createImageView(CodeRacersGUI.redF1CarImage, 90, 65);
         Label lobbiesTitle = new Label("Lobbies");
         lobbiesTitle.setStyle("-fx-font-size: 32px; -fx-font-family: 'Arial Black'; -fx-text-fill: #700000;");
 

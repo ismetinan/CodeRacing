@@ -38,14 +38,15 @@ public class LogInScreen {
         );
         
         Button startButton = new Button("Race!");
-        startButton.setStyle("-fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: seashell;-fx-font-family: 'Arial Black';;-fx-background-radius: 30");
+        startButton.setStyle("-fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: seashell;-fx-font-family: 'Arial Black';-fx-background-radius: 30");
         startButton.setId("startButton");
         centerBox.getChildren().addAll(titleLabel, usernameField, startButton);
         StackPane.setAlignment(logoView, Pos.TOP_CENTER);
         StackPane.setAlignment(centerBox, Pos.CENTER);
         StackPane.setAlignment(roadView, Pos.BOTTOM_CENTER);
         logInPane.getChildren().addAll(roadView, logoView, centerBackground, centerBox);
-        return logInPane;
+
+       return logInPane;
     }
 
     

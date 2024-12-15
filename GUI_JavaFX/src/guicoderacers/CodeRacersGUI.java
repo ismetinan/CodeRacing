@@ -1,11 +1,5 @@
 package guicoderacers;
 
-import java.io.File;
-import java.net.URI;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,7 +21,13 @@ public class CodeRacersGUI extends Application {
     protected static Image homeIconImage;
     protected static Image trophyIconImage;
     protected static Image settingsIconImage;
-    protected static Image carIconImage;
+    protected static Image cyanF1CarImage;
+    protected static Image redF1CarImage;
+    protected static Image greenF1CarImage;
+    protected static Image yellowF1CarImage;
+    protected static Image blueF1CarImage;
+    protected static Image orangeF1CarImage;
+    protected static Image pinkF1CarImage;
     protected static Scene logInScene;
     protected static Scene mainGameScene;
     protected static Scene leaderboardScene;
@@ -38,10 +38,13 @@ public class CodeRacersGUI extends Application {
     protected static final int defaultWidth = 1000;
     protected static final int defaultHeight = 750;
 
+    private static MediaPlayer mediaPlayer;
+
     @Override
     public void start(Stage primaryStage) {
         loadImages();
-        
+        playBackgroundMusic();
+
         StackPane logInPane = new LogInScreen().createLogInPane(primaryStage);
         StackPane mainGamePane = new MainScreen().createMainGamePane(primaryStage);
         StackPane leaderboardPane = new LeaderboardScreen().createLeaderboardPane(primaryStage);
@@ -63,21 +66,10 @@ public class CodeRacersGUI extends Application {
             }
         });
 
-       
-        try {
-            Media media=new Media(getClass().getResource("/Musics/ALIZADE & BEGE - 247 (Official Music Video).mp3").toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.play();
-            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
         primaryStage.setTitle("Code Racers");
         primaryStage.setScene(logInScene);
         primaryStage.setResizable(false);
+        primaryStage.setOnCloseRequest(event -> mediaPlayer.stop()); // Stop music when window is closed
         primaryStage.show();
     }
 
@@ -89,7 +81,36 @@ public class CodeRacersGUI extends Application {
         homeIconImage = new Image("Images/HomeIcon.png");
         trophyIconImage = new Image("Images/Trophy.png");
         settingsIconImage = new Image("Images/SettingsIcon.png");
-        carIconImage = new Image("Images/CarIcon.png");
+        cyanF1CarImage = new Image("Images/Cars/CyanRaceCar.png");
+        redF1CarImage = new Image("Images/Cars/RedRaceCar.png");
+        greenF1CarImage = new Image("Images/Cars/GreenRaceCar.png");
+        yellowF1CarImage = new Image("Images/Cars/YellowRaceCar.png");
+        blueF1CarImage = new Image("Images/Cars/DarkBlueRaceCar.png");
+        orangeF1CarImage = new Image("Images/Cars/OrangeRaceCar.png");
+        pinkF1CarImage = new Image("Images/Cars/PinkRaceCar.png");
+
+    }
+
+    private void playBackgroundMusic() {
+        String musicFile = "/Musics/GameOpeningTheme.mp3"; // Ensure the correct path
+        Media media = new Media(getClass().getResource(musicFile).toExternalForm());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop the music
+        mediaPlayer.play();
+    }
+
+    public static void setVolume(double volume) {
+        if (mediaPlayer != null) {
+            mediaPlayer.setVolume(volume);
+        }
+    }
+
+    public static void updateBackgroundColor(String color) {
+        logInScene.getRoot().setStyle("-fx-background-color: " + color + ";");
+        mainGameScene.getRoot().setStyle("-fx-background-color: " + color + ";");
+        leaderboardScene.getRoot().setStyle("-fx-background-color: " + color + ";");
+        settingsScene.getRoot().setStyle("-fx-background-color: " + color + ";");
+        lobbiesScene.getRoot().setStyle("-fx-background-color: " + color + ";");
     }
 
     protected static ImageView createImageView(Image image, int width, int height) {
