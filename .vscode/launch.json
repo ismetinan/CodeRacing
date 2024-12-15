@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeRacersGUI",
+            "request": "launch",
+            "mainClass": "guicoderacers.CodeRacersGUI",
+            "projectName": "CodeRacing_d251d95a"
+        },
+        {
+            "type": "java",
             "name": "LogInScreen",
             "request": "launch",
             "mainClass": "guicoderacers.LogInScreen",

@@ -27,14 +27,22 @@
             "request": "launch",
             "mainClass": "CodeRacersGUI",
             "projectName": "GUI_JavaFX_174545ee",
-            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml"
+            "classPaths": [
+                "libs/sqlite-jdbc-3.47.0.0.jar",
+                "bin/" // Adjust to the folder where your compiled .class files are stored
+            ],
+            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml -cp lib/sqlite-jdbc-3.47.0.0.jar"
         },
         {
             "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}",
-            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml"
+            "classPaths": [
+                "libs/sqlite-jdbc-3.47.0.0.jar",
+                "bin/" // Adjust to the folder where your compiled .class files are stored
+            ],
+            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml -cp lib/sqlite-jdbc-3.47.0.0.jar"
         },
         {
             "type": "java",
