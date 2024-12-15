@@ -6,9 +6,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "GamePlayFx",
+            "name": "RandomGameGenerator",
             "request": "launch",
-            "mainClass": "guicoderacers.GamePlayFx",
+            "mainClass": "RandomGameGenerator",
             "projectName": "CodeRacing_7075d419"
         },
         {
