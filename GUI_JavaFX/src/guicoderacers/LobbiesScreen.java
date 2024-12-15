@@ -2,7 +2,6 @@ package guicoderacers;
 
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -29,11 +28,13 @@ public class LobbiesScreen {
         topIcons.setAlignment(Pos.TOP_RIGHT);
         ImageView lightIcon = CodeRacersGUI.createImageView(CodeRacersGUI.lightIconImage, 50, 50);
         ImageView profileIcon = CodeRacersGUI.createImageView(CodeRacersGUI.profileIconImage, 72, 72);
+        ImageView roadIcon = CodeRacersGUI.createImageView(CodeRacersGUI.roadIconImage, 50, 50); // Add road icon
+        ImageView carIcon = CodeRacersGUI.createImageView(CodeRacersGUI.redCarIconImage, 50, 50); // Add car icon
         Button profileButton = new Button();
         profileButton.setGraphic(profileIcon);
         profileButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
         profileButton.setOnMouseClicked(e -> ProfileScreen.showProfile(primaryStage));
-        topIcons.getChildren().addAll(lightIcon, profileButton);
+        topIcons.getChildren().addAll(lightIcon, roadIcon, carIcon, profileButton); // Add icons to topIcons
 
         HBox topBar = new HBox(775);
         topBar.setAlignment(Pos.TOP_LEFT);
@@ -43,14 +44,17 @@ public class LobbiesScreen {
         playerList.setStyle("-fx-background-color: #700000; -fx-background-radius: 30;");
         playerList.setPadding(new Insets(15));
 
-        String[] lobbies = { "Lobby 1", "Lobby 2", "Lobby 3", "Lobby 4", "Lobby 5", "Lobby 6", "Lobby 7", "Lobby 8", "Lobby 9", "Lobby 10" };
+        // Add multiple lobby buttons
+        String[] lobbies = {"Lobby 1", "Lobby 2", "Lobby 3"};
         for (String lobby : lobbies) {
             Button lobbyButton = new Button(lobby);
             lobbyButton.setStyle("-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black'; -fx-background-color: #100000; -fx-background-radius: 30;");
             lobbyButton.setMaxWidth(Double.MAX_VALUE);
+            
             if (lobby.equals("Lobby 1")) {
-                lobbyButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.gamePlayScene));
+                lobbyButton.setOnAction(event ->primaryStage.setScene(CodeRacersGUI.gamePlayScene));
             }
+            
             playerList.getChildren().add(lobbyButton);
         }
 

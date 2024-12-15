@@ -21,7 +21,13 @@ public class CodeRacersGUI extends Application {
     protected static Image homeIconImage;
     protected static Image trophyIconImage;
     protected static Image settingsIconImage;
-    protected static Image carIconImage;
+    protected static Image redCarIconImage;
+    protected static Image darkBlueCarIconImage;
+    protected static Image greenCarIconImage;
+    protected static Image yellowCarIconImage;
+    protected static Image pinkCarIconImage;
+    protected static Image orangeCarIconImage;
+    protected static Image cyanCarIconImage;
     protected static Scene logInScene;
     protected static Scene mainGameScene;
     protected static Scene leaderboardScene;
@@ -78,7 +84,14 @@ public class CodeRacersGUI extends Application {
         homeIconImage = new Image("Images/HomeIcon.png");
         trophyIconImage = new Image("Images/Trophy.png");
         settingsIconImage = new Image("Images/SettingsIcon.png");
-        carIconImage = new Image("Images/CarIcon.png");
+        redCarIconImage = new Image("Images/Cars/RedRaceCar.png");
+        darkBlueCarIconImage = new Image("Images/Cars/DarkBlueRaceCar.png");
+        greenCarIconImage = new Image("Images/Cars/GreenRaceCar.png");
+        yellowCarIconImage = new Image("Images/Cars/YellowRaceCar.png");
+        pinkCarIconImage = new Image("Images/Cars/PinkRaceCar.png");
+        orangeCarIconImage = new Image("Images/Cars/OrangeRaceCar.png");
+        cyanCarIconImage = new Image("Images/Cars/CyanRaceCar.png");
+
     }
 
     private void playBackgroundMusic() {
