@@ -1,4 +1,4 @@
-package guicoderacers;
+
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

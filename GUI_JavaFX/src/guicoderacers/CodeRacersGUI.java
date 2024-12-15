@@ -1,7 +1,8 @@
-package guicoderacers;
+
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -44,10 +45,11 @@ public class CodeRacersGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        Database.initializeDatabase();
         loadImages();
         playBackgroundMusic();
-
-        StackPane logInPane = new LogInScreen().createLogInPane(primaryStage);
+        LogInScreen logInScreen = new LogInScreen();
+        StackPane logInPane = logInScreen.createLogInPane(primaryStage);
         StackPane mainGamePane = new MainScreen().createMainGamePane(primaryStage);
         StackPane leaderboardPane = new LeaderboardScreen().createLeaderboardPane(primaryStage);
         StackPane settingsPane = new SettingsScreen().createSettingsPane(primaryStage);
@@ -65,9 +67,12 @@ public class CodeRacersGUI extends Application {
         startButton.setOnAction(event -> primaryStage.setScene(mainGameScene));
 
         logInPane.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                primaryStage.setScene(mainGameScene);
-            }
+            String username = logInScreen.getTextField().getText();
+            System.out.println(username);
+            Database.addUser(username); // Save to database
+            primaryStage.setScene(mainGameScene);
+            primaryStage.setScene(mainGameScene);
+
         });
 
         primaryStage.setTitle("Code Racers");

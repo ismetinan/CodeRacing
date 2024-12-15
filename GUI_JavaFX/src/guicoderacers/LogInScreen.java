@@ -1,4 +1,4 @@
-package guicoderacers;
+
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,6 +12,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class LogInScreen {
+    private TextField textField;
     public StackPane createLogInPane(Stage primaryStage) {
         StackPane logInPane = new StackPane();
         logInPane.setStyle("-fx-background-color: seashell;");
@@ -45,8 +46,11 @@ public class LogInScreen {
         StackPane.setAlignment(centerBox, Pos.CENTER);
         StackPane.setAlignment(roadView, Pos.BOTTOM_CENTER);
         logInPane.getChildren().addAll(roadView, logoView, centerBackground, centerBox);
-
+        this.textField = usernameField;
        return logInPane;
+    }
+    public TextField getTextField() {
+        return textField;
     }
 
     
