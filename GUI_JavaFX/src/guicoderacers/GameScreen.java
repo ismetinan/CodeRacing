@@ -22,6 +22,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import questions.*;
+
 
 public class GameScreen {
 

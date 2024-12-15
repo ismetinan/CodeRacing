@@ -1,4 +1,4 @@
-package guicoderacers;
+package questions;
 public abstract class Question {
     private int id;
     private String questionText;

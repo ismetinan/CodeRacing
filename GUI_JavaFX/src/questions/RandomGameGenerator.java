@@ -1,5 +1,4 @@
-package guicoderacers;
-import java.util.ArrayList;
+package questions;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,11 +19,5 @@ public class RandomGameGenerator {
                 .collect(Collectors.toList());
     }
 
-    public static void main(String[] args) {
-        // Example usage to generate 10 random questions
-        List<Question> randomQuestions = generateRandomQuestions();
-
-        // Print the generated questions for debugging
-       
-}
+    
 }
