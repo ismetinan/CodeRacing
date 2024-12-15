@@ -31,7 +31,7 @@
                 "libs/sqlite-jdbc-3.47.0.0.jar",
                 "bin/" // Adjust to the folder where your compiled .class files are stored
             ],
-            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml -cp lib/sqlite-jdbc-3.47.0.0.jar"
+            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml -cp .:libs/gson-2.8.2.jar:libs/lib/sqlite-jdbc-3.47.0.0.jar"
         },
         {
             "type": "java",
@@ -42,7 +42,7 @@
                 "libs/sqlite-jdbc-3.47.0.0.jar",
                 "bin/" // Adjust to the folder where your compiled .class files are stored
             ],
-            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml -cp lib/sqlite-jdbc-3.47.0.0.jar"
+            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml -cp .:libs/gson-2.8.2.jar:libs/lib/sqlite-jdbc-3.47.0.0.jar"
         },
         {
             "type": "java",
