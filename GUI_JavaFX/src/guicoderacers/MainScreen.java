@@ -24,13 +24,12 @@ public class MainScreen {
         ImageView logoView = CodeRacersGUI.createImageView(CodeRacersGUI.logoIconImage, 375, -1);
         HBox topIcons = new HBox(30);
         topIcons.setAlignment(Pos.TOP_RIGHT);
-        ImageView lightIcon = CodeRacersGUI.createImageView(CodeRacersGUI.lightIconImage, 50, 50);
         ImageView profileIcon = CodeRacersGUI.createImageView(CodeRacersGUI.profileIconImage, 72, 72);
         Button profileButton = new Button();
         profileButton.setGraphic(profileIcon);
         profileButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
         profileButton.setOnMouseClicked(e -> ProfileScreen.showProfile(primaryStage));        ;
-        topIcons.getChildren().addAll(lightIcon, profileButton);
+        topIcons.getChildren().addAll(profileButton);
 
 
         VBox buttonBox = new VBox(50);

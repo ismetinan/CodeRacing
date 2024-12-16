@@ -5,9 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.google.gson.JsonObject;
-
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.animation.KeyFrame;
@@ -141,16 +139,18 @@ public class GameScreen {
         gamePane.getChildren().addAll(carAndroadBox, gridPlaces,rightSideLayout); // Add the road and the VBox to the StackPane
 
         return gamePane;
-    }
+        }
 
-
-
-    private VBox createQuestionDisplay() {
+        private VBox createQuestionDisplay() {
 
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.TOP_LEFT);
         layout.setPadding(new Insets(20));
         layout.setStyle("-fx-background-radius: 30; -fx-border-radius: 30;");
+        layout.setMaxWidth(450);
+        layout.setMinWidth(450);
+        layout.setMaxHeight(200);
+        layout.setMinHeight(200);
 
         String questionText = selectedQuestion.getQuestionText();
         String associatedContent = "";
@@ -168,18 +168,20 @@ public class GameScreen {
         Label questionLabel = new Label(questionText);
         questionLabel.setWrapText(true);
         questionLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;");
-        questionLabel.setPrefWidth(1000);
-
+        questionLabel.setPrefWidth(450);
         Label contentLabel = new Label(associatedContent);
         contentLabel.setWrapText(true);
         contentLabel.setStyle("-fx-font-family: monospace; -fx-font-size: 14px; -fx-padding: 10px; -fx-background-color: #f4f4f4; -fx-border-color: black; -fx-background-radius: 30; -fx-border-radius: 30;");
-        contentLabel.setPrefWidth(1000);
+        contentLabel.setMinWidth(450);
+        contentLabel.setMaxWidth(450);
+        contentLabel.setMinHeight(200);
+        contentLabel.setMaxHeight(200);
 
         layout.getChildren().addAll(questionLabel, contentLabel);
         return layout;
-    }
+        }
 
-    public void handleServerUpdate(JsonObject update) {
+        public void handleServerUpdate(JsonObject update) {
         String status = update.get("status").getAsString();
         String message = update.get("message").getAsString();
 
@@ -188,187 +190,200 @@ public class GameScreen {
             updateQuestionInstance(); // Refresh the question and options
         } else {
             System.out.println("Error or irrelevant update: " + message);
-        }
-    }
 
-    private VBox createOptionsScene() {
-        if (selectedQuestion instanceof DragAndDrop dragAndDropQuestion) {
-            return createDragAndDropScene(dragAndDropQuestion);
+            }
         }
 
-        VBox optionsBox = new VBox(15);
-        optionsBox.setAlignment(Pos.CENTER);
-        optionsBox.setPadding(new Insets(10));
+            private VBox createOptionsScene() {
+                if (selectedQuestion instanceof DragAndDrop dragAndDropQuestion) {
+                return createDragAndDropScene(dragAndDropQuestion);
+                }
 
-        if (selectedQuestion instanceof MultipleChoiceQuestion multipleChoiceQuestion) {
-            for (int i = 0; i < multipleChoiceQuestion.getOptions().size(); i++) {
-                String optionText = multipleChoiceQuestion.getOptions().get(i);
-                Button optionButton = new Button(optionText);
-                optionButton.setPrefWidth(400);
-                optionButton.setStyle("-fx-font-size: 16px; -fx-padding: 10px; -fx-background-color: darkred; -fx-text-fill: white; -fx-background-radius: 30; -fx-border-radius: 30;");
+                VBox optionsBox = new VBox(15);
+                optionsBox.setAlignment(Pos.CENTER);
+                optionsBox.setPadding(new Insets(10));
 
-                int currentIndex = i; // Capture the index
-                optionButton.setOnAction(event -> {
+                if (selectedQuestion instanceof MultipleChoiceQuestion multipleChoiceQuestion) {
+                for (int i = 0; i < multipleChoiceQuestion.getOptions().size(); i++) {
+                    String optionText = multipleChoiceQuestion.getOptions().get(i);
+                    Button optionButton = new Button(optionText);
+                    optionButton.setMaxWidth(450);
+                    optionButton.setMinHeight(50);
+                    optionButton.setWrapText(true);
+                    optionButton.setStyle("-fx-font-size: 12px; -fx-padding: 10px; -fx-background-color: darkred; -fx-text-fill: white; -fx-background-radius: 30; -fx-border-radius: 30;");
+
+                    int currentIndex = i; // Capture the index
+                    optionButton.setOnAction(event -> {
                     boolean isCorrect = currentIndex == multipleChoiceQuestion.getCorrectAnswerIndex();
                     handleAnswer(isCorrect, optionButton);
-                });
+                    });
 
-                optionsBox.getChildren().add(optionButton);
-            }
-        } else if (selectedQuestion instanceof CodeDebuggingQuestion debuggingQuestion) {
-            for (String option : debuggingQuestion.getOptions()) {
-                Button optionButton = new Button(option);
-                optionButton.setPrefWidth(400);
-                optionButton.setStyle("-fx-font-size: 16px; -fx-padding: 10px; -fx-background-color: darkred; -fx-text-fill: white; -fx-background-radius: 30; -fx-border-radius: 30;");
+                    optionsBox.getChildren().add(optionButton);
+                }
+                } else if (selectedQuestion instanceof CodeDebuggingQuestion debuggingQuestion) {
+                for (String option : debuggingQuestion.getOptions()) {
+                    Button optionButton = new Button(option);
+                    optionButton.setMaxWidth(450);
+                    optionButton.setMinHeight(50);
+                    optionButton.setWrapText(true);
+                    optionButton.setStyle("-fx-font-size: 12px; -fx-padding: 10px; -fx-background-color: darkred; -fx-text-fill: white; -fx-background-radius: 30; -fx-border-radius: 30;");
 
-                optionButton.setOnAction(event -> {
+                    optionButton.setOnAction(event -> {
                     boolean isCorrect = debuggingQuestion.checkAnswer(option);
                     handleAnswer(isCorrect, optionButton);
-                });
+                    });
 
-                optionsBox.getChildren().add(optionButton);
-            }
-        } else if (selectedQuestion instanceof AlgorithmTracingQuestion tracingQuestion) {
-            for (String option : tracingQuestion.getOptions()) {
-                Button optionButton = new Button(option);
-                optionButton.setPrefWidth(400);
-                optionButton.setStyle("-fx-font-size: 16px; -fx-padding: 10px; -fx-background-color: darkred; -fx-text-fill: white; -fx-background-radius: 30; -fx-border-radius: 30;");
+                    optionsBox.getChildren().add(optionButton);
+                }
+                } else if (selectedQuestion instanceof AlgorithmTracingQuestion tracingQuestion) {
+                for (String option : tracingQuestion.getOptions()) {
+                    Button optionButton = new Button(option);
+                    optionButton.setMaxWidth(450);
+                    optionButton.setMinHeight(50);
+                    optionButton.setWrapText(true);
+                    optionButton.setStyle("-fx-font-size: 12px; -fx-padding: 10px; -fx-background-color: darkred; -fx-text-fill: white; -fx-background-radius: 30; -fx-border-radius: 30;");
 
-                optionButton.setOnAction(event -> {
+                    optionButton.setOnAction(event -> {
                     boolean isCorrect = tracingQuestion.checkAnswer(option);
                     handleAnswer(isCorrect, optionButton);
+                    });
+
+                    optionsBox.getChildren().add(optionButton);
+                }
+                }
+
+                VBox layout = new VBox(optionsBox);
+                layout.setAlignment(Pos.CENTER);
+                layout.setStyle("-fx-background-color: #e6e6e6; -fx-border-color: black; -fx-border-width: 2px; -fx-background-radius: 30; -fx-border-radius: 30;");
+                layout.setPadding(new Insets(20));
+                layout.setMaxSize(565, 300);
+                layout.setMinSize(565, 300);
+                return layout;
+            }
+
+            private VBox createDragAndDropScene(DragAndDrop question) {
+                VBox dragAndDropArea = new VBox(10);
+                dragAndDropArea.setAlignment(Pos.CENTER);
+
+                // Create pairs of targets and correct answers
+                List<String> targets = new ArrayList<>(question.getCorrectAnswer());
+                Collections.shuffle(targets);
+                List<String> correctAnswers = question.getCorrectAnswer();
+
+                // Shuffle the targets and maintain the correct-answer relationship
+                List<Pair<String, String>> targetAnswerPairs = new ArrayList<>();
+                for (int i = 0; i < targets.size(); i++) {
+                    targetAnswerPairs.add(new Pair<>(targets.get(i), correctAnswers.get(i)));
+                }
+                Collections.shuffle(targetAnswerPairs);
+
+                // Extract shuffled targets and correct answers
+                List<String> shuffledTargets = new ArrayList<>();
+                List<String> shuffledCorrectAnswers = new ArrayList<>();
+                for (Pair<String, String> pair : targetAnswerPairs) {
+                    shuffledTargets.add(pair.getKey());
+                    shuffledCorrectAnswers.add(pair.getValue());
+                }
+
+                // Update the question's correctAnswer to match the shuffled version
+                question.setCorrectAnswer(shuffledCorrectAnswers);
+
+                // Droppable Targets
+                VBox targetArea = new VBox(10);
+                targetArea.setAlignment(Pos.CENTER);
+
+                for (String target : shuffledTargets) {
+                    Label targetLabel = new Label("Drop here: " + target);
+                    targetLabel.setPrefSize(200, 100);
+                    targetLabel.setAlignment(Pos.CENTER);
+                    targetLabel.setWrapText(true);
+                    targetLabel.setStyle("-fx-background-color: lightblue; -fx-border-color: black; -fx-font-size: 14; -fx-background-radius: 30; -fx-border-radius: 30;");
+
+                    targetLabel.setOnDragOver(event -> {
+                        if (event.getGestureSource() != targetLabel && event.getDragboard().hasString()) {
+                            event.acceptTransferModes(TransferMode.MOVE);
+                        }
+                        event.consume();
+                    });
+
+                    targetLabel.setOnDragDropped(event -> {
+                        Dragboard dragboard = event.getDragboard();
+                        if (dragboard.hasString()) {
+                            targetLabel.setText(dragboard.getString());
+                            event.setDropCompleted(true);
+                        } else {
+                            event.setDropCompleted(false);
+                        }
+                        event.consume();
+                    });
+
+                    targetArea.getChildren().add(targetLabel);
+                }
+
+                // Draggable Items
+                VBox draggableArea = new VBox(10);
+                draggableArea.setAlignment(Pos.CENTER);
+
+                for (String item : question.getDraggableItems()) {
+                    Label draggableLabel = new Label(item);
+                    draggableLabel.setPrefSize(200, 100);
+                    draggableLabel.setAlignment(Pos.CENTER);
+                    draggableLabel.setWrapText(true);
+                    draggableLabel.setStyle("-fx-background-color: darkred; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 30; -fx-border-radius: 30;");
+
+                    draggableLabel.setOnDragDetected(event -> {
+                        Dragboard dragboard = draggableLabel.startDragAndDrop(TransferMode.MOVE);
+                        ClipboardContent content = new ClipboardContent();
+                        content.putString(draggableLabel.getText());
+                        dragboard.setContent(content);
+                        event.consume();
+                    });
+
+                    draggableArea.getChildren().add(draggableLabel);
+                }
+
+                HBox dragDropLayout = new HBox(50, targetArea, draggableArea);
+                dragDropLayout.setAlignment(Pos.CENTER);
+
+                dragAndDropArea.getChildren().add(dragDropLayout);
+
+                // Add a "Submit" button to check the answers
+                Button submitButton = new Button("Submit");
+                submitButton.setStyle("-fx-background-color: darkgreen; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 30; -fx-border-radius: 30;");
+                submitButton.setOnAction(event -> {
+                    boolean allCorrect = true;
+
+                    // Check all targets against the correct answers
+                    for (int i = 0; i < targetArea.getChildren().size(); i++) {
+                        Label targetLabel = (Label) targetArea.getChildren().get(i);
+                        String droppedText = targetLabel.getText().replace("Drop here: ", "").trim();
+                        String correctAnswer = shuffledCorrectAnswers.get(i).trim();
+
+                        if (!correctAnswer.equalsIgnoreCase(droppedText)) {
+                            allCorrect = false;
+                            targetLabel.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 30; -fx-border-radius: 30;");
+                        } else {
+                            targetLabel.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 30; -fx-border-radius: 30;");
+                        }
+                    }
+
+                    if (allCorrect) {
+                        updateQuestionInstance();
+                    }
                 });
 
-                optionsBox.getChildren().add(optionButton);
-            }
-        }
+                dragAndDropArea.getChildren().add(submitButton);
 
-        VBox layout = new VBox(optionsBox);
-        layout.setAlignment(Pos.CENTER);
-        layout.setStyle("-fx-background-color: #e6e6e6; -fx-border-color: black; -fx-border-width: 2px; -fx-background-radius: 30; -fx-border-radius: 30;");
-        layout.setPadding(new Insets(20));
-        layout.setPrefSize(565, 300);
-        return layout;
-    }
-
-    private VBox createDragAndDropScene(DragAndDrop question) {
-        VBox dragAndDropArea = new VBox(10);
-        dragAndDropArea.setAlignment(Pos.CENTER);
-
-        // Create pairs of targets and correct answers
-        List<String> targets = question.getDroppableTargets();
-        List<String> correctAnswers = question.getCorrectAnswer();
-
-        // Shuffle the targets and maintain the correct-answer relationship
-        List<Pair<String, String>> targetAnswerPairs = new ArrayList<>();
-        for (int i = 0; i < targets.size(); i++) {
-            targetAnswerPairs.add(new Pair<>(targets.get(i), correctAnswers.get(i)));
-        }
-        Collections.shuffle(targetAnswerPairs);
-
-        // Extract shuffled targets and correct answers
-        List<String> shuffledTargets = new ArrayList<>();
-        List<String> shuffledCorrectAnswers = new ArrayList<>();
-        for (Pair<String, String> pair : targetAnswerPairs) {
-            shuffledTargets.add(pair.getKey());
-            shuffledCorrectAnswers.add(pair.getValue());
-        }
-
-        // Update the question's correctAnswer to match the shuffled version
-        question.setCorrectAnswer(shuffledCorrectAnswers);
-
-        // Droppable Targets
-        VBox targetArea = new VBox(10);
-        targetArea.setAlignment(Pos.CENTER);
-
-        for (String target : shuffledTargets) {
-            Label targetLabel = new Label("Drop here: " + target);
-            targetLabel.setPrefSize(240, 40);
-            targetLabel.setAlignment(Pos.CENTER);
-            targetLabel.setStyle("-fx-background-color: lightblue; -fx-border-color: black; -fx-font-size: 14; -fx-background-radius: 30; -fx-border-radius: 30;");
-
-            targetLabel.setOnDragOver(event -> {
-                if (event.getGestureSource() != targetLabel && event.getDragboard().hasString()) {
-                    event.acceptTransferModes(TransferMode.MOVE);
-                }
-                event.consume();
-            });
-
-            targetLabel.setOnDragDropped(event -> {
-                Dragboard dragboard = event.getDragboard();
-                if (dragboard.hasString()) {
-                    targetLabel.setText(dragboard.getString());
-                    event.setDropCompleted(true);
-                } else {
-                    event.setDropCompleted(false);
-                }
-                event.consume();
-            });
-
-            targetArea.getChildren().add(targetLabel);
-        }
-
-        // Draggable Items
-        VBox draggableArea = new VBox(10);
-        draggableArea.setAlignment(Pos.CENTER);
-
-        for (String item : question.getDraggableItems()) {
-            Label draggableLabel = new Label(item);
-            draggableLabel.setPrefSize(240, 40);
-            draggableLabel.setAlignment(Pos.CENTER);
-            draggableLabel.setStyle("-fx-background-color: darkred; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 14; -fx-background-radius: 30; -fx-border-radius: 30;");
-
-            draggableLabel.setOnDragDetected(event -> {
-                Dragboard dragboard = draggableLabel.startDragAndDrop(TransferMode.MOVE);
-                ClipboardContent content = new ClipboardContent();
-                content.putString(draggableLabel.getText());
-                dragboard.setContent(content);
-                event.consume();
-            });
-
-            draggableArea.getChildren().add(draggableLabel);
-        }
-
-        HBox dragDropLayout = new HBox(50, targetArea, draggableArea);
-        dragDropLayout.setAlignment(Pos.CENTER);
-
-        dragAndDropArea.getChildren().add(dragDropLayout);
-
-        // Add a "Submit" button to check the answers
-        Button submitButton = new Button("Submit");
-        submitButton.setStyle("-fx-background-color: darkgreen; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 30; -fx-border-radius: 30;");
-        submitButton.setOnAction(event -> {
-            boolean allCorrect = true;
-
-            // Check all targets against the correct answers
-            for (int i = 0; i < targetArea.getChildren().size(); i++) {
-                Label targetLabel = (Label) targetArea.getChildren().get(i);
-                String droppedText = targetLabel.getText().replace("Drop here: ", "").trim();
-                String correctAnswer = shuffledCorrectAnswers.get(i).trim();
-
-                if (!correctAnswer.equalsIgnoreCase(droppedText)) {
-                    allCorrect = false;
-                    targetLabel.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 14; -fx-background-radius: 30; -fx-border-radius: 30;");
-                } else {
-                    targetLabel.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 14; -fx-background-radius: 30; -fx-border-radius: 30;");
-                }
+                return dragAndDropArea;
             }
 
-            if (allCorrect) {
-                updateQuestionInstance();
-            }
-        });
-
-        dragAndDropArea.getChildren().add(submitButton);
-
-        return dragAndDropArea;
-    }
-    protected  void playGameSound() {
+            public void playGameSound() {
         String soundFile = "/Musics/GameEngineSound.mp3"; // Ensure the correct path
         Media sound = new Media(getClass().getResource(soundFile).toExternalForm());
         gameSoundPlayer = new MediaPlayer(sound);
-        gameSoundPlayer.play();
+    gameSoundPlayer.play();
     }
+
 
     private void handleAnswer(boolean isCorrect, Button clickedButton) {
         // Highlight the button
