@@ -1,7 +1,6 @@
-
+package guicoderacers;
 
 import javafx.stage.Stage;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -9,13 +8,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
 public class LobbiesScreen {
-
-    
-
+    protected ArrayList<String> lobbies = new ArrayList<>();
+    protected ArrayList<String> lobbyPorts = new ArrayList<>(); 
     public StackPane createLobbiesPane(Stage primaryStage) {
         StackPane lobbiesPane = new StackPane();
         lobbiesPane.setStyle("-fx-background-color: seashell;");
@@ -55,7 +56,7 @@ public class LobbiesScreen {
         playerList.setPadding(new Insets(15));
 
         // Add multiple lobby buttons
-        String[] lobbies = {"Lobby 1", "Lobby 2", "Lobby 3"};
+        
         for (String lobby : lobbies) {
             Button lobbyButton = new Button(lobby);
             lobbyButton.setStyle("-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black'; -fx-background-color: #100000; -fx-background-radius: 30;");
@@ -104,5 +105,10 @@ public class LobbiesScreen {
 
         lobbiesPane.getChildren().addAll(roadView, logoView, mainBox);
         return lobbiesPane;
+    }
+    protected void addLobby(String lobbyName, String port) {
+        // Add a new lobby to the list of lobbies
+        lobbies.add(lobbyName);
+        lobbyPorts.add(port);
     }
 }

@@ -1,8 +1,9 @@
-
+package controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -48,4 +49,32 @@ public class Database {
             System.out.println(e.getMessage());
         }
     }
+    public static void addScore(String username, int score) {
+        String sql = "INSERT INTO leaderboard(username, score) VALUES(?, ?)";
+    
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            pstmt.setInt(2, score);
+            pstmt.executeUpdate();
+            System.out.println("Score added for username: " + username);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+        public static String getLatestUsername() {
+        String sql = "SELECT username FROM users ORDER BY id DESC LIMIT 1";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getString("username");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
 }

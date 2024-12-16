@@ -1,5 +1,6 @@
+package guicoderacers;
 
-
+import controller.Database;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,6 +17,7 @@ public class ProfileScreen {
 
     protected static void showProfile(Stage primaryStage) {
         Stage profileStage = new Stage();
+        String username = Database.getLatestUsername();
         profileStage.initModality(Modality.APPLICATION_MODAL);
         profileStage.initOwner(primaryStage);
 
@@ -30,7 +32,7 @@ public class ProfileScreen {
         ImageView roadView = CodeRacersGUI.createImageView(CodeRacersGUI.roadIconImage, 375, 185);
 
         ImageView profileIcon = CodeRacersGUI.createImageView(CodeRacersGUI.profileIconImage, 72, 72);
-        Label usernameLabel = new Label("\s\sUsername: Ege\s\s");
+        Label usernameLabel = new Label("\s\sUsername:\s\s"+ username);
         usernameLabel.setStyle("-fx-font-size: 18px; -fx-font-family: 'Arial Black';-fx-text-fill: seashell;-fx-background-color:  #700000;-fx-background-radius: 30");
         usernameLabel.setMinSize(-1, 40);
         Label rankingLabel = new Label("\s\sCurrent Ranking: 1\s\s");

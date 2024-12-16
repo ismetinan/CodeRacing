@@ -1,7 +1,10 @@
+package guicoderacers;
 
 
-
+import controller.Server;
+import controller.Database;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -36,14 +39,29 @@ public class MainScreen {
         fullThrottleButton.setMinSize(375, 90);
         leaderboardButton.setMinSize(375, 90);
         settingsButton.setMinSize(375, 90);
-        leaderboardButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.leaderboardScene)); 
+        leaderboardButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.leaderboardScene));
         settingsButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.settingsScene));
-        fullThrottleButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.lobbiesScene));
+        fullThrottleButton.setOnAction(e -> {
+            // Create a new server instance dynamically for a new lobby
+            String username = Database.getLatestUsername();
+            String lobbyName = username + "'s Lobby";
+            int lobbyPort = Server.getNextPort();
+            Server.startServerInBackground(lobbyPort, lobbyName);
+            System.out.println("New lobby created: " + lobbyName + " on port " + lobbyPort);
+            LobbiesScreen lobbiesScreen = new LobbiesScreen();
+            lobbiesScreen.addLobby(lobbyName, username);
+            StackPane lobbiesPane = lobbiesScreen.createLobbiesPane(primaryStage);
+            Scene lobbiesScene = new Scene(lobbiesPane, CodeRacersGUI.defaultWidth, CodeRacersGUI.defaultHeight);
+            
+            CodeRacersGUI.lobbiesScene = lobbiesScene;
+            // Navigate to the Lobbies Screen
+            primaryStage.setScene(CodeRacersGUI.lobbiesScene);
+        });
         buttonBox.getChildren().addAll(fullThrottleButton, leaderboardButton, settingsButton);
 
         VBox mainContent = new VBox(20);
         mainContent.setAlignment(Pos.CENTER);
-        mainContent.getChildren().addAll(  buttonBox);
+        mainContent.getChildren().addAll( buttonBox);
 
         StackPane.setAlignment(mainContent, Pos.CENTER);
         StackPane.setAlignment(logoView, Pos.TOP_CENTER);
