@@ -1,6 +1,8 @@
 package guicoderacers;
 
-import javafx.stage.Stage;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -8,19 +10,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 import controller.Client;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 
 public class LobbiesScreen {
 
-    protected ArrayList<String> lobbies = new ArrayList<>();
-    protected ArrayList<Integer> lobbyPorts = new ArrayList<>(); 
-    private GameScreen gameScreen;
+    private List<String> lobbies = new ArrayList<>();
+    private List<Integer> lobbyPorts = new ArrayList<>();
+
     public StackPane createLobbiesPane(Stage primaryStage) {
         StackPane lobbiesPane = new StackPane();
         lobbiesPane.setStyle("-fx-background-color: seashell;");
@@ -36,7 +37,7 @@ public class LobbiesScreen {
         lobbiesBox.setAlignment(Pos.CENTER);
         lobbiesBox.setPadding(new Insets(80));
 
-        ImageView redCarIcon = CodeRacersGUI.createImageView(CodeRacersGUI.redCarIconImage, 75, 50);
+        ImageView redCarIcon = CodeRacersGUI.createImageView(CodeRacersGUI.redCarIconImage, 80, 50);
         Label lobbiesTitle = new Label("Lobbies");
         lobbiesTitle.setStyle("-fx-font-size: 32px; -fx-font-family: 'Arial Black'; -fx-text-fill: #700000;");
 
@@ -58,29 +59,29 @@ public class LobbiesScreen {
         VBox playerList = new VBox(15);
         playerList.setStyle("-fx-background-color: #700000; -fx-background-radius: 30;");
         playerList.setPadding(new Insets(15));
-        addLobby("ismet31'lobby", 12345);
+
         // Add multiple lobby buttons
         for (String lobby : lobbies) {
             Button lobbyButton = new Button(lobby);
             lobbyButton.setStyle(
-                    "-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black'; -fx-background-color: #100000; -fx-background-radius: 30;");
+                "-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black'; -fx-background-color: #100000; -fx-background-radius: 30;");
             lobbyButton.setMaxWidth(Double.MAX_VALUE);
 
             lobbyButton.setOnAction(event -> {
-                Client client = new Client("localhost", (lobbyPorts.get(lobbies.indexOf(lobby))));
+                Client client = new Client("localhost", lobbyPorts.get(lobbies.indexOf(lobby)));
                 client.connect();
-                gameScreen = new GameScreen();
+                GameScreen gameScreen = new GameScreen();
                 client.listenForUpdates(gameScreen);
                 if (client != null) {
                     System.out.println("Connected to lobby: " + lobby + " on port: " + lobbyPorts.get(lobbies.indexOf(lobby)));
-                    primaryStage.setScene(CodeRacersGUI.gamePlayScene); // Navigate to the game screen
+                    CarColorSelectionScreen carColorSelectionScreen = new CarColorSelectionScreen();
+                    carColorSelectionScreen.showCarColorSelection(primaryStage, () -> {
+                        // Callback to navigate to the game screen
+                        gameScreen.playGameSound();
+                        primaryStage.setScene(CodeRacersGUI.gamePlayScene);
+                    });
                 }
-                GameScreen gameScreen = new GameScreen();
-                gameScreen.playGameSound();
-                primaryStage.setScene(CodeRacersGUI.gamePlayScene);
-                
             });
-
             playerList.getChildren().add(lobbyButton);
         }
 
@@ -96,7 +97,7 @@ public class LobbiesScreen {
         profileButton.setGraphic(profileIcon);
         profileButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
         profileButton.setOnMouseClicked(e -> ProfileScreen.showProfile(primaryStage));
-        topIcons.getChildren().addAll(profileButton); // Add icons to topIcons
+        topIcons.getChildren().addAll( profileButton); // Add icons to topIcons
 
         HBox topBar = new HBox(850);
         topBar.setAlignment(Pos.TOP_LEFT);
@@ -114,6 +115,7 @@ public class LobbiesScreen {
         lobbiesPane.getChildren().addAll(roadView, logoView, mainBox);
         return lobbiesPane;
     }
+
     public void addLobby(String lobbyName, int port) {
         lobbies.add(lobbyName);
         lobbyPorts.add(port);

@@ -76,7 +76,6 @@ public void listenForUpdates(GameScreen gameScreen) {
                         double x = carData.get("x").getAsDouble();
                         double y = carData.get("y").getAsDouble();
 
-                        gameScreen.updateCarPosition(playerId, x, y);
                     }
                 }
             }

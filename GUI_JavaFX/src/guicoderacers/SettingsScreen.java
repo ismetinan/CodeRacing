@@ -10,33 +10,30 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class SettingsScreen {
-    private static String selectedColor;
+    private static String selectedColor = "Red";
 
     protected static double gameSoundVolume = 50;
 
-    
     public StackPane createSettingsPane(Stage primaryStage) {
         StackPane settingsPane = new StackPane();
         settingsPane.setStyle("-fx-background-color: seashell;");
-        
+
         ImageView logoView = CodeRacersGUI.createImageView(CodeRacersGUI.logoIconImage, 375, -1);
 
         ImageView homeIcon = CodeRacersGUI.createImageView(CodeRacersGUI.homeIconImage, 50, 50);
 
         ImageView roadView = CodeRacersGUI.createImageView(CodeRacersGUI.roadIconImage, CodeRacersGUI.defaultWidth, 500);
 
-        
         Button backButton = new Button();
         backButton.setGraphic(homeIcon);
         backButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
         backButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.mainGameScene));
 
         Label settingsTitle = new Label("Settings");
-        settingsTitle.setStyle("-fx-font-size: 32px; -fx-font-family: 'Arial Black'; -fx-text-fill: #700000;");        
+        settingsTitle.setStyle("-fx-font-size: 32px; -fx-font-family: 'Arial Black'; -fx-text-fill: #700000;");
 
         HBox topIcons = new HBox(30);
         topIcons.setAlignment(Pos.TOP_RIGHT);
@@ -77,8 +74,6 @@ public class SettingsScreen {
             CodeRacersGUI.setVolume(newValue.doubleValue() / 100);
         });
 
-        
-
         // ComboBox for selecting background color
         Label backgroundColorLabel = new Label("Background Color");
         backgroundColorLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: seashell; -fx-font-family: 'Arial Black';");
@@ -94,15 +89,15 @@ public class SettingsScreen {
         Label carColorLabel = new Label("Car Color");
         carColorLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: seashell; -fx-font-family: 'Arial Black';");
         ComboBox<String> carColorComboBox = new ComboBox<>();
-        carColorComboBox.getItems().addAll("Red", "Dark Blue", "Green", "Yellow", "Pink", "Orange", "Cyan");
-        carColorComboBox.setValue("Red");
+        carColorComboBox.getItems().addAll("Red", "DarkBlue", "Green", "Yellow", "Pink", "Orange", "Cyan");
+        carColorComboBox.setValue(selectedColor); // Set the initial value to the selected color
         carColorComboBox.getStylesheets().add(getClass().getResource("/Styles/combobox-style.css").toExternalForm());
-        selectedColor = carColorComboBox.getValue();
-
-        
+        carColorComboBox.setOnAction(e -> {
+            selectedColor = carColorComboBox.getValue();
+        });
 
         // Add components to the content box
-        contentBox.getChildren().addAll(gameSoundLabel, gameSoundSlider, musicAudioLabel, musicAudioSlider,  backgroundColorLabel, backgroundColorComboBox, carColorLabel, carColorComboBox);
+        contentBox.getChildren().addAll(gameSoundLabel, gameSoundSlider, musicAudioLabel, musicAudioSlider, backgroundColorLabel, backgroundColorComboBox, carColorLabel, carColorComboBox);
         contentBox.setAlignment(Pos.TOP_LEFT);
 
         // ScrollPane for content box
@@ -141,7 +136,11 @@ public class SettingsScreen {
         return settingsPane;
     }
 
-    public static String getUserCarColor(){
+    public static String getUserCarColor() {
         return selectedColor;
+    }
+
+    public static void setUserCarColor(String color) {
+        selectedColor = color;
     }
 }

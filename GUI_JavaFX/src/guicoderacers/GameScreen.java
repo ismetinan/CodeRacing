@@ -44,6 +44,8 @@ public class GameScreen {
     protected static final int defaultLocx = 540;
     protected static final int defaultLocy = 923; 
     protected static int carCount = 0;
+    protected static Car player1Car=new Car(null, carCount);
+
 
     private Map<String, Node> carNodes = new HashMap<>();
     public StackPane createGamePane(Stage primaryStage) {
@@ -99,7 +101,6 @@ public class GameScreen {
         
 
         
-        Car player1Car=new Car(null, carCount);
         
         ImageView blueCar = CodeRacersGUI.createImageView(CodeRacersGUI.darkBlueCarIconImage, 60, 42);
         blueCar.setRotate(90); // Rotate the car to face the road
@@ -400,6 +401,7 @@ public class GameScreen {
                 : "-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 30; -fx-border-radius: 30;");
 
         if (isCorrect) {
+            StackPane.setMargin(player1Car.getCar(), player1Car.setMargin()); 
             updateQuestionInstance();
         }
     }
@@ -433,35 +435,7 @@ public class GameScreen {
         VBox newOptionsScene = createOptionsScene();
         optionsArea.getChildren().addAll(newOptionsScene.getChildren());
     }
-    public void updateCarPosition(String playerId, double x, double y) {
-        if (!cars.containsKey(playerId)) {
-            // Add a new car if it doesn't exist
-            cars.put(playerId, new Car(playerId, x, y, 0));
-        }
-
-        // Update the car's position
-        Car car = cars.get(playerId);
-        car.setX(x);
-        car.setY(y);
-
-        // Refresh the car's graphical position
-        Platform.runLater(() -> {
-            // Assuming `carNodes` is a map of playerId to JavaFX Node representing the car
-            if (carNodes.containsKey(playerId)) {
-                Node carNode = carNodes.get(playerId);
-                carNode.setLayoutX(x);
-                carNode.setLayoutY(y);
-            }
-        });
-    }
-    public void addCar(String playerId, double startX, double startY, String carPath) {
-        ImageView carImage = new ImageView(carPath);
-        carImage.setFitWidth(50);
-        carImage.setFitHeight(30);
-        carImage.setLayoutX(startX);
-        carImage.setLayoutY(startY);
     
-        carNodes.put(playerId, carImage);
-    }
+      
     
 }
