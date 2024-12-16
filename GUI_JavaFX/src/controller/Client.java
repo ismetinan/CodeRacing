@@ -2,7 +2,12 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import guicoderacers.GameScreen;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -55,4 +60,30 @@ public class Client {
             System.out.println("Error disconnecting: " + e.getMessage());
         }
     }
+public void listenForUpdates(GameScreen gameScreen) {
+    new Thread(() -> {
+        try {
+            String serverResponse;
+            while ((serverResponse = in.readLine()) != null) {
+                System.out.println("Server update: " + serverResponse);
+                JsonObject response = gson.fromJson(serverResponse, JsonObject.class);
+
+                if (response.has("action") && "update_positions".equals(response.get("action").getAsString())) {
+                    JsonArray carUpdates = response.getAsJsonArray("cars");
+                    for (JsonElement carElement : carUpdates) {
+                        JsonObject carData = carElement.getAsJsonObject();
+                        String playerId = carData.get("playerId").getAsString();
+                        double x = carData.get("x").getAsDouble();
+                        double y = carData.get("y").getAsDouble();
+
+                        gameScreen.updateCarPosition(playerId, x, y);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error listening for updates: " + e.getMessage());
+        }
+    }).start();
+}
+
 }

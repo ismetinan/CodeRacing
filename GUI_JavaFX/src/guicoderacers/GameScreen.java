@@ -2,13 +2,20 @@ package guicoderacers;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.google.gson.JsonObject;
+
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -32,8 +39,9 @@ public class GameScreen {
     private Timeline timeline;
     VBox questionDisplayArea = new VBox(10);
     VBox optionsArea = new VBox(10);
+    private Map<String, Car> cars = new HashMap<>();
     private MediaPlayer gameSoundPlayer;
-
+    private Map<String, Node> carNodes = new HashMap<>();
     public StackPane createGamePane(Stage primaryStage) {
 
         StackPane gamePane = new StackPane();
@@ -123,6 +131,8 @@ public class GameScreen {
         return gamePane;
     }
 
+
+
     private VBox createQuestionDisplay() {
 
         VBox layout = new VBox(20);
@@ -155,6 +165,18 @@ public class GameScreen {
 
         layout.getChildren().addAll(questionLabel, contentLabel);
         return layout;
+    }
+
+    public void handleServerUpdate(JsonObject update) {
+        String status = update.get("status").getAsString();
+        String message = update.get("message").getAsString();
+
+        if ("success".equals(status)) {
+            System.out.println("Update received: " + message);
+            updateQuestionInstance(); // Refresh the question and options
+        } else {
+            System.out.println("Error or irrelevant update: " + message);
+        }
     }
 
     private VBox createOptionsScene() {
@@ -376,4 +398,35 @@ public class GameScreen {
         VBox newOptionsScene = createOptionsScene();
         optionsArea.getChildren().addAll(newOptionsScene.getChildren());
     }
+    public void updateCarPosition(String playerId, double x, double y) {
+        if (!cars.containsKey(playerId)) {
+            // Add a new car if it doesn't exist
+            cars.put(playerId, new Car(playerId, x, y, 0));
+        }
+
+        // Update the car's position
+        Car car = cars.get(playerId);
+        car.setX(x);
+        car.setY(y);
+
+        // Refresh the car's graphical position
+        Platform.runLater(() -> {
+            // Assuming `carNodes` is a map of playerId to JavaFX Node representing the car
+            if (carNodes.containsKey(playerId)) {
+                Node carNode = carNodes.get(playerId);
+                carNode.setLayoutX(x);
+                carNode.setLayoutY(y);
+            }
+        });
+    }
+    public void addCar(String playerId, double startX, double startY, String carPath) {
+        ImageView carImage = new ImageView(carPath);
+        carImage.setFitWidth(50);
+        carImage.setFitHeight(30);
+        carImage.setLayoutX(startX);
+        carImage.setLayoutY(startY);
+    
+        carNodes.put(playerId, carImage);
+    }
+    
 }

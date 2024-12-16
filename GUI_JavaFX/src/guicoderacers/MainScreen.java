@@ -49,7 +49,7 @@ public class MainScreen {
             Server.startServerInBackground(lobbyPort, lobbyName);
             System.out.println("New lobby created: " + lobbyName + " on port " + lobbyPort);
             LobbiesScreen lobbiesScreen = new LobbiesScreen();
-            lobbiesScreen.addLobby(lobbyName, username);
+            lobbiesScreen.addLobby(lobbyName, lobbyPort);
             StackPane lobbiesPane = lobbiesScreen.createLobbiesPane(primaryStage);
             Scene lobbiesScene = new Scene(lobbiesPane, CodeRacersGUI.defaultWidth, CodeRacersGUI.defaultHeight);
             

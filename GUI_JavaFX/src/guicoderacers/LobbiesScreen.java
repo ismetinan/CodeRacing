@@ -10,13 +10,17 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import controller.Client;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
 public class LobbiesScreen {
+
     protected ArrayList<String> lobbies = new ArrayList<>();
-    protected ArrayList<String> lobbyPorts = new ArrayList<>(); 
+    protected ArrayList<Integer> lobbyPorts = new ArrayList<>(); 
+    private GameScreen gameScreen;
     public StackPane createLobbiesPane(Stage primaryStage) {
         StackPane lobbiesPane = new StackPane();
         lobbiesPane.setStyle("-fx-background-color: seashell;");
@@ -54,24 +58,29 @@ public class LobbiesScreen {
         VBox playerList = new VBox(15);
         playerList.setStyle("-fx-background-color: #700000; -fx-background-radius: 30;");
         playerList.setPadding(new Insets(15));
-
+        addLobby("ismet31'lobby", 12345);
         // Add multiple lobby buttons
-        
         for (String lobby : lobbies) {
             Button lobbyButton = new Button(lobby);
-            lobbyButton.setStyle("-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black'; -fx-background-color: #100000; -fx-background-radius: 30;");
+            lobbyButton.setStyle(
+                    "-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black'; -fx-background-color: #100000; -fx-background-radius: 30;");
             lobbyButton.setMaxWidth(Double.MAX_VALUE);
-            
-            if (lobby.equals("Lobby 1")) {
-                lobbyButton.setOnAction(event -> {
 
-                    GameScreen gameScreen = new GameScreen();
-                    gameScreen.playGameSound();            
-                    primaryStage.setScene(CodeRacersGUI.gamePlayScene);
-                });
-            }
-            
-            
+            lobbyButton.setOnAction(event -> {
+                Client client = new Client("localhost", (lobbyPorts.get(lobbies.indexOf(lobby))));
+                client.connect();
+                gameScreen = new GameScreen();
+                client.listenForUpdates(gameScreen);
+                if (client != null) {
+                    System.out.println("Connected to lobby: " + lobby + " on port: " + lobbyPorts.get(lobbies.indexOf(lobby)));
+                    primaryStage.setScene(CodeRacersGUI.gamePlayScene); // Navigate to the game screen
+                }
+                GameScreen gameScreen = new GameScreen();
+                gameScreen.playGameSound();
+                primaryStage.setScene(CodeRacersGUI.gamePlayScene);
+                
+            });
+
             playerList.getChildren().add(lobbyButton);
         }
 
@@ -106,8 +115,7 @@ public class LobbiesScreen {
         lobbiesPane.getChildren().addAll(roadView, logoView, mainBox);
         return lobbiesPane;
     }
-    protected void addLobby(String lobbyName, String port) {
-        // Add a new lobby to the list of lobbies
+    public void addLobby(String lobbyName, int port) {
         lobbies.add(lobbyName);
         lobbyPorts.add(port);
     }
