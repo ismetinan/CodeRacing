@@ -50,7 +50,13 @@ public class CodeRacersGUI extends Application {
         loadImages();
         playBackgroundMusic();
         LogInScreen logInScreen = new LogInScreen();
+        MainScreen mainScreen = new MainScreen();
         StackPane logInPane = logInScreen.createLogInPane(primaryStage);
+        StackPane mainGamePane = mainScreen.createMainGamePane(primaryStage);
+        StackPane leaderboardPane = new LeaderboardScreen().createLeaderboardPane(primaryStage);
+        StackPane settingsPane = new SettingsScreen().createSettingsPane(primaryStage);
+        StackPane lobbiesPane = new LobbiesScreen().createLobbiesPane(primaryStage);
+        StackPane gamePlayPane = new GameScreen().createGamePane(primaryStage);
 
         Button startButton = (Button) logInPane.lookup("#startButton");
         startButton.setOnAction(event -> primaryStage.setScene(mainGameScene));
@@ -59,19 +65,17 @@ public class CodeRacersGUI extends Application {
             String username = logInScreen.getTextField().getText();
             System.out.println(username);
             Database.addUser(username);
+            mainScreen.setUsername(username);
+            
+            mainGameScene = new Scene(mainScreen.createMainGamePane(primaryStage), defaultWidth, defaultHeight);
             primaryStage.setScene(mainGameScene);
-            primaryStage.setScene(mainGameScene);
-
+            
         });
 
-        StackPane mainGamePane = new MainScreen().createMainGamePane(primaryStage);
-        StackPane leaderboardPane = new LeaderboardScreen().createLeaderboardPane(primaryStage);
-        StackPane settingsPane = new SettingsScreen().createSettingsPane(primaryStage);
-        StackPane lobbiesPane = new LobbiesScreen().createLobbiesPane(primaryStage);
-        StackPane gamePlayPane = new GameScreen().createGamePane(primaryStage);
 
 
-        mainGameScene = new Scene(mainGamePane, defaultWidth, defaultHeight);
+
+        
         leaderboardScene = new Scene(leaderboardPane, defaultWidth, defaultHeight);
         settingsScene = new Scene(settingsPane, defaultWidth, defaultHeight);
         lobbiesScene = new Scene(lobbiesPane, defaultWidth, defaultHeight);
