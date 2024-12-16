@@ -13,6 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MainScreen {
+    private String username;
+
 
     public StackPane createMainGamePane(Stage primaryStage) {
 
@@ -43,7 +45,7 @@ public class MainScreen {
         settingsButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.settingsScene));
         fullThrottleButton.setOnAction(e -> {
             // Create a new server instance dynamically for a new lobby
-            String username = Database.getLatestUsername();
+            
             String lobbyName = username + "'s Lobby";
             int lobbyPort = Server.getNextPort();
             Server.startServerInBackground(lobbyPort, lobbyName);
@@ -80,5 +82,12 @@ public class MainScreen {
         Button button = new Button(text);
         button.setStyle("-fx-font-size: 24px; -fx-background-color: #700000 ; -fx-text-fill: seashell; -fx-font-family: 'Arial Black'; -fx-background-radius: 30");
         return button;
+    }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
