@@ -10,9 +10,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class SettingsScreen {
+    private static String selectedColor;
 
     protected static double gameSoundVolume = 50;
 
@@ -96,6 +98,9 @@ public class SettingsScreen {
         carColorComboBox.getItems().addAll("Red", "Dark Blue", "Green", "Yellow", "Pink", "Orange", "Cyan");
         carColorComboBox.setValue("Red");
         carColorComboBox.getStylesheets().add(getClass().getResource("/Styles/combobox-style.css").toExternalForm());
+        selectedColor = carColorComboBox.getValue();
+
+        
 
         // Add components to the content box
         contentBox.getChildren().addAll(gameSoundLabel, gameSoundSlider, musicAudioLabel, musicAudioSlider,  backgroundColorLabel, backgroundColorComboBox, carColorLabel, carColorComboBox);
@@ -135,5 +140,9 @@ public class SettingsScreen {
 
         settingsPane.getChildren().addAll(roadView, logoView, mainBox);
         return settingsPane;
+    }
+
+    public static String getUserCarColor(){
+        return selectedColor;
     }
 }
