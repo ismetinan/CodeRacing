@@ -2,7 +2,6 @@ package guicoderacers;
 
 
 import controller.Database;
-import controller.Server;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

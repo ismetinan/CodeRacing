@@ -425,95 +425,95 @@ public class QuestionGenerator {
                 "3"
         );
         addDragAndDropQuestion(
-    dragNDropQuestions,
-    6001,
-    "Match the country with its capital city.",
-    Arrays.asList("USA", "France", "Japan", "India"),
-    Arrays.asList("Washington, D.C.", "Paris", "Tokyo", "New Delhi"),
-    Arrays.asList("Washington, D.C.", "Paris", "Tokyo", "New Delhi")
-);
+                dragNDropQuestions,
+                6001,
+                "What is the correct order of the  insertion sort algorithm?",
+                Arrays.asList("1", "2", "3", "4"),
+                Arrays.asList("Start with second element",
+                        "Compare the current element with sorted portion of the array",
+                        "Shift elements in the sorted portion to make space for the current element, if needed.",
+                        "Insert the current element into its correct position in the sorted portion.")
+        );
 
-addDragAndDropQuestion(
-    dragNDropQuestions,
-    6002,
-    "Match the programming language with its creator.",
-    Arrays.asList("Java", "Python", "C++", "Ruby"),
-    Arrays.asList("James Gosling", "Guido van Rossum", "Bjarne Stroustrup", "Yukihiro Matsumoto"),
-    Arrays.asList("James Gosling", "Guido van Rossum", "Bjarne Stroustrup", "Yukihiro Matsumoto")
-);
+        addDragAndDropQuestion(
+                dragNDropQuestions,
+                6002,
+                "What is the correct order to count how many words can be formed using only allowed characters?",
+                Arrays.asList("1", "2", "3", "4"),
+                Arrays.asList(
+                        "Start with a counter set to zero to count valid words.",
+                        "For each word in the list, check each letter of the word.",
+                        "Ensure every letter of the word is in the allowed characters.",
+                        "If all letters are valid, increase the counter. At the end, return the counter value."
+                )
+        );
 
-addDragAndDropQuestion(
-    dragNDropQuestions,
-    6003,
-    "Match the fruit with its color.",
-    Arrays.asList("Apple", "Banana", "Cherry", "Grape"),
-    Arrays.asList("Red", "Yellow", "Red", "Purple"),
-    Arrays.asList("Red", "Yellow", "Red", "Purple")
-);
+        addDragAndDropQuestion(
+                dragNDropQuestions,
+                6003,
+                "What is the correct order of the steps to check if a number is a palindrome?",
+                Arrays.asList("1", "2", "3", "4"),
+                Arrays.asList(
+                        "Check if the number is equal to its reversed version.",
+                        "Define a helper function to reverse the digits of the number.",
+                        "Extract the last digit of the number and add it to the reversed number.",
+                        "Divide the number by 10 to remove the last digit and repeat until the number becomes 0."
+                )
+        );
 
-addDragAndDropQuestion(
-    dragNDropQuestions,
-    6004,
-    "Match the planet with its characteristic.",
-    Arrays.asList("Earth", "Mars", "Jupiter", "Saturn"),
-    Arrays.asList("Life-supporting", "Red planet", "Largest planet", "Ringed planet"),
-    Arrays.asList("Life-supporting", "Red planet", "Largest planet", "Ringed planet")
-);
+        addDragAndDropQuestion(
+                dragNDropQuestions,
+                6004,
+                "The climbing stairs problem asks how many distinct ways you can reach the top of a staircase with n steps, where you can take either 1 or 2 steps at a time. What is the correct order of the steps to solve the climbing stairs problem?",
+                Arrays.asList("1", "2", "3", "4"),
+                Arrays.asList(
+                        "Initialize two variables, previous and twoPrevious, both set to 1.",
+                        "Loop through the stairs from 2 to n.",
+                        "At each step, calculate the total steps as the sum of the previous two values.",
+                        "Update the previous and twoPrevious values for the next iteration."
+                )
+        );
 
-addDragAndDropQuestion(
-    dragNDropQuestions,
-    6005,
-    "Match the animal with its habitat.",
-    Arrays.asList("Camel", "Penguin", "Eagle", "Dolphin"),
-    Arrays.asList("Desert", "Antarctica", "Mountains", "Ocean"),
-    Arrays.asList("Desert", "Antarctica", "Mountains", "Ocean")
-);
+        addDragAndDropQuestion(
+                dragNDropQuestions,
+                6005,
+                " The plusOne problem involves adding one to a number represented by an array of digits, handling carry-over when digits are 9, and returning the updated array.What is the correct order of the steps to add one to the number represented by an array of digits?",
+                Arrays.asList("1", "2", "3", "4"),
+                Arrays.asList(
+                        "Loop through the digits array from the last digit to the first.",
+                        "If the current digit is less than 9, increment it by 1 and return the array.",
+                        "If the digit is 9, set it to 0 and move to the next more significant digit.",
+                        "If all digits are 9, create a new array with one extra digit, set the first digit to 1, and return the array."
+                )
+        );
 
-addDragAndDropQuestion(
-    dragNDropQuestions,
-    6006,
-    "Match the element with its chemical symbol.",
-    Arrays.asList("Oxygen", "Carbon", "Hydrogen", "Nitrogen"),
-    Arrays.asList("O", "C", "H", "N"),
-    Arrays.asList("O", "C", "H", "N")
-);
+        addDragAndDropQuestion(
+                dragNDropQuestions,
+                6006,
+                "What is the correct order of the steps to add two numbers represented by linked lists?",
+                Arrays.asList("1", "2", "3", "4"),
+                Arrays.asList(
+                        "Initialize a dummy node and a carry variable.",
+                        "Traverse both linked lists, adding the corresponding digits and the carry.",
+                        "If the sum exceeds 9, set the carry to 1; otherwise, set it to 0.",
+                        "After the loop, check if theres any remaining carry and create a new node if needed."
+                )
+        );
 
-addDragAndDropQuestion(
-    dragNDropQuestions,
-    6007,
-    "Match the book with its author.",
-    Arrays.asList("1984", "Pride and Prejudice", "The Great Gatsby", "Moby Dick"),
-    Arrays.asList("George Orwell", "Jane Austen", "F. Scott Fitzgerald", "Herman Melville"),
-    Arrays.asList("George Orwell", "Jane Austen", "F. Scott Fitzgerald", "Herman Melville")
-);
-
-addDragAndDropQuestion(
-    dragNDropQuestions,
-    6008,
-    "Match the invention with its inventor.",
-    Arrays.asList("Telephone", "Light Bulb", "Airplane", "Computer"),
-    Arrays.asList("Alexander Graham Bell", "Thomas Edison", "Wright Brothers", "Charles Babbage"),
-    Arrays.asList("Alexander Graham Bell", "Thomas Edison", "Wright Brothers", "Charles Babbage")
-);
-
-addDragAndDropQuestion(
-    dragNDropQuestions,
-    6009,
-    "Match the sport with its equipment.",
-    Arrays.asList("Soccer", "Tennis", "Cricket", "Basketball"),
-    Arrays.asList("Ball", "Racket", "Bat", "Hoop"),
-    Arrays.asList("Ball", "Racket", "Bat", "Hoop")
-);
-
-addDragAndDropQuestion(
-    dragNDropQuestions,
-    6010,
-    "Match the programming paradigm with its example.",
-    Arrays.asList("Object-Oriented", "Functional", "Procedural", "Event-Driven"),
-    Arrays.asList("Java", "Haskell", "C", "JavaScript"),
-    Arrays.asList("Java", "Haskell", "C", "JavaScript")
-);
-
+        addDragAndDropQuestion(
+                dragNDropQuestions,
+                6007,
+                "What is the correct order of the steps to reverse a linked list?",
+                Arrays.asList("1", "2", "3", "4"),
+                Arrays.asList(
+                        "Set the current node to the head of the list and the previous node to null.",
+                        "Traverse the list and change the next pointer of the current node to the previous node.",
+                        "Move the previous node to the current node and the current node to the next node.",
+                        "After the loop, the previous node will be the new head of the reversed list, so return it."
+                )
+        );
+        
+        
 
 
 
@@ -534,10 +534,9 @@ addDragAndDropQuestion(
     int id,
     String questionText,
     List<String> draggableTargets,
-    List<String> droppableItems,
     List<String> correctAnswer
 ) {
-    questions.add(new DragAndDrop(id, questionText, draggableTargets, droppableItems, correctAnswer));
+    questions.add(new DragAndDrop(id, questionText, draggableTargets, correctAnswer));
 }
 
 
