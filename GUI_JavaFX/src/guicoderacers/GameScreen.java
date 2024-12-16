@@ -41,6 +41,9 @@ public class GameScreen {
     private MediaPlayer gameSoundPlayer;
     private Label timerLabel;
     private int timeRemaining=30;
+    protected static final int defaultLocx = 540;
+    protected static final int defaultLocy = 923; 
+    protected static int carCount = 0;
 
     private Map<String, Node> carNodes = new HashMap<>();
     public StackPane createGamePane(Stage primaryStage) {
@@ -93,13 +96,11 @@ public class GameScreen {
         StackPane.setAlignment(rightSideLayout, Pos.CENTER_RIGHT); // Align the VBox to the right
         
 
-        // Add different colored cars under each road"
+        
 
-        HBox carBox = new HBox(48); // 10 is the spacing between cars
-        carBox.setAlignment(Pos.BOTTOM_LEFT); // Align to the bottom left
-
-        ImageView redCar = CodeRacersGUI.createImageView(CodeRacersGUI.redCarIconImage, 60, 42);
-        redCar.setRotate(90); // Rotate the car to face the road
+        
+        Car player1Car=new Car(null, carCount);
+        
         ImageView blueCar = CodeRacersGUI.createImageView(CodeRacersGUI.darkBlueCarIconImage, 60, 42);
         blueCar.setRotate(90); // Rotate the car to face the road
         ImageView greenCar = CodeRacersGUI.createImageView(CodeRacersGUI.greenCarIconImage, 60, 42);
@@ -110,12 +111,18 @@ public class GameScreen {
         pinkCar.setRotate(90); // Rotate the car to face the road
 
 
-        // Set margin to the left side of the window
-        HBox.setMargin(redCar, new Insets(0, 0, 0, 132)); 
-        carBox.getChildren().addAll(redCar, blueCar, greenCar, yellowCar, pinkCar);
+        
+        StackPane.setMargin(player1Car.getCar(), player1Car.getMargin(carCount)); // Adjust the margin as needed
+        StackPane.setMargin(blueCar, new Insets(540,708, 0, 0)); // Adjust the margin as needed
+        StackPane.setMargin(greenCar, new Insets(540,493 , 0, 0)); // Adjust the margin as needed
+        StackPane.setMargin(yellowCar, new Insets(540, 278, 0, 0)); // Adjust the margin as needed
+        StackPane.setMargin(pinkCar, new Insets(540, 63, 0, 0)); // Adjust the margin as needed
+
+
+        //carBox.getChildren().addAll(redCar, blueCar, greenCar, yellowCar, pinkCar);
 
         VBox carAndroadBox = new VBox(124);
-        carAndroadBox.getChildren().addAll(roadView, carBox);
+        carAndroadBox.getChildren().addAll(roadView);
 
         HBox gridPlaces = new HBox(50);
         gridPlaces.setAlignment(Pos.BOTTOM_LEFT);
@@ -128,6 +135,7 @@ public class GameScreen {
             gridPlaces.getChildren().add(positionLabel);
         }
 
+
         HBox.setMargin(gridPlaces, new Insets(0, 0, 0, 132));
 
         
@@ -136,7 +144,7 @@ public class GameScreen {
         StackPane.setMargin(carAndroadBox, new Insets(0, 0, 0, -125)); // Add some margin
         StackPane.setAlignment(gridPlaces, Pos.BOTTOM_LEFT); // Align the HBox to the bottom left
 
-        gamePane.getChildren().addAll(carAndroadBox, gridPlaces,rightSideLayout); // Add the road and the VBox to the StackPane
+        gamePane.getChildren().addAll(carAndroadBox, gridPlaces,rightSideLayout,player1Car.getCar(),blueCar,greenCar,yellowCar,pinkCar); // Add the road and the VBox to the StackPane
 
         return gamePane;
         }
