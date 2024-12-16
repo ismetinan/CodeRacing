@@ -1,5 +1,4 @@
 package guicoderacers;
-
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -51,7 +50,7 @@ public class LeaderboardScreen {
         playerList.setStyle("-fx-background-color: #700000; -fx-background-radius: 30;");
         playerList.setPadding(new Insets(10));
 
-        String[] players = { "Ege Hamilton", "Vettel Emre", "Eren Uçak", "İsmet Skywalker", "Aybüke Leclerc","1","1","2","2","1","1" };
+        String[] players = { "Ege Hamilton", "Vettel Emre", "Eren Uçak", "İsmet Skywalker", "Aybüke Leclerc"};
         int rank = 1;
         for (String player : players) {
             Label playerLabel = new Label(rank + ". " + player);

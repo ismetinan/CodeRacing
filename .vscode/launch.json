@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Client",
+            "request": "launch",
+            "mainClass": "guicoderacers.Client",
+            "projectName": "CodeRacing_d251d95a"
+        },
+        {
+            "type": "java",
+            "name": "Server",
+            "request": "launch",
+            "mainClass": "guicoderacers.Server",
+            "projectName": "CodeRacing_d251d95a"
+        },
+        {
+            "type": "java",
+            "name": "CodeRacersGUI",
+            "request": "launch",
+            "mainClass": "guicoderacers.CodeRacersGUI",
+            "projectName": "CodeRacing_d251d95a"
+        },
+        {
+            "type": "java",
             "name": "GamePlayFx",
             "request": "launch",
             "mainClass": "guicoderacers.GamePlayFx",
