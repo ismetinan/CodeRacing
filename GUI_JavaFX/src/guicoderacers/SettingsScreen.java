@@ -38,16 +38,15 @@ public class SettingsScreen {
 
         HBox topIcons = new HBox(30);
         topIcons.setAlignment(Pos.TOP_RIGHT);
-        ImageView lightIcon = CodeRacersGUI.createImageView(CodeRacersGUI.lightIconImage, 50, 50);
         ImageView profileIcon = CodeRacersGUI.createImageView(CodeRacersGUI.profileIconImage, 72, 72);
         Button profileButton = new Button();
         profileButton.setGraphic(profileIcon);
         profileButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
         profileButton.setOnMouseClicked(e -> ProfileScreen.showProfile(primaryStage));
         topIcons.setAlignment(Pos.TOP_RIGHT);
-        topIcons.getChildren().addAll(lightIcon, profileButton);
+        topIcons.getChildren().addAll(profileButton);
 
-        HBox topBar = new HBox(775);
+        HBox topBar = new HBox(850);
         topBar.setAlignment(Pos.TOP_LEFT);
         topBar.getChildren().addAll(backButton, topIcons);
 

@@ -17,7 +17,6 @@ public class CodeRacersGUI extends Application {
     // Images and Scenes that I use in various methods
     protected static Image roadIconImage;
     protected static Image logoIconImage;
-    protected static Image lightIconImage;
     protected static Image profileIconImage;
     protected static Image homeIconImage;
     protected static Image trophyIconImage;
@@ -91,7 +90,6 @@ public class CodeRacersGUI extends Application {
     private void loadImages() {
         roadIconImage = new Image("Images/Roads.png");
         logoIconImage = new Image("Images/GameLogo.png");
-        lightIconImage = new Image("Images/LightIcon.png");
         profileIconImage = new Image("Images/ProfileIcon.png");
         homeIconImage = new Image("Images/HomeIcon.png");
         trophyIconImage = new Image("Images/Trophy.png");
