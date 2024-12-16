@@ -11,7 +11,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -34,6 +33,8 @@ public class GameScreen {
     VBox questionDisplayArea = new VBox(10);
     VBox optionsArea = new VBox(10);
     private MediaPlayer gameSoundPlayer;
+    private Label timerLabel;
+    private int timeRemaining=30;
 
     public StackPane createGamePane(Stage primaryStage) {
 
@@ -62,15 +63,24 @@ public class GameScreen {
         optionsArea.setMaxHeight(400);
         optionsArea.setMinHeight(400);
 
-        timeline = new Timeline(new KeyFrame(Duration.seconds(15), event -> {
-            updateQuestionInstance();
+        timerLabel = new Label("Time remaining: " + timeRemaining +"\t\t\t\t");
+        timerLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: black; -fx-font-family: 'Arial Black';");
+
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            timeRemaining--;
+            timerLabel.setText("Time remaining: " + timeRemaining+"\t\t\t\t");
+            if (timeRemaining <= 0) {
+                updateQuestionInstance();
+                timeRemaining = 30; // Reset the timer for the next question
+            }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
-        VBox rightSideLayout = new VBox(20); // 20 is the spacing between question and options
+        VBox rightSideLayout = new VBox(10); // 20 is the spacing between question and options
         rightSideLayout.setAlignment(Pos.CENTER_RIGHT); // Align to the right
-        rightSideLayout.getChildren().addAll(questionDisplayArea, optionsArea); // Add question and options vertically
+        timerLabel.setAlignment(Pos.CENTER_LEFT);
+        rightSideLayout.getChildren().addAll(timerLabel,questionDisplayArea, optionsArea); // Add question and options vertically
 
         
         StackPane.setAlignment(rightSideLayout, Pos.CENTER_RIGHT); // Align the VBox to the right
