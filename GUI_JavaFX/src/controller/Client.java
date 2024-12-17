@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.Socket;
 
 public class Client {
+    private static Client instance;
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
@@ -45,5 +46,11 @@ public class Client {
         request.addProperty("action", "join_lobby");
         request.addProperty("lobby_name", lobbyName);
         out.println(gson.toJson(request));
+    }
+    public static Client getInstance(String serverHost, int serverPort) {
+        if (instance == null) {
+            instance = new Client(serverHost, serverPort);
+        }
+        return instance;
     }
 }
