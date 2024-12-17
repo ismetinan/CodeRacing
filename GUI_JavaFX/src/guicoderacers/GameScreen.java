@@ -1,11 +1,19 @@
 package guicoderacers;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
+import controller.Server;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.animation.KeyFrame;
@@ -28,7 +36,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import questions.*;
-
+import java.lang.reflect.Type;
 
 public class GameScreen {
 
@@ -39,14 +47,19 @@ public class GameScreen {
     VBox questionDisplayArea = new VBox(10);
     HBox trueFalseArea = new HBox(30);
     VBox optionsArea = new VBox(10);
-    private Map<String, Car> cars = new HashMap<>();
+    private static final Gson gson = new Gson(); // Gson instance
+    private static Map<Integer, String> userPasswords;
     private MediaPlayer gameSoundPlayer;
     private Label timerLabel;
     private int timeRemaining=60;
     protected static final int defaultLocx = 540;
     protected static final int defaultLocy = 923; 
     protected static int carCount = 0;
-    protected static Car player1Car=new Car(null, carCount);
+    protected static Car player1Car=new Car(null, carCount,"Red");
+    protected static Car player2Car=new Car(null, carCount, "Cyan");
+    protected static Car player3Car=new Car(null, carCount, "Green");
+    protected static Car player4Car=new Car(null, carCount, "Yellow");
+    protected static Car player5Car=new Car(null, carCount, "Pink");
     private Map<String, Node> carNodes = new HashMap<>();
     protected static int questionNumber=0;
     private static int correctAnswersNumber=0;
@@ -134,32 +147,25 @@ public class GameScreen {
         roadView.rotateProperty().set(90);    
 
         
-        ImageView blueCar = CodeRacersGUI.createImageView(CodeRacersGUI.darkBlueCarIconImage, 60, 42);
-        blueCar.setRotate(90); // Rotate the car to face the road
-        ImageView greenCar = CodeRacersGUI.createImageView(CodeRacersGUI.greenCarIconImage, 60, 42);
-        greenCar.setRotate(90); // Rotate the car to face the road
-        ImageView yellowCar = CodeRacersGUI.createImageView(CodeRacersGUI.yellowCarIconImage, 60, 42);
-        yellowCar.setRotate(90); // Rotate the car to face the road
-        ImageView pinkCar = CodeRacersGUI.createImageView(CodeRacersGUI.pinkCarIconImage, 60, 42);
-        pinkCar.setRotate(90); // Rotate the car to face the road
-
+        
         StackPane.setMargin(player1Car.getCar(), player1Car.getMargin(carCount)); 
 
 
+
         
-        StackPane.setMargin(blueCar, new Insets(540,708, 0, 0)); // Adjust the margin as needed
-        StackPane.setMargin(greenCar, new Insets(540,493 , 0, 0)); // Adjust the margin as needed
-        StackPane.setMargin(yellowCar, new Insets(540, 278, 0, 0)); // Adjust the margin as needed
-        StackPane.setMargin(pinkCar, new Insets(540, 63, 0, 0)); // Adjust the margin as needed      
+        StackPane.setMargin(player2Car.getCar(), new Insets(540,708, 0, 0)); // Adjust the margin as needed
+        StackPane.setMargin(player3Car.getCar(), new Insets(540,493 , 0, 0)); // Adjust the margin as needed
+        StackPane.setMargin(player4Car.getCar(), new Insets(540, 278, 0, 0)); // Adjust the margin as needed
+        StackPane.setMargin(player5Car.getCar(), new Insets(540, 63, 0, 0)); // Adjust the margin as needed      
 
         
 
         StackPane.setMargin(roadView, new Insets(0, 0, 0, -500)); // Add some margin
 
-        gamePane.getChildren().addAll(roadView, gridPlaces,player1Car.getCar(),blueCar,greenCar,yellowCar,pinkCar,rightSideLayout,overlayPane); // Add the road and the VBox to the StackPane
-
+        gamePane.getChildren().addAll(roadView, gridPlaces,player1Car.getCar(),player2Car.getCar(),player3Car.getCar(),player4Car.getCar(),player5Car.getCar(),rightSideLayout,overlayPane); // Add the road and the VBox to the StackPane
         return gamePane;
         }
+       
         private HBox createTrueandFalseDisplay(int correctAnswers, int incorrectAnswers) {
             HBox trueFalseDisplay = new HBox();
             trueFalseDisplay.setAlignment(Pos.CENTER);
@@ -175,7 +181,29 @@ public class GameScreen {
             return trueFalseDisplay;
         }
 
-        
+        public static void connectToServer() {
+        try (Socket socket = new Socket("localhost", 12345);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+            // Read JSON data from the server
+            String jsonResponse = in.readLine();
+            System.out.println("Received JSON: " + jsonResponse);
+
+            // Parse JSON to extract the user-password HashMap
+            JsonObject jsonObject = gson.fromJson(jsonResponse, JsonObject.class);
+            Type type = new TypeToken<HashMap<Integer, String>>() {}.getType();
+            userPasswords = gson.fromJson(jsonObject.get("userPasswords"), type);
+
+            System.out.println(userPasswords.isEmpty());
+            for (Map.Entry<Integer, String> entry : userPasswords.entrySet()) {
+                System.out.println("User " + entry.getKey() + " -> Password: " + entry.getValue());
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error connecting to server: " + e.getMessage());
+        }
+    }
+
 
         private VBox createQuestionDisplay() {
 

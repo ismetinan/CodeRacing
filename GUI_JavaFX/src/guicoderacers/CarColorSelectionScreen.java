@@ -11,6 +11,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class CarColorSelectionScreen {
+    private static String colorNameMod="Red";
 
     public void showCarColorSelection(Stage primaryStage, Runnable onColorSelected) {
         Stage colorSelectionStage = new Stage();
@@ -42,7 +43,6 @@ public class CarColorSelectionScreen {
             String selectedColor = colorComboBox.getValue();
             if (selectedColor != null) {
                 SettingsScreen.setUserCarColor(selectedColor); // Set the car color
-                Car.setCarColor(selectedColor); // Set the car color for the game
                 colorSelectionStage.close(); // Close the color selection stage
                 onColorSelected.run(); // Run the provided callback to navigate to the game screen
             }
@@ -56,6 +56,8 @@ public class CarColorSelectionScreen {
     }
 
     private String getColorHex(String colorName) {
+        colorNameMod=colorName;
+
         switch (colorName) {
             case "Red":
                 return "#FF0000";
@@ -75,4 +77,8 @@ public class CarColorSelectionScreen {
                 return "#FFF5EE"; // Default to white if color is not recognized
         }
     }
+    public static String getColorNameMod() {
+        return colorNameMod;
+    }
+
 }
