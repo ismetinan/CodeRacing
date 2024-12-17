@@ -43,12 +43,6 @@ public class Car {
         selectedColor = color;
     }
 
-    public void moveUp() {
-        double currentY = car.getLayoutY();
-        System.out.println("Current Y Position: " + currentY); // Debug current position
-        car.setLayoutY(currentY - 10); // Move the car up
-        System.out.println("New Y Position: " + car.getLayoutY()); // Verify new position
-    }
 
     public Insets getMargin(int count) {
         return new Insets(YPosition, 0, 0, XPosition); // Adjust the margin as needed

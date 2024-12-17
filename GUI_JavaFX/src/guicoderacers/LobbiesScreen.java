@@ -89,6 +89,12 @@ public class LobbiesScreen {
                 carColorSelectionScreen.showCarColorSelection(primaryStage, () -> {
                     // Callback to navigate to the game screen
                     gameScreen.playGameSound();
+                    StackPane gamesPane= gameScreen.createGamePane(primaryStage);
+                    Scene gameScene= new Scene(gamesPane,  CodeRacersGUI.defaultWidth, CodeRacersGUI.defaultHeight);
+                    
+                
+                    CodeRacersGUI.gamePlayScene = gameScene;
+                    CodeRacersGUI.updateBackgroundColor(SettingsScreen.selectedColor);
                     primaryStage.setScene(CodeRacersGUI.gamePlayScene);
                 });
             }

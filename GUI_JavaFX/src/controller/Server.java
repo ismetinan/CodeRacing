@@ -13,6 +13,8 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Server {
+
+    public static ArrayList<Car> carsArray= new ArrayList<>();
     private static final int PORT = 12345;
     private static final Map<String, List<PrintWriter>> lobbies = new HashMap<>();
     private static final Map<String, Map<String, Car>> lobbyCars = new HashMap<>(); // Lobby -> PlayerId -> Car
@@ -58,13 +60,19 @@ public class Server {
                 String action = request.get("action").getAsString();
                 String lobbyName = request.get("lobby_name").getAsString();
 
+
+
                 if ("join_lobby".equals(action)) {
-                    lobbies.get(lobbyName).add(out);
-                    lobbyCars.get(lobbyName).put(playerId, new Car(playerId,1)); // Initialize car position
+                    Car newCar = new Car(playerId, GameScreen.getCarCount());
+
+                    carsArray.add(newCar);         
+                    GameScreen.setCarCount(GameScreen.getCarCount() + 1);
+                    
+                    lobbyCars.get(lobbyName).put(playerId, newCar);
                     sendCarUpdate(lobbyName);
                 } else if ("correct_answer".equals(action)) {
                     Car car = lobbyCars.get(lobbyName).get(playerId);
-                    if (car != null) car.moveUp();
+                    if (car != null);
                     sendCarUpdate(lobbyName);
                 }
             }

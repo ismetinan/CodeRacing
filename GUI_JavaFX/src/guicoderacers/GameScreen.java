@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import controller.*;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -42,14 +43,14 @@ public class GameScreen {
     VBox questionDisplayArea = new VBox(10);
     HBox trueFalseArea = new HBox(30);
     VBox optionsArea = new VBox(10);
-    private Map<String, Car> cars = new HashMap<>();
     private MediaPlayer gameSoundPlayer;
     private Label timerLabel;
     private int timeRemaining=60;
     protected static final int defaultLocx = 540;
     protected static final int defaultLocy = 923; 
     protected static int carCount = 0;
-    protected static Car player1Car=new Car(null, carCount);
+    
+    
     private Map<String, Node> carNodes = new HashMap<>();
     protected static int questionNumber=0;
     private static int correctAnswersNumber=0;
@@ -136,30 +137,23 @@ public class GameScreen {
         ImageView roadView = CodeRacersGUI.createImageView(CodeRacersGUI.autoBahnIconImage,CodeRacersGUI.defaultHeight , 500);
         roadView.rotateProperty().set(90);    
 
+        HBox carsHBox = new HBox(20);
+        System.out.println("fdsghjklş"+Server.carsArray.isEmpty());
+        for (Car car : Server.carsArray) {
+            StackPane.setMargin(car.getCar(), car.getMargin(carCount)); 
+            carsHBox.getChildren().addAll(car.getCar());
+            
+        }
         
-        ImageView blueCar = CodeRacersGUI.createImageView(CodeRacersGUI.greenCarIconImage, 60, 42);
-        blueCar.setRotate(90); // Rotate the car to face the road
-        ImageView greenCar = CodeRacersGUI.createImageView(CodeRacersGUI.greenCarIconImage, 60, 42);
-        greenCar.setRotate(90); // Rotate the car to face the road
-        ImageView yellowCar = CodeRacersGUI.createImageView(CodeRacersGUI.greenCarIconImage, 60, 42);
-        yellowCar.setRotate(90); // Rotate the car to face the road
-        ImageView pinkCar = CodeRacersGUI.createImageView(CodeRacersGUI.greenCarIconImage, 60, 42);
-        pinkCar.setRotate(90); // Rotate the car to face the road
-
-        StackPane.setMargin(player1Car.getCar(), player1Car.getMargin(carCount)); 
 
 
         
-        StackPane.setMargin(blueCar, new Insets(540,708, 0, 0)); // Adjust the margin as needed
-        StackPane.setMargin(greenCar, new Insets(540,493 , 0, 0)); // Adjust the margin as needed
-        StackPane.setMargin(yellowCar, new Insets(540, 278, 0, 0)); // Adjust the margin as needed
-        StackPane.setMargin(pinkCar, new Insets(540, 63, 0, 0)); // Adjust the margin as needed      
 
         
 
         StackPane.setMargin(roadView, new Insets(0, 0, 0, -500)); // Add some margin
 
-        gamePane.getChildren().addAll(roadView, gridPlaces,player1Car.getCar(),blueCar,greenCar,yellowCar,pinkCar,rightSideLayout,overlayPane); // Add the road and the VBox to the StackPane
+        gamePane.getChildren().addAll(roadView, gridPlaces,carsHBox,rightSideLayout,overlayPane); // Add the road and the VBox to the StackPane
 
         return gamePane;
         }
@@ -455,7 +449,7 @@ public class GameScreen {
             correctAnswersNumber++;
             System.out.println("Correct Answers: " + correctAnswersNumber);
             setCorrectAnswers(correctAnswersNumber);
-            StackPane.setMargin(player1Car.getCar(), player1Car.setMargin()); 
+            StackPane.setMargin(Server.carsArray.get(0).getCar(), Server.carsArray.get(0).setMargin()); 
             updateQuestionInstance();
         } else {
             
@@ -557,6 +551,14 @@ private void resetTimer() {
             carNodes.get(playerId).setLayoutY(y);
         }
     }
+    
 }
+    public static int getCarCount() {
+        return carCount;
+    }
+    public static void setCarCount(int carCount) {
+        GameScreen.carCount = carCount;
+    }
+
 
 }

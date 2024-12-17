@@ -72,7 +72,7 @@ public class CodeRacersGUI extends Application {
         StackPane endGamePane= new EndGameScreen().createEndGamePane(primaryStage);
 
         Button startButton = logInScreen.getStartButton();
-        startButton.setOnAction(_ -> {
+        startButton.setOnAction(e -> {
             String username = logInScreen.getTextField().getText();
             if (username.isEmpty()) {
                 System.out.println("Username cannot be empty!");
