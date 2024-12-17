@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import controller.*;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -49,7 +48,7 @@ public class GameScreen {
     protected static final int defaultLocx = 540;
     protected static final int defaultLocy = 923; 
     protected static int carCount = 0;
-    
+    public static ArrayList<Car> carsArray= new ArrayList<>();
     
     private Map<String, Node> carNodes = new HashMap<>();
     protected static int questionNumber=0;
@@ -57,8 +56,7 @@ public class GameScreen {
     private static int incorrectAnswersNumber=0;
     private StackPane overlayPane;
     private static ArrayList<Integer> incorrectId = new ArrayList<>();
-    private ArrayList<Integer> incorrectId = new ArrayList<>();
-    private StackPane gamePane;
+    private static StackPane gamePane;
 
 
     public StackPane createGamePane(Stage primaryStage) {
@@ -139,22 +137,21 @@ public class GameScreen {
         roadView.rotateProperty().set(90);    
 
         HBox carsHBox = new HBox(20);
-        System.out.println("fdsghjklş"+Server.carsArray.isEmpty());
-        for (Car car : Server.carsArray) {
-            StackPane.setMargin(car.getCar(), car.getMargin(carCount)); 
-            carsHBox.getChildren().addAll(car.getCar());
-            
-        }
-        
+        carsArray.add(new Car(null, carCount++));
+        carsArray.add(new Car(null, carCount++));
+        carsArray.add(new Car(null, carCount++));
+        carsArray.add(new Car(null, carCount++));
+        carsArray.add(new Car(null, carCount));
+        StackPane.setMargin(carsArray.get(0).getCar(), carsArray.get(0).getMargin(carCount)); 
+        StackPane.setMargin(carsArray.get(1).getCar(), carsArray.get(0).getMargin(carCount)); 
+        StackPane.setMargin(carsArray.get(2).getCar(), carsArray.get(0).getMargin(carCount)); 
 
 
-        
 
-        
+        StackPane.setMargin(carsHBox, new Insets(650,0,0,10));
+        StackPane.setMargin(roadView, new Insets(0, 0, 0,-500)); // Add some margin
 
-        StackPane.setMargin(roadView, new Insets(0, 0, 0, -500)); // Add some margin
-
-        gamePane.getChildren().addAll(roadView, gridPlaces,carsHBox,rightSideLayout,overlayPane); // Add the road and the VBox to the StackPane
+        gamePane.getChildren().addAll(roadView, gridPlaces,rightSideLayout,overlayPane); // Add the road and the VBox to the StackPane
 
         return gamePane;
         }
@@ -450,7 +447,7 @@ public class GameScreen {
             correctAnswersNumber++;
             System.out.println("Correct Answers: " + correctAnswersNumber);
             setCorrectAnswers(correctAnswersNumber);
-            StackPane.setMargin(Server.carsArray.get(0).getCar(), Server.carsArray.get(0).setMargin()); 
+            StackPane.setMargin(carsArray.get(0).getCar(), carsArray.get(0).setMargin()); 
             updateQuestionInstance();
         } else {
             
@@ -535,9 +532,6 @@ private void resetTimer() {
         HBox newTrueFalseDisplay = createTrueandFalseDisplay(correctAnswersNumber, incorrectAnswersNumber);
         trueFalseArea.getChildren().addAll(newTrueFalseDisplay.getChildren());
     }
-    public static ArrayList<Integer> getIncorrectId() {
-        return incorrectId;
-    }
     public void updateCarPositions(JsonArray carData) {
     for (JsonElement carElement : carData) {
         JsonObject carJson = carElement.getAsJsonObject();
@@ -563,6 +557,33 @@ private void resetTimer() {
     public static void setCarCount(int carCount) {
         GameScreen.carCount = carCount;
     }
-
+    public static ArrayList<Integer> getIncorrectId() {
+        return incorrectId;
+    }
+    public static void createCarFromJson(JsonObject carJson) {
+        String playerId = carJson.get("playerId").getAsString();
+        double marginTop = carJson.get("carMarginTop").getAsDouble();
+    
+        // Create and configure the new car
+        Car newCar = new Car(playerId, carsArray.size());
+        StackPane.setMargin(newCar.getCar(), new Insets(marginTop, 0, 0, 100));
+        carsArray.add(newCar);
+    
+        System.out.println("Car created for player: " + playerId);
+        refreshCarsDisplay();
+    }
+    public static void refreshCarsDisplay() {
+        HBox carsHBox = new HBox(20);
+        carsHBox.setAlignment(Pos.CENTER);
+        carsHBox.getChildren().clear();
+    
+        for (Car car : carsArray) {
+            carsHBox.getChildren().add(car.getCar());
+        }
+    
+        gamePane.getChildren().clear();
+        gamePane.getChildren().add(carsHBox);
+    }
+    
 
 }

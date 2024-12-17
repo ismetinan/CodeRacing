@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import guicoderacers.GameScreen;
+import javafx.application.Platform;
 
 import java.io.*;
 import java.net.Socket;
@@ -69,9 +70,10 @@ public void listenForUpdates(GameScreen gameScreen) {
             String response;
             while ((response = in.readLine()) != null) {
                 JsonObject jsonResponse = gson.fromJson(response, JsonObject.class);
-                if ("update_cars".equals(jsonResponse.get("action").getAsString())) {
-                    JsonArray cars = jsonResponse.getAsJsonArray("cars");
-                    gameScreen.updateCarPositions(cars);
+                String action = jsonResponse.get("action").getAsString();
+
+                if ("create_car".equals(action)) {
+                    Platform.runLater(() -> gameScreen.createCarFromJson(jsonResponse));
                 }
             }
         } catch (IOException e) {
@@ -79,5 +81,6 @@ public void listenForUpdates(GameScreen gameScreen) {
         }
     }).start();
 }
+
 
 }

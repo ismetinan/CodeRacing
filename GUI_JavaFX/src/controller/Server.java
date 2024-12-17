@@ -13,8 +13,6 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Server {
-
-    public static ArrayList<Car> carsArray= new ArrayList<>();
     private static final int PORT = 12345;
     private static final Map<String, List<PrintWriter>> lobbies = new HashMap<>();
     private static final Map<String, Map<String, Car>> lobbyCars = new HashMap<>(); // Lobby -> PlayerId -> Car
@@ -59,18 +57,25 @@ public class Server {
                 JsonObject request = gson.fromJson(input, JsonObject.class);
                 String action = request.get("action").getAsString();
                 String lobbyName = request.get("lobby_name").getAsString();
-
-
+                
 
                 if ("join_lobby".equals(action)) {
                     Car newCar = new Car(playerId, GameScreen.getCarCount());
-
-                    carsArray.add(newCar);         
+                    GameScreen.carsArray.add(newCar);
                     GameScreen.setCarCount(GameScreen.getCarCount() + 1);
-                    
+                
                     lobbyCars.get(lobbyName).put(playerId, newCar);
-                    sendCarUpdate(lobbyName);
-                } else if ("correct_answer".equals(action)) {
+                
+                    JsonObject response = new JsonObject();
+                    response.addProperty("action", "create_car");
+                    response.addProperty("playerId", playerId);
+                    response.addProperty("carMarginTop", newCar.getMargin(lobbyCars.get(lobbyName).size()).getTop());
+                
+                    for (PrintWriter writer : lobbies.get(lobbyName)) {
+                        writer.println(gson.toJson(response));
+                    }
+                }
+                 else if ("correct_answer".equals(action)) {
                     Car car = lobbyCars.get(lobbyName).get(playerId);
                     if (car != null);
                     sendCarUpdate(lobbyName);

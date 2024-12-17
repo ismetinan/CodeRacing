@@ -186,13 +186,13 @@ public class CodeRacersGUI extends Application {
             backButton.setStyle(
                 "-fx-font-size: 20px; -fx-background-radius: 15; -fx-background-color: #700000; -fx-text-fill: #ecf0f1;"
             );
-            backButton.setOnMouseEntered(_ -> backButton.setStyle(
+            backButton.setOnMouseEntered(e -> backButton.setStyle(
                 "-fx-font-size: 20px; -fx-background-radius: 15; -fx-background-color: #900000; -fx-text-fill: #ecf0f1;"
             ));
-            backButton.setOnMouseExited(_ -> backButton.setStyle(
+            backButton.setOnMouseExited(e -> backButton.setStyle(
                 "-fx-font-size: 20px; -fx-background-radius: 15; -fx-background-color: #700000; -fx-text-fill: #ecf0f1;"
             ));
-            backButton.setOnAction(_ -> primaryStage.setScene(mainGameScene));
+            backButton.setOnAction(e -> primaryStage.setScene(mainGameScene));
         
             // Road Icon Image
             ImageView roadView = createImageView(roadIconImage, 800, 200);
