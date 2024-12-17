@@ -28,8 +28,16 @@ public class DragAndDrop extends Question {
     public List<String> getCorrectAnswer() {
         return correctAnswer;
     }
+    public String getCorrectAnswerV2() {
+        String returned= "";
+        for(String s: correctAnswer){
+           returned = returned+s+" ";
+        }
+        return returned;
+    }
 
     public List<String> getUserAnswer() {
+        
         return userAnswer;
     }
 

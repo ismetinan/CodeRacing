@@ -49,6 +49,7 @@ public class GameScreen {
     protected static int questionNumber=0;
     private static int correctAnswersNumber=0;
     private static int incorrectAnswersNumber=0;
+    private ArrayList<Integer> incorrectId = new ArrayList<>();
 
 
 
@@ -416,6 +417,7 @@ public class GameScreen {
                             incorrectAnswersNumber++;
                             setIncorrectAnswers(incorrectAnswersNumber);
                             updateQuestionInstance();
+                            incorrectId.add(question.getId());
                         }
                     }
                 });
@@ -450,6 +452,10 @@ public class GameScreen {
             System.out.println("Incorrect Answers: " + incorrectAnswersNumber);
             setIncorrectAnswers(incorrectAnswersNumber);
         updateQuestionInstance();
+        incorrectId.add(selectedQuestion.getId());
+        for(int i : incorrectId){
+            QuestionGenerator.incorrectQuestionReturner(i);
+        }
         }
     }
     public void setGameSoundVolume(double volume) {
