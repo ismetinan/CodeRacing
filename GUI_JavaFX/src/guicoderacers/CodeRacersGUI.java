@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -70,24 +71,35 @@ public class CodeRacersGUI extends Application {
         StackPane gamePlayPane = new GameScreen().createGamePane(primaryStage);
         StackPane endGamePane= new EndGameScreen().createEndGamePane(primaryStage);
 
-        Button startButton = (Button) logInPane.lookup("#startButton");
-        startButton.setOnAction(event -> primaryStage.setScene(mainGameScene));
-        logInScene = new Scene(logInPane, defaultWidth, defaultHeight);
-        logInPane.setOnKeyPressed(event -> {
+        Button startButton = logInScreen.getStartButton();
+        startButton.setOnAction(_ -> {
             String username = logInScreen.getTextField().getText();
-            System.out.println(username);
-            Database.addUser(username);
-            mainScreen.setUsername(username);
-            
+            if (username.isEmpty()) {
+                System.out.println("Username cannot be empty!");
+                return; // Do not proceed if username is empty
+            }
+
+            System.out.println("Username: " + username);
+            Database.addUser(username); // Add the user to the database
+            mainScreen.setUsername(username); // Pass the username to the main screen
+
+            // Create the main game scene and switch to it
             mainGameScene = new Scene(mainScreen.createMainGamePane(primaryStage), defaultWidth, defaultHeight);
             primaryStage.setScene(mainGameScene);
-            
+        });
+
+        // Optionally, if you still need a key press:
+        logInPane.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) { // Handle Enter key only
+                startButton.fire(); // Simulate button click on Enter key press
+            }
         });
 
 
 
 
-        
+
+        logInScene = new Scene(logInPane, defaultWidth, defaultHeight);        
         leaderboardScene = new Scene(leaderboardPane, defaultWidth, defaultHeight);
         settingsScene = new Scene(settingsPane, defaultWidth, defaultHeight);
         lobbiesScene = new Scene(lobbiesPane, defaultWidth, defaultHeight);
