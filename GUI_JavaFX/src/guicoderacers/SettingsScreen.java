@@ -13,7 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class SettingsScreen {
-    protected static String selectedColor = "Red";
+    protected static String selectedColor = "seashell";
+    protected static String selectedCarColor = "Red";
 
     protected static double gameSoundVolume = 50;
 
@@ -90,10 +91,10 @@ public class SettingsScreen {
         carColorLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: seashell; -fx-font-family: 'Arial Black';");
         ComboBox<String> carColorComboBox = new ComboBox<>();
         carColorComboBox.getItems().addAll("Red", "DarkBlue", "Green", "Yellow", "Pink", "Orange", "Cyan");
-        carColorComboBox.setValue(selectedColor); // Set the initial value to the selected color
+        carColorComboBox.setValue(selectedCarColor); // Set the initial value to the selected color
         carColorComboBox.getStylesheets().add(getClass().getResource("/Styles/combobox-style.css").toExternalForm());
         carColorComboBox.setOnAction(e -> {
-            selectedColor = carColorComboBox.getValue();
+            selectedCarColor = carColorComboBox.getValue();
         });
 
         // Add components to the content box
@@ -137,10 +138,10 @@ public class SettingsScreen {
     }
 
     public static String getUserCarColor() {
-        return selectedColor;
+        return selectedCarColor;
     }
 
     public static void setUserCarColor(String color) {
-        selectedColor = color;
+        selectedCarColor = color;
     }
 }

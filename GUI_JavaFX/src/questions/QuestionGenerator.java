@@ -5,12 +5,9 @@ import java.util.List;
 
 public class QuestionGenerator {
 
-
-       
-
     public static List<Question> generateQuestions() {
-        List<Question> multipleChoiceQuestions = new ArrayList<>();
         List<Question> questions = new ArrayList<>();
+        List<Question> multipleChoiceQuestions = new ArrayList<>();
         List<Question> dragNDropQuestions = new ArrayList<>();
         List<Question> fillInTheBlankQuestions = new ArrayList<>();
         List<Question> codeComparisonQuestions = new ArrayList<>();
@@ -528,25 +525,9 @@ public class QuestionGenerator {
         questions.addAll(trueFalseQuestions);
         questions.addAll(fillInTheBlankQuestions);
 
-        ArrayList<Integer> questionIDList = new ArrayList<>(); 
-                List<Question> questionList = new ArrayList<>();
-        
-            
-                for (Question question : questions) {
-                    if (!questionIDList.contains(question.getId())) {
-                        questionIDList.add(question.getId()); 
-                        questionList.add(question);
-                    }
-                    
-        
-                    
-                }
 
 
-                for(int a: questionIDList) {
-                        System.out.println(a);
-                }
-        return questionList;
+        return questions;
     }
     private static void addDragAndDropQuestion(
     List<Question> questions,
