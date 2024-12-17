@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
@@ -17,11 +18,12 @@ public class Server {
 
     public static void main(String[] args) {
         initializeLobbies(); // Predefined lobbies
-        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+        try (ServerSocket serverSocket = new ServerSocket(12345, 50, InetAddress.getByName("139.179.135.253"))) {
             System.out.println("Server started on port " + PORT);
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
+                System.out.println("Biri Baglandi");
                 System.out.println("Client connected: " + clientSocket.getInetAddress());
                 new Thread(() -> handleClient(clientSocket)).start();
             }
