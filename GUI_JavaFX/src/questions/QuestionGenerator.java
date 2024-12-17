@@ -532,22 +532,26 @@ protected static List<Question> questions = new ArrayList<>();
         return questions;
     }
     public static String incorrectQuestionReturner(int id){
-        String returned="";
-        for(Question q: questions){
-                if(q.getId()==id){
-                        if(q instanceof MultipleChoiceQuestion){
-                                returned= q.getQuestionText() +((MultipleChoiceQuestion)q).getCorrectAnswer();
-                        }
-                        else if(q instanceof DragAndDrop){
-                                returned= q.getQuestionText()+((DragAndDrop)q).getCorrectAnswerV2();
-                        }
-                        else if(q instanceof AlgorithmTracingQuestion){
-                                returned=q.getQuestionText()+((AlgorithmTracingQuestion)q).getAlgorithmCode()+((AlgorithmTracingQuestion)q).getCorrectAnswer();
-                        }
+        StringBuilder returned = new StringBuilder();
+        for (Question q : questions) {
+            if (q.getId() == id) {
+                if (q instanceof MultipleChoiceQuestion) {
+                    returned.append("\nQuestion:\n").append(q.getQuestionText())
+                            .append("\n\nCorrect Answer:\n ").append(((MultipleChoiceQuestion) q).getCorrectAnswer());
+                } else if (q instanceof DragAndDrop) {
+                    returned.append("\nQuestion:\n").append(q.getQuestionText())
+                            .append("\n\nCorrect Order:\n").append(String.join(", ", ((DragAndDrop) q).getCorrectAnswerV2()));
+                } else if (q instanceof AlgorithmTracingQuestion) {
+                    returned.append("\nQuestion:\n").append(q.getQuestionText())
+                            .append("\n\nAlgorithm Code:\n").append(((AlgorithmTracingQuestion) q).getAlgorithmCode())
+                            .append("\n\nCorrect Answer:\n ").append(((AlgorithmTracingQuestion) q).getCorrectAnswer());
                 }
-        }
-                System.out.println(returned);
-                return returned;
+            }
+                
+            
+    }
+                System.out.println(returned.toString());
+                return returned.toString();
                 
     }
     private static void addDragAndDropQuestion(

@@ -1,6 +1,7 @@
 package guicoderacers;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import controller.Database;
@@ -10,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import questions.Question;
+import questions.QuestionGenerator;
 
 public class CodeRacersGUI extends Application {
     
@@ -135,6 +138,85 @@ public class CodeRacersGUI extends Application {
     public static void navigateToMainScreen() {
         primaryStage.setScene(mainGameScene); // Set the scene to the main game screen
         }
+
+        public static void navigateToReviewScreen() {
+            VBox reviewLayout = new VBox(20);
+            reviewLayout.setAlignment(Pos.CENTER);
+            reviewLayout.setStyle("-fx-background-color: black; -fx-padding: 40px;");
+        
+            // Title Label with Drop Shadow Effect
+            Label reviewLabel = new Label("Review Questions");
+            reviewLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ecf0f1;");
+            reviewLabel.setWrapText(true);
+            reviewLabel.setEffect(new DropShadow(10, Color.BLACK)); // Add shadow for better visual
+        
+            // Get the list of questions from the database
+            ArrayList<Integer> questionIds = GameScreen.getIncorrectId();
+        
+            // Create a VBox to hold the questions and answers
+            VBox questionsLayout = new VBox(10);
+            questionsLayout.setAlignment(Pos.CENTER);
+        
+            // Iterate over the questions and create a label for each question and its answer
+            for (int id : questionIds) {
+                String questionText = QuestionGenerator.incorrectQuestionReturner(id);
+                Label questionLabel = new Label(questionText);
+                questionLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: #ecf0f1;");
+                questionLabel.setWrapText(true);
+                questionLabel.setMaxWidth(800); // Set max width to ensure wrapping
+        
+                questionsLayout.getChildren().addAll(questionLabel);
+            }
+        
+            // Add the questions layout to a ScrollPane
+            ScrollPane scrollPane = new ScrollPane(questionsLayout);
+            scrollPane.setFitToWidth(true);
+            scrollPane.setStyle(
+                "-fx-background: #700000;" +
+                "-fx-background-color: #700000;" +
+                "-fx-border-color: #700000;" +
+                "-fx-border-width: 30;" +
+                "-fx-border-radius: 30;" +
+                "-fx-background-radius: 30;"
+            );
+            scrollPane.getStylesheets().add("Styles/scrollpane-style.css");
+        
+            // Back Button with Hover Effect
+            Button backButton = new Button("Back to Home");
+            backButton.setStyle(
+                "-fx-font-size: 20px; -fx-background-radius: 15; -fx-background-color: #700000; -fx-text-fill: #ecf0f1;"
+            );
+            backButton.setOnMouseEntered(_ -> backButton.setStyle(
+                "-fx-font-size: 20px; -fx-background-radius: 15; -fx-background-color: #900000; -fx-text-fill: #ecf0f1;"
+            ));
+            backButton.setOnMouseExited(_ -> backButton.setStyle(
+                "-fx-font-size: 20px; -fx-background-radius: 15; -fx-background-color: #700000; -fx-text-fill: #ecf0f1;"
+            ));
+            backButton.setOnAction(_ -> primaryStage.setScene(mainGameScene));
+        
+            // Road Icon Image
+            ImageView roadView = createImageView(roadIconImage, 800, 200);
+            roadView.setStyle("-fx-padding: 20px;");
+            roadView.setEffect(new DropShadow(20, Color.BLACK)); // Add a shadow for depth
+        
+            // Add a motivational message with transition effect
+            Label motivationalLabel = new Label("Thank you for playing! Keep improving!");
+            motivationalLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ecf0f1;");
+            DropShadow textShadow = new DropShadow(20, Color.GOLD);
+            motivationalLabel.setEffect(textShadow);
+        
+            // Add a subtle fade-in effect for the motivational label
+            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), motivationalLabel);
+            fadeTransition.setFromValue(0);
+            fadeTransition.setToValue(1);
+            fadeTransition.setCycleCount(1);
+            fadeTransition.play();
+        
+            reviewLayout.getChildren().addAll(reviewLabel, scrollPane, roadView, motivationalLabel, backButton);
+            Scene reviewScene = new Scene(reviewLayout, defaultWidth, defaultHeight);
+            primaryStage.setScene(reviewScene);
+            primaryStage.show();
+        }
         
 
         public static void navigateToEndGameScreen() {
@@ -151,6 +233,14 @@ public class CodeRacersGUI extends Application {
     Label correctAnswersLabel = new Label("Correct Answers: " + GameScreen.getCorrectAnswers());
     correctAnswersLabel.setStyle("-fx-font-size: 28px; -fx-text-fill: #2ecc71;");
     correctAnswersLabel.setAlignment(Pos.CENTER);
+
+    Button reviewButton = new Button("Review");
+
+        // Set button style (optional)
+        reviewButton.setStyle("-fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: seashell; -fx-font-family: 'Arial Black'; -fx-background-radius: 30");
+
+        // Add event handler to the button
+        reviewButton.setOnAction(e -> navigateToReviewScreen());
 
     // Incorrect Answers Label
     Label incorrectAnswersLabel = new Label("Incorrect Answers: " + GameScreen.getIncorrectAnswers());
@@ -189,7 +279,7 @@ public class CodeRacersGUI extends Application {
     fadeTransition.setToValue(1);
     fadeTransition.play();
 
-    endGameLayout.getChildren().addAll(resultLabel, correctAnswersLabel, incorrectAnswersLabel, roadView, motivationalLabel, backButton);
+    endGameLayout.getChildren().addAll(resultLabel, correctAnswersLabel, incorrectAnswersLabel, roadView, motivationalLabel, backButton, reviewButton);
     // Add cars on the road
     HBox carsOnRoad = new HBox(10);
     carsOnRoad.setAlignment(Pos.CENTER);

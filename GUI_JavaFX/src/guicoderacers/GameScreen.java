@@ -52,7 +52,7 @@ public class GameScreen {
     private static int correctAnswersNumber=0;
     private static int incorrectAnswersNumber=0;
     private StackPane overlayPane;
-    private ArrayList<Integer> incorrectId = new ArrayList<>();
+    private static ArrayList<Integer> incorrectId = new ArrayList<>();
 
 
 
@@ -536,6 +536,9 @@ private void resetTimer() {
         trueFalseArea.getChildren().clear();
         HBox newTrueFalseDisplay = createTrueandFalseDisplay(correctAnswersNumber, incorrectAnswersNumber);
         trueFalseArea.getChildren().addAll(newTrueFalseDisplay.getChildren());
+    }
+    public static ArrayList<Integer> getIncorrectId() {
+        return incorrectId;
     }
     
 }
