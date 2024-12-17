@@ -14,6 +14,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -50,6 +52,7 @@ public class GameScreen {
     protected static int questionNumber=0;
     private static int correctAnswersNumber=0;
     private static int incorrectAnswersNumber=0;
+    private StackPane overlayPane;
 
 
 
@@ -74,7 +77,7 @@ public class GameScreen {
         optionsArea.setMinWidth(500); 
         optionsArea.setMaxHeight(300);
         optionsArea.setMinHeight(300);
-        trueFalseArea = createTrueandFalseDisplay(correctAnswers, incorrectAnswers);
+        trueFalseArea = createTrueandFalseDisplay(correctAnswersNumber, incorrectAnswersNumber);
         trueFalseArea.setStyle("-fx-background-color:seashell; -fx-border-color: black;-fx-background-radius: 30;-fx-border-radius: 30;");
         trueFalseArea.setMaxWidth(500);
         trueFalseArea.setMinWidth(500);
@@ -102,6 +105,9 @@ public class GameScreen {
         rightSideLayout.getChildren().addAll(timerLabel,questionDisplayArea, optionsArea, trueFalseArea); 
 
         StackPane.setAlignment(rightSideLayout, Pos.CENTER_RIGHT); 
+        overlayPane = new StackPane();
+        overlayPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
+        overlayPane.setVisible(false);
 
         HBox gridPlaces = new HBox(47);
         gridPlaces.setAlignment(Pos.BOTTOM_LEFT);
@@ -150,7 +156,7 @@ public class GameScreen {
 
         StackPane.setMargin(roadView, new Insets(0, 0, 0, -500)); // Add some margin
 
-        gamePane.getChildren().addAll(roadView, gridPlaces,player1Car.getCar(),blueCar,greenCar,yellowCar,pinkCar,rightSideLayout); // Add the road and the VBox to the StackPane
+        gamePane.getChildren().addAll(roadView, gridPlaces,player1Car.getCar(),blueCar,greenCar,yellowCar,pinkCar,rightSideLayout,overlayPane); // Add the road and the VBox to the StackPane
 
         return gamePane;
         }
@@ -302,6 +308,7 @@ public class GameScreen {
                 // Droppable Targets
                 VBox targetArea = new VBox(10);
                 targetArea.setAlignment(Pos.CENTER);
+                targetArea.setPadding(new Insets(10)); // Add padding to prevent overflow
             
                 // Create 4 target areas
                 for (int i = 0; i < correctAnswers.size(); i++) {
@@ -322,7 +329,7 @@ public class GameScreen {
                     targetLabel.setOnDragDropped(event -> {
                         Dragboard dragboard = event.getDragboard();
                         boolean success = false;
-                        if (dragboard.hasString()) {
+                        if (dragboard.hasString()&& targetLabel.getText().equals("Drop here")) {
                             String droppedText = dragboard.getString();
                             targetLabel.setText(droppedText);
                             success = true;
@@ -337,6 +344,7 @@ public class GameScreen {
                 // Draggable Items Area
                 VBox draggableArea = new VBox(10);
                 draggableArea.setAlignment(Pos.CENTER);
+                draggableArea.setPadding(new Insets(10)); // Add padding to prevent overflow
             
                 // Create 4 draggable items
                 for (String item : draggableItems) {
@@ -408,14 +416,14 @@ public class GameScreen {
                         }
             
                         if (isCorrect) {
-                            correctAnswersNumber++;
-                            setCorrectAnswers(correctAnswersNumber);
+                            EndGameScreen.corrplus();
+                           correctAnswersNumber++;
                             updateQuestionInstance();
                            
                         }
                         else {
-                            incorrectAnswersNumber++;
-                            setIncorrectAnswers(incorrectAnswersNumber);
+                            EndGameScreen.incorplus();;
+                           incorrectAnswersNumber++;
                             updateQuestionInstance();
                         }
                     }
@@ -440,16 +448,16 @@ public class GameScreen {
                 : "-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 30; -fx-border-radius: 30;");
 
         if (isCorrect) {
+            EndGameScreen.corrplus();
             correctAnswersNumber++;
-            System.out.println("Correct Answers: " + correctAnswersNumber);
-            setCorrectAnswers(correctAnswersNumber);
+           
             StackPane.setMargin(player1Car.getCar(), player1Car.setMargin()); 
             updateQuestionInstance();
         } else {
             
+            EndGameScreen.incorplus();;
             incorrectAnswersNumber++;
-            System.out.println("Incorrect Answers: " + incorrectAnswersNumber);
-            setIncorrectAnswers(incorrectAnswersNumber);
+           
         updateQuestionInstance();
         }
     }
@@ -476,11 +484,18 @@ public class GameScreen {
     
         // Update the trueFalseArea
         trueFalseArea.getChildren().clear();
-        HBox newTrueFalseDisplay = createTrueandFalseDisplay(correctAnswers, incorrectAnswers);
+        HBox newTrueFalseDisplay = createTrueandFalseDisplay(correctAnswersNumber, incorrectAnswersNumber);
         trueFalseArea.getChildren().addAll(newTrueFalseDisplay.getChildren());
     
-        // Update the scenes
-        updateScenes();
+        // Show the overlay pane and pause for 4 seconds before updating the scenes
+        overlayPane.setVisible(true);
+        PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+        pause.setOnFinished(event -> {
+            // Update the scenes after the pause
+            updateScenes();
+            overlayPane.setVisible(false);
+        });
+        pause.play();
     }
 private void resetTimer() {
     timeRemaining = 60;
@@ -495,12 +510,7 @@ private void resetTimer() {
     public static int getIncorrectAnswers() {
         return incorrectAnswersNumber;
     }
-    public static void setCorrectAnswers(int correctAnswersNumber) {
-        GameScreen.correctAnswersNumber = correctAnswersNumber;
-    }
-    public  static void setIncorrectAnswers(int incorrectAnswersNumber) {
-       GameScreen.incorrectAnswersNumber = incorrectAnswersNumber;
-    }
+  
     
 
     private void updateScenes() {
@@ -514,9 +524,8 @@ private void resetTimer() {
     
         // Update the trueFalseArea
         trueFalseArea.getChildren().clear();
-        HBox newTrueFalseDisplay = createTrueandFalseDisplay(correctAnswers, incorrectAnswers);
+        HBox newTrueFalseDisplay = createTrueandFalseDisplay(correctAnswersNumber, incorrectAnswersNumber);
         trueFalseArea.getChildren().addAll(newTrueFalseDisplay.getChildren());
     }
-      
     
 }
