@@ -5,12 +5,11 @@ import java.util.List;
 
 public class QuestionGenerator {
 
+protected static List<Question> questions = new ArrayList<>();
 
-       
 
     public static List<Question> generateQuestions() {
         List<Question> multipleChoiceQuestions = new ArrayList<>();
-        List<Question> questions = new ArrayList<>();
         List<Question> dragNDropQuestions = new ArrayList<>();
         List<Question> fillInTheBlankQuestions = new ArrayList<>();
         List<Question> codeComparisonQuestions = new ArrayList<>();
@@ -528,25 +527,28 @@ public class QuestionGenerator {
         questions.addAll(trueFalseQuestions);
         questions.addAll(fillInTheBlankQuestions);
 
-        ArrayList<Integer> questionIDList = new ArrayList<>(); 
-                List<Question> questionList = new ArrayList<>();
-        
-            
-                for (Question question : questions) {
-                    if (!questionIDList.contains(question.getId())) {
-                        questionIDList.add(question.getId()); 
-                        questionList.add(question);
-                    }
-                    
-        
-                    
-                }
 
 
-                for(int a: questionIDList) {
-                        System.out.println(a);
+        return questions;
+    }
+    public static String incorrectQuestionReturner(int id){
+        String returned="";
+        for(Question q: questions){
+                if(q.getId()==id){
+                        if(q instanceof MultipleChoiceQuestion){
+                                returned= q.getQuestionText() +((MultipleChoiceQuestion)q).getCorrectAnswer();
+                        }
+                        else if(q instanceof DragAndDrop){
+                                returned= q.getQuestionText()+((DragAndDrop)q).getCorrectAnswerV2();
+                        }
+                        else if(q instanceof AlgorithmTracingQuestion){
+                                returned=q.getQuestionText()+((AlgorithmTracingQuestion)q).getAlgorithmCode()+((AlgorithmTracingQuestion)q).getCorrectAnswer();
+                        }
                 }
-        return questionList;
+        }
+                System.out.println(returned);
+                return returned;
+                
     }
     private static void addDragAndDropQuestion(
     List<Question> questions,

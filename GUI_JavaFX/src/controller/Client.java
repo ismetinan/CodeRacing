@@ -4,8 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import guicoderacers.GameScreen;
-
 import java.io.*;
 import java.net.Socket;
 
@@ -77,7 +75,6 @@ public void listenForUpdates(GameScreen gameScreen) {
         } catch (IOException e) {
             System.out.println("Disconnected: " + e.getMessage());
         }
-    }).start();
-}
-
+        return instance;
+    }
 }

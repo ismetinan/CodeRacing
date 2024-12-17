@@ -12,12 +12,12 @@ import com.google.gson.JsonObject;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,7 +30,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import questions.*;
 
 
@@ -56,6 +55,7 @@ public class GameScreen {
     private static int correctAnswersNumber=0;
     private static int incorrectAnswersNumber=0;
     private StackPane overlayPane;
+    private ArrayList<Integer> incorrectId = new ArrayList<>();
     private StackPane gamePane;
 
 
@@ -428,6 +428,7 @@ public class GameScreen {
                             incorrectAnswersNumber++;
                             setIncorrectAnswers(incorrectAnswersNumber);
                             updateQuestionInstance();
+                            incorrectId.add(question.getId());
                         }
                     }
                 });
@@ -462,6 +463,10 @@ public class GameScreen {
             System.out.println("Incorrect Answers: " + incorrectAnswersNumber);
             setIncorrectAnswers(incorrectAnswersNumber);
         updateQuestionInstance();
+        incorrectId.add(selectedQuestion.getId());
+        for(int i : incorrectId){
+            QuestionGenerator.incorrectQuestionReturner(i);
+        }
         }
     }
     public void setGameSoundVolume(double volume) {
