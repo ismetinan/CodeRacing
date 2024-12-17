@@ -416,14 +416,14 @@ public class GameScreen {
                         }
             
                         if (isCorrect) {
-                            EndGameScreen.corrplus();
-                           correctAnswersNumber++;
+                            correctAnswersNumber++;
+                            setCorrectAnswers(correctAnswersNumber);
                             updateQuestionInstance();
                            
                         }
                         else {
-                            EndGameScreen.incorplus();;
-                           incorrectAnswersNumber++;
+                            incorrectAnswersNumber++;
+                            setIncorrectAnswers(incorrectAnswersNumber);
                             updateQuestionInstance();
                         }
                     }
@@ -448,16 +448,16 @@ public class GameScreen {
                 : "-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 30; -fx-border-radius: 30;");
 
         if (isCorrect) {
-            EndGameScreen.corrplus();
             correctAnswersNumber++;
-           
+            System.out.println("Correct Answers: " + correctAnswersNumber);
+            setCorrectAnswers(correctAnswersNumber);
             StackPane.setMargin(player1Car.getCar(), player1Car.setMargin()); 
             updateQuestionInstance();
         } else {
             
-            EndGameScreen.incorplus();;
             incorrectAnswersNumber++;
-           
+            System.out.println("Incorrect Answers: " + incorrectAnswersNumber);
+            setIncorrectAnswers(incorrectAnswersNumber);
         updateQuestionInstance();
         }
     }
@@ -510,7 +510,12 @@ private void resetTimer() {
     public static int getIncorrectAnswers() {
         return incorrectAnswersNumber;
     }
-  
+    public static void setCorrectAnswers(int correctAnswersNumber) {
+        GameScreen.correctAnswersNumber = correctAnswersNumber;
+    }
+    public  static void setIncorrectAnswers(int incorrectAnswersNumber) {
+       GameScreen.incorrectAnswersNumber = incorrectAnswersNumber;
+    }
     
 
     private void updateScenes() {
