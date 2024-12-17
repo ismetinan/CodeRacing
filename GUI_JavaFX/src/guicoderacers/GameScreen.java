@@ -48,8 +48,8 @@ public class GameScreen {
     protected static Car player1Car=new Car(null, carCount);
     private Map<String, Node> carNodes = new HashMap<>();
     protected static int questionNumber=0;
-    private static int correctAnswers=0;
-    private static int incorrectAnswers=0;
+    private static int correctAnswersNumber=0;
+    private static int incorrectAnswersNumber=0;
 
 
 
@@ -408,11 +408,14 @@ public class GameScreen {
                         }
             
                         if (isCorrect) {
+                            correctAnswersNumber++;
+                            setCorrectAnswers(correctAnswersNumber);
                             updateQuestionInstance();
+                           
                         }
                         else {
-                            incorrectAnswers++;
-                            setIncorrectAnswers(incorrectAnswers);
+                            incorrectAnswersNumber++;
+                            setIncorrectAnswers(incorrectAnswersNumber);
                             updateQuestionInstance();
                         }
                     }
@@ -437,16 +440,16 @@ public class GameScreen {
                 : "-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 30; -fx-border-radius: 30;");
 
         if (isCorrect) {
-            correctAnswers++;
-            System.out.println("Correct Answers: " + correctAnswers);
-            setCorrectAnswers(correctAnswers);
+            correctAnswersNumber++;
+            System.out.println("Correct Answers: " + correctAnswersNumber);
+            setCorrectAnswers(correctAnswersNumber);
             StackPane.setMargin(player1Car.getCar(), player1Car.setMargin()); 
             updateQuestionInstance();
         } else {
             
-            incorrectAnswers++;
-            System.out.println("Incorrect Answers: " + incorrectAnswers);
-            setIncorrectAnswers(incorrectAnswers);
+            incorrectAnswersNumber++;
+            System.out.println("Incorrect Answers: " + incorrectAnswersNumber);
+            setIncorrectAnswers(incorrectAnswersNumber);
         updateQuestionInstance();
         }
     }
@@ -487,16 +490,16 @@ private void resetTimer() {
 }
 
     public static int getCorrectAnswers() {        
-        return correctAnswers;
+        return correctAnswersNumber;
     }
     public static int getIncorrectAnswers() {
-        return incorrectAnswers;
+        return incorrectAnswersNumber;
     }
-    public static void setCorrectAnswers(int correctAnswers) {
-        GameScreen.correctAnswers = correctAnswers;
+    public static void setCorrectAnswers(int correctAnswersNumber) {
+        GameScreen.correctAnswersNumber = correctAnswersNumber;
     }
-    public  static void setIncorrectAnswers(int incorrectAnswers) {
-       GameScreen.incorrectAnswers = incorrectAnswers;
+    public  static void setIncorrectAnswers(int incorrectAnswersNumber) {
+       GameScreen.incorrectAnswersNumber = incorrectAnswersNumber;
     }
     
 
