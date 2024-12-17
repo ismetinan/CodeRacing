@@ -10,10 +10,10 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -21,11 +21,11 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.util.Pair;
 import questions.*;
 
 
@@ -45,62 +45,82 @@ public class GameScreen {
     protected static final int defaultLocy = 923; 
     protected static int carCount = 0;
     protected static Car player1Car=new Car(null, carCount);
-
-
     private Map<String, Node> carNodes = new HashMap<>();
+    protected static int questionNumber=0;
+    private static int correctAnswers=0;
+    private static int incorrectAnswers=0;
+
+
+
     public StackPane createGamePane(Stage primaryStage) {
 
         StackPane gamePane = new StackPane();
         gamePane.setStyle("-fx-background-color: seashell;");
 
-
         questions = RandomGameGenerator.generateRandomQuestions();
         selectedQuestion = questions.get(currentQuestionIndex);
 
-        ImageView roadView = CodeRacersGUI.createImageView(CodeRacersGUI.autoBahnIconImage,CodeRacersGUI.defaultHeight , 500);
-        roadView.rotateProperty().set(90);
-
         questionDisplayArea = createQuestionDisplay();
+        System.out.println(questionNumber);
         questionDisplayArea.setStyle("-fx-background-color: #700000; -fx-border-color: black;-fx-background-radius: 30;-fx-border-radius: 30;"); // Dark red background
         questionDisplayArea.setMaxWidth(500); 
         questionDisplayArea.setMinWidth(500); 
         questionDisplayArea.setMaxHeight(300);
         questionDisplayArea.setMinHeight(300);       
         questionDisplayArea.setMouseTransparent(true); 
-
         optionsArea = createOptionsScene();
-        optionsArea.setStyle("-fx-background-color: white; -fx-border-color: black;-fx-background-radius: 30;-fx-border-radius: 30;");
+        optionsArea.setStyle("-fx-background-color: seashell; -fx-border-color: black;-fx-background-radius: 30;-fx-border-radius: 30;");
         optionsArea.setMaxWidth(500); 
         optionsArea.setMinWidth(500); 
         optionsArea.setMaxHeight(400);
         optionsArea.setMinHeight(400);
 
-        timerLabel = new Label("Time remaining: " + timeRemaining +"\t\t\t\t");
+
+        timerLabel = new Label("Time remaining: " + timeRemaining + "\t\t\t\t");
         timerLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: black; -fx-font-family: 'Arial Black';");
 
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             timeRemaining--;
-            timerLabel.setText("Time remaining: " + timeRemaining+"\t\t\t\t");
+            timerLabel.setText("Time remaining: " + timeRemaining + "\t\t\t\t");
             if (timeRemaining <= 0) {
-                updateQuestionInstance();
-                timeRemaining = 30; // Reset the timer for the next question
+            updateQuestionInstance();
+            timeRemaining = 30; // Reset the timer for the next question
+            resetTimer(); // Restart the timer for the next question
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
-        VBox rightSideLayout = new VBox(10); // 20 is the spacing between question and options
-        rightSideLayout.setAlignment(Pos.CENTER_RIGHT); // Align to the right
-        timerLabel.setAlignment(Pos.CENTER_LEFT);
-        rightSideLayout.getChildren().addAll(timerLabel,questionDisplayArea, optionsArea); // Add question and options vertically
+        VBox rightSideLayout = new VBox(10); 
+        rightSideLayout.setAlignment(Pos.CENTER_RIGHT); 
+        rightSideLayout.getChildren().addAll(timerLabel,questionDisplayArea, optionsArea); 
 
-        
-        StackPane.setAlignment(rightSideLayout, Pos.CENTER_RIGHT); // Align the VBox to the right
-        
+        StackPane.setAlignment(rightSideLayout, Pos.CENTER_RIGHT); 
 
-        
+        HBox gridPlaces = new HBox(47);
+        gridPlaces.setAlignment(Pos.BOTTOM_LEFT);
 
-        
+        for (int i = 1; i <= 5; i++) {
+            Label positionLabel = new Label(String.valueOf(i));
+            positionLabel.setPrefSize(60, 42);
+            positionLabel.setAlignment(Pos.CENTER);
+            positionLabel.setStyle("-fx-background-color: darkgray; -fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;");
+            if (i == 1) {
+            HBox.setMargin(positionLabel, new Insets(0, 0, 0, 10)); // Add 10 pixel margin to the first label
+            }
+            gridPlaces.getChildren().add(positionLabel);
+        }
+
+
+        StackPane.setAlignment(gridPlaces, Pos.BOTTOM_LEFT); // Align the HBox to the bottom left
+        HBox.setMargin(gridPlaces, new Insets(0, 0, 0, 180));
+
+
+
+
+        ImageView roadView = CodeRacersGUI.createImageView(CodeRacersGUI.autoBahnIconImage,CodeRacersGUI.defaultHeight , 500);
+        roadView.rotateProperty().set(90);    
+
         
         ImageView blueCar = CodeRacersGUI.createImageView(CodeRacersGUI.darkBlueCarIconImage, 60, 42);
         blueCar.setRotate(90); // Rotate the car to face the road
@@ -111,55 +131,33 @@ public class GameScreen {
         ImageView pinkCar = CodeRacersGUI.createImageView(CodeRacersGUI.pinkCarIconImage, 60, 42);
         pinkCar.setRotate(90); // Rotate the car to face the road
 
+        StackPane.setMargin(player1Car.getCar(), player1Car.getMargin(carCount)); 
+
 
         
-        StackPane.setMargin(player1Car.getCar(), player1Car.getMargin(carCount)); // Adjust the margin as needed
         StackPane.setMargin(blueCar, new Insets(540,708, 0, 0)); // Adjust the margin as needed
         StackPane.setMargin(greenCar, new Insets(540,493 , 0, 0)); // Adjust the margin as needed
         StackPane.setMargin(yellowCar, new Insets(540, 278, 0, 0)); // Adjust the margin as needed
-        StackPane.setMargin(pinkCar, new Insets(540, 63, 0, 0)); // Adjust the margin as needed
-
-
-        //carBox.getChildren().addAll(redCar, blueCar, greenCar, yellowCar, pinkCar);
-
-        VBox carAndroadBox = new VBox(124);
-        carAndroadBox.getChildren().addAll(roadView);
-
-        HBox gridPlaces = new HBox(50);
-        gridPlaces.setAlignment(Pos.BOTTOM_LEFT);
-
-        for (int i = 1; i <= 5; i++) {
-            Label positionLabel = new Label(String.valueOf(i));
-            positionLabel.setPrefSize(60, 42);
-            positionLabel.setAlignment(Pos.CENTER);
-            positionLabel.setStyle("-fx-background-color: darkgray; -fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;");
-            gridPlaces.getChildren().add(positionLabel);
-        }
-
-
-        HBox.setMargin(gridPlaces, new Insets(0, 0, 0, 132));
+        StackPane.setMargin(pinkCar, new Insets(540, 63, 0, 0)); // Adjust the margin as needed      
 
         
 
-        StackPane.setAlignment(carAndroadBox, Pos.TOP_LEFT); // Align the HBox to the bottom left
-        StackPane.setMargin(carAndroadBox, new Insets(0, 0, 0, -125)); // Add some margin
-        StackPane.setAlignment(gridPlaces, Pos.BOTTOM_LEFT); // Align the HBox to the bottom left
+        StackPane.setMargin(roadView, new Insets(0, 0, 0, -500)); // Add some margin
 
-        gamePane.getChildren().addAll(carAndroadBox, gridPlaces,rightSideLayout,player1Car.getCar(),blueCar,greenCar,yellowCar,pinkCar); // Add the road and the VBox to the StackPane
+        gamePane.getChildren().addAll(roadView, gridPlaces,player1Car.getCar(),blueCar,greenCar,yellowCar,pinkCar,rightSideLayout); // Add the road and the VBox to the StackPane
 
         return gamePane;
         }
 
         private VBox createQuestionDisplay() {
 
-        VBox layout = new VBox(20);
-        layout.setAlignment(Pos.TOP_LEFT);
-        layout.setPadding(new Insets(20));
+        VBox layout = new VBox();
+        layout.setAlignment(Pos.CENTER);
         layout.setStyle("-fx-background-radius: 30; -fx-border-radius: 30;");
-        layout.setMaxWidth(450);
-        layout.setMinWidth(450);
-        layout.setMaxHeight(200);
-        layout.setMinHeight(200);
+        layout.setMaxWidth(480);
+        layout.setMinWidth(480);
+        layout.setMaxHeight(275);
+        layout.setMinHeight(275);
 
         String questionText = selectedQuestion.getQuestionText();
         String associatedContent = "";
@@ -176,15 +174,15 @@ public class GameScreen {
 
         Label questionLabel = new Label(questionText);
         questionLabel.setWrapText(true);
-        questionLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;");
-        questionLabel.setPrefWidth(450);
+        questionLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: seashell;-fx-font-family: 'Arial Black';");
+        questionLabel.setMaxWidth(475);
+
         Label contentLabel = new Label(associatedContent);
         contentLabel.setWrapText(true);
-        contentLabel.setStyle("-fx-font-family: monospace; -fx-font-size: 14px; -fx-padding: 10px; -fx-background-color: #f4f4f4; -fx-border-color: black; -fx-background-radius: 30; -fx-border-radius: 30;");
-        contentLabel.setMinWidth(450);
-        contentLabel.setMaxWidth(450);
-        contentLabel.setMinHeight(200);
-        contentLabel.setMaxHeight(200);
+        contentLabel.setStyle("-fx-font-family: monospace; -fx-font-size: 14px; -fx-text-fill: seashell; -fx-background-color: #700000;  -fx-background-radius: 30; -fx-border-radius: 30;");
+        contentLabel.setMaxWidth(475);
+        contentLabel.setMaxHeight(Double.MAX_VALUE);
+        VBox.setVgrow(contentLabel, Priority.ALWAYS);
 
         layout.getChildren().addAll(questionLabel, contentLabel);
         return layout;
@@ -273,73 +271,59 @@ public class GameScreen {
             private VBox createDragAndDropScene(DragAndDrop question) {
                 VBox dragAndDropArea = new VBox(10);
                 dragAndDropArea.setAlignment(Pos.CENTER);
-
-                // Create pairs of targets and correct answers
-                List<String> targets = new ArrayList<>(question.getCorrectAnswer());
-                Collections.shuffle(targets);
+            
+                
                 List<String> correctAnswers = question.getCorrectAnswer();
-
-                // Shuffle the targets and maintain the correct-answer relationship
-                List<Pair<String, String>> targetAnswerPairs = new ArrayList<>();
-                for (int i = 0; i < targets.size(); i++) {
-                    targetAnswerPairs.add(new Pair<>(targets.get(i), correctAnswers.get(i)));
-                }
-                Collections.shuffle(targetAnswerPairs);
-
-                // Extract shuffled targets and correct answers
-                List<String> shuffledTargets = new ArrayList<>();
-                List<String> shuffledCorrectAnswers = new ArrayList<>();
-                for (Pair<String, String> pair : targetAnswerPairs) {
-                    shuffledTargets.add(pair.getKey());
-                    shuffledCorrectAnswers.add(pair.getValue());
-                }
-
-                // Update the question's correctAnswer to match the shuffled version
-                question.setCorrectAnswer(shuffledCorrectAnswers);
-
+                List<String> draggableItems = new ArrayList<>(question.getCorrectAnswer());
+                Collections.shuffle(draggableItems); // Only shuffle draggable items
+            
                 // Droppable Targets
                 VBox targetArea = new VBox(10);
                 targetArea.setAlignment(Pos.CENTER);
-
-                for (String target : shuffledTargets) {
-                    Label targetLabel = new Label("Drop here: " + target);
+            
+                // Create 4 target areas
+                for (int i = 0; i < correctAnswers.size(); i++) {
+                    Label targetLabel = new Label("Drop here");
                     targetLabel.setPrefSize(200, 100);
                     targetLabel.setAlignment(Pos.CENTER);
                     targetLabel.setWrapText(true);
                     targetLabel.setStyle("-fx-background-color: lightblue; -fx-border-color: black; -fx-font-size: 14; -fx-background-radius: 30; -fx-border-radius: 30;");
-
+                    targetLabel.setUserData(correctAnswers.get(i)); // Store correct answer
+            
                     targetLabel.setOnDragOver(event -> {
                         if (event.getGestureSource() != targetLabel && event.getDragboard().hasString()) {
                             event.acceptTransferModes(TransferMode.MOVE);
                         }
                         event.consume();
                     });
-
+            
                     targetLabel.setOnDragDropped(event -> {
                         Dragboard dragboard = event.getDragboard();
+                        boolean success = false;
                         if (dragboard.hasString()) {
-                            targetLabel.setText(dragboard.getString());
-                            event.setDropCompleted(true);
-                        } else {
-                            event.setDropCompleted(false);
+                            String droppedText = dragboard.getString();
+                            targetLabel.setText(droppedText);
+                            success = true;
                         }
+                        event.setDropCompleted(success);
                         event.consume();
                     });
-
+            
                     targetArea.getChildren().add(targetLabel);
                 }
-
-                // Draggable Items
+            
+                // Draggable Items Area
                 VBox draggableArea = new VBox(10);
                 draggableArea.setAlignment(Pos.CENTER);
-
-                for (String item : question.getDraggableItems()) {
+            
+                // Create 4 draggable items
+                for (String item : draggableItems) {
                     Label draggableLabel = new Label(item);
                     draggableLabel.setPrefSize(200, 100);
                     draggableLabel.setAlignment(Pos.CENTER);
                     draggableLabel.setWrapText(true);
                     draggableLabel.setStyle("-fx-background-color: darkred; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 30; -fx-border-radius: 30;");
-
+            
                     draggableLabel.setOnDragDetected(event -> {
                         Dragboard dragboard = draggableLabel.startDragAndDrop(TransferMode.MOVE);
                         ClipboardContent content = new ClipboardContent();
@@ -347,42 +331,67 @@ public class GameScreen {
                         dragboard.setContent(content);
                         event.consume();
                     });
-
+            
+                    draggableLabel.setOnDragDone(event -> {
+                        if (event.getTransferMode() == TransferMode.MOVE) {
+                            draggableLabel.setVisible(false);
+                        }
+                        event.consume();
+                    });
+            
                     draggableArea.getChildren().add(draggableLabel);
                 }
-
-                HBox dragDropLayout = new HBox(50, targetArea, draggableArea);
+            
+                // Layout with draggable items on left, targets on right
+                HBox dragDropLayout = new HBox(50, draggableArea, targetArea);
                 dragDropLayout.setAlignment(Pos.CENTER);
-
                 dragAndDropArea.getChildren().add(dragDropLayout);
-
-                // Add a "Submit" button to check the answers
+            
+                // Submit button
                 Button submitButton = new Button("Submit");
                 submitButton.setStyle("-fx-background-color: darkgreen; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 30; -fx-border-radius: 30;");
+                
                 submitButton.setOnAction(event -> {
-                    boolean allCorrect = true;
-
-                    // Check all targets against the correct answers
-                    for (int i = 0; i < targetArea.getChildren().size(); i++) {
-                        Label targetLabel = (Label) targetArea.getChildren().get(i);
-                        String droppedText = targetLabel.getText().replace("Drop here: ", "").trim();
-                        String correctAnswer = shuffledCorrectAnswers.get(i).trim();
-
-                        if (!correctAnswer.equalsIgnoreCase(droppedText)) {
-                            allCorrect = false;
+                    List<String> userAnswers = new ArrayList<>();
+                    boolean allAnswered = true;
+            
+                    // Collect all current answers
+                    for (Node node : targetArea.getChildren()) {
+                        Label targetLabel = (Label) node;
+                        String answer = targetLabel.getText();
+                        
+                        if (answer.equals("Drop here")) {
+                            allAnswered = false;
                             targetLabel.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 30; -fx-border-radius: 30;");
                         } else {
-                            targetLabel.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 30; -fx-border-radius: 30;");
+                            userAnswers.add(answer);
                         }
                     }
-
-                    if (allCorrect) {
-                        updateQuestionInstance();
+            
+                    if (allAnswered) {
+                        // Set user's answers in the question object
+                        question.setUserAnswer(userAnswers);
+                        
+                        // Check if the answers are correct
+                        boolean isCorrect = question.isAnswerCorrect();
+            
+                        // Update the UI based on correctness
+                        for (Node node : targetArea.getChildren()) {
+                            Label targetLabel = (Label) node;
+                            if (isCorrect) {
+                                targetLabel.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 30; -fx-border-radius: 30;");
+                            } else {
+                                targetLabel.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 30; -fx-border-radius: 30;");
+                            }
+                        }
+            
+                        if (isCorrect) {
+                            updateQuestionInstance();
+                        }
                     }
                 });
-
+            
                 dragAndDropArea.getChildren().add(submitButton);
-
                 return dragAndDropArea;
             }
 
@@ -401,8 +410,15 @@ public class GameScreen {
                 : "-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 30; -fx-border-radius: 30;");
 
         if (isCorrect) {
+            correctAnswers++;
+            setCorrectAnswers(correctAnswers);
             StackPane.setMargin(player1Car.getCar(), player1Car.setMargin()); 
             updateQuestionInstance();
+        } else {
+            
+            incorrectAnswers++;
+            setIncorrectAnswers(incorrectAnswers);
+        updateQuestionInstance();
         }
     }
     public void setGameSoundVolume(double volume) {
@@ -413,16 +429,42 @@ public class GameScreen {
 
 
     private void updateQuestionInstance() {
+        questionNumber++;
+        resetTimer();
+        System.out.println(questionNumber);
+        if (currentQuestionIndex >= questions.size() - 1) {
+            currentQuestionIndex = 0; // Reset index
+        }
+        if (questionNumber >= 10) {
+            CodeRacersGUI.navigateToEndGameScreen(); // Navigate to the end game screen
+            return;
+        }
         currentQuestionIndex = (currentQuestionIndex + 1) % questions.size();
         selectedQuestion = questions.get(currentQuestionIndex);
         updateScenes();
         resetTimer();
-    }
+}
 
-    private void resetTimer() {
-        timeline.stop();
-        timeline.playFromStart();
+private void resetTimer() {
+    timeRemaining = 30;
+    timerLabel.setText("Time remaining: " + timeRemaining + "\t\t\t\t");
+    timeline.stop();
+    timeline.playFromStart();
+}
+
+    public static int getCorrectAnswer() {
+        return correctAnswers;
     }
+    public static int getIncorrectAnswers() {
+        return incorrectAnswers;
+    }
+    public static void setCorrectAnswers(int correctAnswers) {
+        GameScreen.correctAnswers = correctAnswers;
+    }
+    public static void setIncorrectAnswers(int incorrectAnswers) {
+        GameScreen.incorrectAnswers = incorrectAnswers;
+    }
+    
 
     private void updateScenes() {
         // Update the question display scene

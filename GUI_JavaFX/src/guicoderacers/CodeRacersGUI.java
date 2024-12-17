@@ -35,6 +35,8 @@ public class CodeRacersGUI extends Application {
     protected static Scene settingsScene;
     protected static Scene lobbiesScene;
     protected static Scene gamePlayScene;
+    protected static Scene endGameScene;
+    private static Stage primaryStage;
 
     // Default sizes of screens
     protected static final int defaultWidth = 1000;
@@ -44,6 +46,7 @@ public class CodeRacersGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        CodeRacersGUI.primaryStage = primaryStage;
         Database.initializeDatabase();
         loadImages();
         playBackgroundMusic();
@@ -55,6 +58,7 @@ public class CodeRacersGUI extends Application {
         StackPane settingsPane = new SettingsScreen().createSettingsPane(primaryStage);
         StackPane lobbiesPane = new LobbiesScreen().createLobbiesPane(primaryStage);
         StackPane gamePlayPane = new GameScreen().createGamePane(primaryStage);
+        StackPane endGamePane= new EndGameScreen().createEndGamePane(primaryStage);
 
         Button startButton = (Button) logInPane.lookup("#startButton");
         startButton.setOnAction(event -> primaryStage.setScene(mainGameScene));
@@ -78,6 +82,7 @@ public class CodeRacersGUI extends Application {
         settingsScene = new Scene(settingsPane, defaultWidth, defaultHeight);
         lobbiesScene = new Scene(lobbiesPane, defaultWidth, defaultHeight);
         gamePlayScene = new Scene(gamePlayPane, defaultWidth, defaultHeight);
+        endGameScene = new Scene(endGamePane, defaultWidth, defaultHeight);
 
 
         primaryStage.setTitle("Code Racers");
@@ -103,6 +108,12 @@ public class CodeRacersGUI extends Application {
         orangeCarIconImage = new Image("Images/Cars/OrangeRaceCar.png");
         cyanCarIconImage = new Image("Images/Cars/CyanRaceCar.png");
 
+    }
+    public static void navigateToMainScreen() {
+        primaryStage.setScene(mainGameScene); // Set the scene to the main game screen
+    }
+    public static void navigateToEndGameScreen() {
+        primaryStage.setScene(endGameScene); // Set the scene to the end game screen
     }
 
     private void playBackgroundMusic() {

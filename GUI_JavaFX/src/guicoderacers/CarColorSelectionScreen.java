@@ -55,7 +55,6 @@ public class CarColorSelectionScreen {
         colorSelectionStage.showAndWait();
     }
 
-    // Helper method to get the hex color code based on the color name
     private String getColorHex(String colorName) {
         switch (colorName) {
             case "Red":
@@ -73,7 +72,7 @@ public class CarColorSelectionScreen {
             case "Cyan":
                 return "#00FFFF";
             default:
-                return "#FFFFFF"; // Default to white if color is not recognized
+                return "#FFF5EE"; // Default to white if color is not recognized
         }
     }
 }
