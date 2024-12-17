@@ -1,9 +1,11 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import java.io.*;
+import guicoderacers.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,19 +15,19 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Server {
     private static final int PORT = 12345;
     private static final Map<String, List<PrintWriter>> lobbies = new HashMap<>();
-    private static final List<PrintWriter> clientWriters = new CopyOnWriteArrayList<>();
-    private static final Gson gson = new Gson();
+    private static final Map<String, Map<String, Car>> lobbyCars = new HashMap<>(); // Lobby -> PlayerId -> Car
+    private static final Gson gson = new GsonBuilder()
+        .excludeFieldsWithoutExposeAnnotation() // Only serialize explicitly exposed fields
+        .disableHtmlEscaping()
+        .create();
 
     public static void main(String[] args) {
-        initializeLobbies(); // Predefined lobbies
-        try (ServerSocket serverSocket = new ServerSocket(12345, 50, InetAddress.getByName("139.179.135.253"))) {
+        initializeLobbies();
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("Server started on port " + PORT);
-
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Biri Baglandi");
-                System.out.println("Client connected: " + clientSocket.getInetAddress());
-                new Thread(() -> handleClient(clientSocket)).start();
+                System.out.println("Client connected: " + clientSocket.getInetAddress());                new Thread(() -> handleClient(clientSocket)).start();
             }
         } catch (IOException e) {
             System.out.println("Server error: " + e.getMessage());
@@ -36,51 +38,49 @@ public class Server {
         lobbies.put("Lobby 1", new ArrayList<>());
         lobbies.put("Lobby 2", new ArrayList<>());
         lobbies.put("Lobby 3", new ArrayList<>());
-        System.out.println("Initialized 3 predefined lobbies.");
+        
+        lobbyCars.put("Lobby 1", new HashMap<>());
+        lobbyCars.put("Lobby 2", new HashMap<>());
+        lobbyCars.put("Lobby 3", new HashMap<>()); 
+
     }
 
     private static void handleClient(Socket clientSocket) {
         try (BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
              PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
-
-            clientWriters.add(out); // Keep track of all clients
-            sendLobbyList(out); // Send available lobbies on connect
-
+            
+            String playerId = UUID.randomUUID().toString();
+            out.println("{\"status\":\"connected\", \"playerId\":\"" + playerId + "\"}");
+            
             String input;
             while ((input = in.readLine()) != null) {
                 JsonObject request = gson.fromJson(input, JsonObject.class);
                 String action = request.get("action").getAsString();
+                String lobbyName = request.get("lobby_name").getAsString();
 
                 if ("join_lobby".equals(action)) {
-                    String lobbyName = request.get("lobby_name").getAsString();
-                    if (lobbies.containsKey(lobbyName)) {
-                        lobbies.get(lobbyName).add(out);
-                        broadcastToLobby(lobbyName, "Player joined " + lobbyName);
-                        System.out.println("Player joined: " + lobbyName);
-                    }
+                    lobbies.get(lobbyName).add(out);
+                    lobbyCars.get(lobbyName).put(playerId, new Car(playerId,1)); // Initialize car position
+                    sendCarUpdate(lobbyName);
+                } else if ("correct_answer".equals(action)) {
+                    Car car = lobbyCars.get(lobbyName).get(playerId);
+                    if (car != null) car.moveUp();
+                    sendCarUpdate(lobbyName);
                 }
             }
         } catch (IOException e) {
             System.out.println("Client disconnected.");
-        } finally {
-            clientWriters.removeIf(writer -> writer.checkError());
         }
     }
 
-    private static void sendLobbyList(PrintWriter out) {
+    private static void sendCarUpdate(String lobbyName) {
         JsonObject response = new JsonObject();
-        response.addProperty("action", "lobby_list");
-        response.add("lobbies", gson.toJsonTree(lobbies.keySet()));
-        out.println(gson.toJson(response));
-    }
-
-    private static void broadcastToLobby(String lobbyName, String message) {
-        JsonObject response = new JsonObject();
-        response.addProperty("action", "lobby_update");
-        response.addProperty("message", message);
+        response.addProperty("action", "update_cars");
+        response.add("cars", gson.toJsonTree(lobbyCars.get(lobbyName).values()));
 
         for (PrintWriter writer : lobbies.get(lobbyName)) {
             writer.println(gson.toJson(response));
         }
     }
 }
+

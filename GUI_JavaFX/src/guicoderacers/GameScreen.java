@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -53,12 +56,12 @@ public class GameScreen {
     private static int correctAnswersNumber=0;
     private static int incorrectAnswersNumber=0;
     private StackPane overlayPane;
-
+    private StackPane gamePane;
 
 
     public StackPane createGamePane(Stage primaryStage) {
 
-        StackPane gamePane = new StackPane();
+        this.gamePane = new StackPane();
         gamePane.setStyle("-fx-background-color: seashell;");
 
         questions = RandomGameGenerator.generateRandomQuestions();
@@ -134,13 +137,13 @@ public class GameScreen {
         roadView.rotateProperty().set(90);    
 
         
-        ImageView blueCar = CodeRacersGUI.createImageView(CodeRacersGUI.darkBlueCarIconImage, 60, 42);
+        ImageView blueCar = CodeRacersGUI.createImageView(CodeRacersGUI.greenCarIconImage, 60, 42);
         blueCar.setRotate(90); // Rotate the car to face the road
         ImageView greenCar = CodeRacersGUI.createImageView(CodeRacersGUI.greenCarIconImage, 60, 42);
         greenCar.setRotate(90); // Rotate the car to face the road
-        ImageView yellowCar = CodeRacersGUI.createImageView(CodeRacersGUI.yellowCarIconImage, 60, 42);
+        ImageView yellowCar = CodeRacersGUI.createImageView(CodeRacersGUI.greenCarIconImage, 60, 42);
         yellowCar.setRotate(90); // Rotate the car to face the road
-        ImageView pinkCar = CodeRacersGUI.createImageView(CodeRacersGUI.pinkCarIconImage, 60, 42);
+        ImageView pinkCar = CodeRacersGUI.createImageView(CodeRacersGUI.greenCarIconImage, 60, 42);
         pinkCar.setRotate(90); // Rotate the car to face the road
 
         StackPane.setMargin(player1Car.getCar(), player1Car.getMargin(carCount)); 
@@ -532,5 +535,23 @@ private void resetTimer() {
         HBox newTrueFalseDisplay = createTrueandFalseDisplay(correctAnswersNumber, incorrectAnswersNumber);
         trueFalseArea.getChildren().addAll(newTrueFalseDisplay.getChildren());
     }
-    
+    public void updateCarPositions(JsonArray carData) {
+    for (JsonElement carElement : carData) {
+        JsonObject carJson = carElement.getAsJsonObject();
+        String playerId = carJson.get("playerId").getAsString();
+        int x = carJson.get("x").getAsInt();
+        int y = carJson.get("y").getAsInt();
+
+        if (!carNodes.containsKey(playerId)) {
+            ImageView carImage = CodeRacersGUI.createImageView(CodeRacersGUI.redCarIconImage, 60, 42);
+            carImage.setLayoutX(x);
+            carImage.setLayoutY(y);
+            carNodes.put(playerId, carImage);
+            gamePane.getChildren().add(carImage);
+        } else {
+            carNodes.get(playerId).setLayoutY(y);
+        }
+    }
+}
+
 }

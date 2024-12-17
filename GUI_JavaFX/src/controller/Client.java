@@ -1,7 +1,10 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import guicoderacers.GameScreen;
 
 import java.io.*;
 import java.net.Socket;
@@ -53,4 +56,28 @@ public class Client {
         }
         return instance;
     }
+    public void submitCorrectAnswer(String lobbyName) {
+    JsonObject request = new JsonObject();
+    request.addProperty("action", "correct_answer");
+    request.addProperty("lobby_name", lobbyName);
+    out.println(gson.toJson(request));
+}
+
+public void listenForUpdates(GameScreen gameScreen) {
+    new Thread(() -> {
+        try {
+            String response;
+            while ((response = in.readLine()) != null) {
+                JsonObject jsonResponse = gson.fromJson(response, JsonObject.class);
+                if ("update_cars".equals(jsonResponse.get("action").getAsString())) {
+                    JsonArray cars = jsonResponse.getAsJsonArray("cars");
+                    gameScreen.updateCarPositions(cars);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Disconnected: " + e.getMessage());
+        }
+    }).start();
+}
+
 }
