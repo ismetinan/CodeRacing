@@ -13,7 +13,6 @@ import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -74,7 +73,7 @@ public class GameScreen {
         optionsArea.setMinWidth(500); 
         optionsArea.setMaxHeight(300);
         optionsArea.setMinHeight(300);
-        trueFalseArea = createTrueandFalseDisplay(correctAnswers, incorrectAnswers);
+        trueFalseArea = createTrueandFalseDisplay(correctAnswersNumber, incorrectAnswersNumber);
         trueFalseArea.setStyle("-fx-background-color:seashell; -fx-border-color: black;-fx-background-radius: 30;-fx-border-radius: 30;");
         trueFalseArea.setMaxWidth(500);
         trueFalseArea.setMinWidth(500);
@@ -476,7 +475,7 @@ public class GameScreen {
     
         // Update the trueFalseArea
         trueFalseArea.getChildren().clear();
-        HBox newTrueFalseDisplay = createTrueandFalseDisplay(correctAnswers, incorrectAnswers);
+        HBox newTrueFalseDisplay = createTrueandFalseDisplay(correctAnswersNumber, incorrectAnswersNumber);
         trueFalseArea.getChildren().addAll(newTrueFalseDisplay.getChildren());
     
         // Update the scenes
@@ -514,7 +513,7 @@ private void resetTimer() {
     
         // Update the trueFalseArea
         trueFalseArea.getChildren().clear();
-        HBox newTrueFalseDisplay = createTrueandFalseDisplay(correctAnswers, incorrectAnswers);
+        HBox newTrueFalseDisplay = createTrueandFalseDisplay(correctAnswersNumber, incorrectAnswersNumber);
         trueFalseArea.getChildren().addAll(newTrueFalseDisplay.getChildren());
     }
       
