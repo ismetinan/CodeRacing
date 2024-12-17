@@ -36,6 +36,7 @@ public class GameScreen {
     private int currentQuestionIndex = 0;
     private Timeline timeline;
     VBox questionDisplayArea = new VBox(10);
+    HBox trueFalseArea = new HBox(30);
     VBox optionsArea = new VBox(10);
     private Map<String, Car> cars = new HashMap<>();
     private MediaPlayer gameSoundPlayer;
@@ -71,8 +72,14 @@ public class GameScreen {
         optionsArea.setStyle("-fx-background-color: seashell; -fx-border-color: black;-fx-background-radius: 30;-fx-border-radius: 30;");
         optionsArea.setMaxWidth(500); 
         optionsArea.setMinWidth(500); 
-        optionsArea.setMaxHeight(400);
-        optionsArea.setMinHeight(400);
+        optionsArea.setMaxHeight(300);
+        optionsArea.setMinHeight(300);
+        trueFalseArea = createTrueandFalseDisplay(correctAnswers, incorrectAnswers);
+        trueFalseArea.setStyle("-fx-background-color:seashell; -fx-border-color: black;-fx-background-radius: 30;-fx-border-radius: 30;");
+        trueFalseArea.setMaxWidth(500);
+        trueFalseArea.setMinWidth(500);
+        trueFalseArea.setMaxHeight(40);
+        trueFalseArea.setMinHeight(40);
 
 
         timerLabel = new Label("Time remaining: " + timeRemaining + "\t\t\t\t");
@@ -92,7 +99,7 @@ public class GameScreen {
 
         VBox rightSideLayout = new VBox(10); 
         rightSideLayout.setAlignment(Pos.CENTER_RIGHT); 
-        rightSideLayout.getChildren().addAll(timerLabel,questionDisplayArea, optionsArea); 
+        rightSideLayout.getChildren().addAll(timerLabel,questionDisplayArea, optionsArea, trueFalseArea); 
 
         StackPane.setAlignment(rightSideLayout, Pos.CENTER_RIGHT); 
 
@@ -147,6 +154,22 @@ public class GameScreen {
 
         return gamePane;
         }
+        private HBox createTrueandFalseDisplay(int correctAnswers, int incorrectAnswers) {
+            HBox trueFalseDisplay = new HBox();
+            trueFalseDisplay.setAlignment(Pos.CENTER);
+            trueFalseDisplay.setSpacing(20);
+        
+            Label correctLabel = new Label("Correct: " + correctAnswers);
+            correctLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: green; -fx-font-family: 'Arial Black';");
+        
+            Label incorrectLabel = new Label("Incorrect: " + incorrectAnswers);
+            incorrectLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: red; -fx-font-family: 'Arial Black';");
+        
+            trueFalseDisplay.getChildren().addAll(correctLabel, incorrectLabel);
+            return trueFalseDisplay;
+        }
+
+        
 
         private VBox createQuestionDisplay() {
 
@@ -447,10 +470,15 @@ public class GameScreen {
         }
         currentQuestionIndex = (currentQuestionIndex + 1) % questions.size();
         selectedQuestion = questions.get(currentQuestionIndex);
+    
+        // Update the trueFalseArea
+        trueFalseArea.getChildren().clear();
+        HBox newTrueFalseDisplay = createTrueandFalseDisplay(correctAnswers, incorrectAnswers);
+        trueFalseArea.getChildren().addAll(newTrueFalseDisplay.getChildren());
+    
+        // Update the scenes
         updateScenes();
-        resetTimer();
-}
-
+    }
 private void resetTimer() {
     timeRemaining = 60;
     timerLabel.setText("Time remaining: " + timeRemaining + "\t\t\t\t");
@@ -473,17 +501,19 @@ private void resetTimer() {
     
 
     private void updateScenes() {
-        // Update the question display scene
         questionDisplayArea.getChildren().clear();
         VBox newQuestionDisplay = createQuestionDisplay();
         questionDisplayArea.getChildren().addAll(newQuestionDisplay.getChildren());
-
-        // Update the options scene
+    
         optionsArea.getChildren().clear();
         VBox newOptionsScene = createOptionsScene();
         optionsArea.getChildren().addAll(newOptionsScene.getChildren());
-    }
     
+        // Update the trueFalseArea
+        trueFalseArea.getChildren().clear();
+        HBox newTrueFalseDisplay = createTrueandFalseDisplay(correctAnswers, incorrectAnswers);
+        trueFalseArea.getChildren().addAll(newTrueFalseDisplay.getChildren());
+    }
       
     
 }
