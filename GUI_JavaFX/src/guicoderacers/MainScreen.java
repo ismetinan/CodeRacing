@@ -53,10 +53,13 @@ public class MainScreen {
             lobbiesScreen.addLobby(lobbyName, lobbyPort);
             StackPane lobbiesPane = lobbiesScreen.createLobbiesPane(primaryStage);
             Scene lobbiesScene = new Scene(lobbiesPane, CodeRacersGUI.defaultWidth, CodeRacersGUI.defaultHeight);
+
             
             CodeRacersGUI.lobbiesScene = lobbiesScene;
-            // Navigate to the Lobbies Screen
+            CodeRacersGUI.updateBackgroundColor(SettingsScreen.selectedColor);
+
             primaryStage.setScene(CodeRacersGUI.lobbiesScene);
+
         });
         buttonBox.getChildren().addAll(fullThrottleButton, leaderboardButton, settingsButton);
 

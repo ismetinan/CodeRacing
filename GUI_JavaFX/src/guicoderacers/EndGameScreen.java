@@ -33,7 +33,7 @@ public class EndGameScreen {
         // Add more summary details here as needed
 
         // Create a label with two lines of text
-        Label twoLineLabel = new Label();
+        Label twoLineLabel = new Label(GameScreen.getCorrectAnswers() + " correct answers\n" + GameScreen.getIncorrectAnswers() + " incorrect answers");
         twoLineLabel.setStyle("-fx-font-size: 24px; -fx-font-family: 'Arial Black'; -fx-text-fill: seashell;");
         summaryBox.getChildren().add(twoLineLabel);
 

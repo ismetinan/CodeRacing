@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class SettingsScreen {
-    private static String selectedColor = "Red";
+    protected static String selectedColor = "Red";
 
     protected static double gameSoundVolume = 50;
 
@@ -82,7 +82,7 @@ public class SettingsScreen {
         backgroundColorComboBox.setValue("seashell");
         backgroundColorComboBox.getStylesheets().add(getClass().getResource("/Styles/combobox-style.css").toExternalForm());
         backgroundColorComboBox.setOnAction(e -> {
-            String selectedColor = backgroundColorComboBox.getValue();
+            selectedColor = backgroundColorComboBox.getValue();
             CodeRacersGUI.updateBackgroundColor(selectedColor);
         });
 

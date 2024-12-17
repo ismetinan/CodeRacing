@@ -40,7 +40,7 @@ public class GameScreen {
     private Map<String, Car> cars = new HashMap<>();
     private MediaPlayer gameSoundPlayer;
     private Label timerLabel;
-    private int timeRemaining=30;
+    private int timeRemaining=60;
     protected static final int defaultLocx = 540;
     protected static final int defaultLocy = 923; 
     protected static int carCount = 0;
@@ -61,7 +61,6 @@ public class GameScreen {
         selectedQuestion = questions.get(currentQuestionIndex);
 
         questionDisplayArea = createQuestionDisplay();
-        System.out.println(questionNumber);
         questionDisplayArea.setStyle("-fx-background-color: #700000; -fx-border-color: black;-fx-background-radius: 30;-fx-border-radius: 30;"); // Dark red background
         questionDisplayArea.setMaxWidth(500); 
         questionDisplayArea.setMinWidth(500); 
@@ -84,7 +83,7 @@ public class GameScreen {
             timerLabel.setText("Time remaining: " + timeRemaining + "\t\t\t\t");
             if (timeRemaining <= 0) {
             updateQuestionInstance();
-            timeRemaining = 30; // Reset the timer for the next question
+            timeRemaining = 60; // Reset the timer for the next question
             resetTimer(); // Restart the timer for the next question
             }
         }));
@@ -388,6 +387,11 @@ public class GameScreen {
                         if (isCorrect) {
                             updateQuestionInstance();
                         }
+                        else {
+                            incorrectAnswers++;
+                            setIncorrectAnswers(incorrectAnswers);
+                            updateQuestionInstance();
+                        }
                     }
                 });
             
@@ -411,12 +415,14 @@ public class GameScreen {
 
         if (isCorrect) {
             correctAnswers++;
+            System.out.println("Correct Answers: " + correctAnswers);
             setCorrectAnswers(correctAnswers);
             StackPane.setMargin(player1Car.getCar(), player1Car.setMargin()); 
             updateQuestionInstance();
         } else {
             
             incorrectAnswers++;
+            System.out.println("Incorrect Answers: " + incorrectAnswers);
             setIncorrectAnswers(incorrectAnswers);
         updateQuestionInstance();
         }
@@ -446,13 +452,13 @@ public class GameScreen {
 }
 
 private void resetTimer() {
-    timeRemaining = 30;
+    timeRemaining = 60;
     timerLabel.setText("Time remaining: " + timeRemaining + "\t\t\t\t");
     timeline.stop();
     timeline.playFromStart();
 }
 
-    public static int getCorrectAnswer() {
+    public static int getCorrectAnswers() {        
         return correctAnswers;
     }
     public static int getIncorrectAnswers() {
@@ -461,8 +467,8 @@ private void resetTimer() {
     public static void setCorrectAnswers(int correctAnswers) {
         GameScreen.correctAnswers = correctAnswers;
     }
-    public static void setIncorrectAnswers(int incorrectAnswers) {
-        GameScreen.incorrectAnswers = incorrectAnswers;
+    public  static void setIncorrectAnswers(int incorrectAnswers) {
+       GameScreen.incorrectAnswers = incorrectAnswers;
     }
     
 

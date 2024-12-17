@@ -53,7 +53,6 @@ public class CodeRacersGUI extends Application {
         LogInScreen logInScreen = new LogInScreen();
         MainScreen mainScreen = new MainScreen();
         StackPane logInPane = logInScreen.createLogInPane(primaryStage);
-        StackPane mainGamePane = mainScreen.createMainGamePane(primaryStage);
         StackPane leaderboardPane = new LeaderboardScreen().createLeaderboardPane(primaryStage);
         StackPane settingsPane = new SettingsScreen().createSettingsPane(primaryStage);
         StackPane lobbiesPane = new LobbiesScreen().createLobbiesPane(primaryStage);
