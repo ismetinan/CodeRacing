@@ -119,6 +119,7 @@ public class CodeRacersGUI extends Application {
         cyanCarIconImage = new Image("Images/Cars/CyanRaceCar.png");
 
     }
+
     public static void navigateToMainScreen() {
         primaryStage.setScene(mainGameScene); // Set the scene to the main game screen
         }

@@ -46,8 +46,7 @@ public class MainScreen {
             // Create a new server instance dynamically for a new lobby
             
             String lobbyName = username + "'s Lobby";
-            int lobbyPort = Server.getNextPort();
-            Server.startServerInBackground(lobbyPort, lobbyName);
+            int lobbyPort = 12345;
             System.out.println("New lobby created: " + lobbyName + " on port " + lobbyPort);
             LobbiesScreen lobbiesScreen = new LobbiesScreen();
             lobbiesScreen.addLobby(lobbyName, lobbyPort);

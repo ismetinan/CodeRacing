@@ -5,12 +5,14 @@ public class MultipleChoiceQuestion extends Question {
     private List<String> options;
     private int correctAnswerIndex;
     private int userAnswerIndex = -1; 
+    private String correctAnswer;
 
   
     public MultipleChoiceQuestion(int id, String questionText, List<String> options, String correctAnswer) {
         super(id, questionText);
         this.options = options;
         this.correctAnswerIndex = options.indexOf(correctAnswer);
+        this.correctAnswer=correctAnswer;
     }
 
     
@@ -35,6 +37,9 @@ public class MultipleChoiceQuestion extends Question {
     public boolean isAnswerCorrect() {
       
         return userAnswerIndex == correctAnswerIndex;
+    }
+    public String getCorrectAnswer(){
+        return correctAnswer;
     }
 
 

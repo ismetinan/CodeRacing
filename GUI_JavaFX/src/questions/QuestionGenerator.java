@@ -5,8 +5,10 @@ import java.util.List;
 
 public class QuestionGenerator {
 
+protected static List<Question> questions = new ArrayList<>();
+
+
     public static List<Question> generateQuestions() {
-        List<Question> questions = new ArrayList<>();
         List<Question> multipleChoiceQuestions = new ArrayList<>();
         List<Question> dragNDropQuestions = new ArrayList<>();
         List<Question> fillInTheBlankQuestions = new ArrayList<>();
@@ -528,6 +530,25 @@ public class QuestionGenerator {
 
 
         return questions;
+    }
+    public static String incorrectQuestionReturner(int id){
+        String returned="";
+        for(Question q: questions){
+                if(q.getId()==id){
+                        if(q instanceof MultipleChoiceQuestion){
+                                returned= q.getQuestionText() +((MultipleChoiceQuestion)q).getCorrectAnswer();
+                        }
+                        else if(q instanceof DragAndDrop){
+                                returned= q.getQuestionText()+((DragAndDrop)q).getCorrectAnswerV2();
+                        }
+                        else if(q instanceof AlgorithmTracingQuestion){
+                                returned=q.getQuestionText()+((AlgorithmTracingQuestion)q).getAlgorithmCode()+((AlgorithmTracingQuestion)q).getCorrectAnswer();
+                        }
+                }
+        }
+                System.out.println(returned);
+                return returned;
+                
     }
     private static void addDragAndDropQuestion(
     List<Question> questions,
