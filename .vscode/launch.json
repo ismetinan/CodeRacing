@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Server",
+            "request": "launch",
+            "mainClass": "controller.Server",
+            "projectName": "CodeRacing_d251d95a"
+        },
+        {
+            "type": "java",
             "name": "Client",
             "request": "launch",
             "mainClass": "guicoderacers.Client",

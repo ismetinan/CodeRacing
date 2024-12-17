@@ -19,9 +19,14 @@ import controller.Client;
 
 public class LobbiesScreen {
 
+
     private List<String> lobbies = new ArrayList<>();
     private List<Integer> lobbyPorts = new ArrayList<>();
+    private Client client;
 
+    public LobbiesScreen() {
+        client = new Client("localhost", 12345);
+    }
     public StackPane createLobbiesPane(Stage primaryStage) {
         StackPane lobbiesPane = new StackPane();
         lobbiesPane.setStyle("-fx-background-color: seashell;");
@@ -60,31 +65,68 @@ public class LobbiesScreen {
         playerList.setStyle("-fx-background-color: #700000; -fx-background-radius: 30;");
         playerList.setPadding(new Insets(15));
 
+        lobbies.add("Lobby 1");
+        lobbies.add("Lobby 2");
+        lobbies.add("Lobby 3");
         // Add multiple lobby buttons
-        for (String lobby : lobbies) {
-            Button lobbyButton = new Button(lobby);
-            lobbyButton.setStyle(
+
+        Button requestLobbiesButton = new Button("Refresh Lobbies");
+        requestLobbiesButton.setOnAction(e -> client.requestLobbies());
+        requestLobbiesButton.setStyle(
                 "-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black'; -fx-background-color: #100000; -fx-background-radius: 30;");
-            lobbyButton.setMaxWidth(Double.MAX_VALUE);
+        requestLobbiesButton.setMaxWidth(Double.MAX_VALUE);
 
-            lobbyButton.setOnAction(event -> {
-                Client client = new Client("localhost", lobbyPorts.get(lobbies.indexOf(lobby)));
-                client.connect();
-                GameScreen gameScreen = new GameScreen();
-                client.listenForUpdates(gameScreen);
-                if (client != null) {
-                    System.out.println("Connected to lobby: " + lobby + " on port: " + lobbyPorts.get(lobbies.indexOf(lobby)));
-                    CarColorSelectionScreen carColorSelectionScreen = new CarColorSelectionScreen();
-                    carColorSelectionScreen.showCarColorSelection(primaryStage, () -> {
-                        // Callback to navigate to the game screen
-                        gameScreen.playGameSound();
-                        primaryStage.setScene(CodeRacersGUI.gamePlayScene);
-                    });
-                }
-            });
-            playerList.getChildren().add(lobbyButton);
-        }
-
+        Button joinLobby1 = new Button("Join Lobby 1");
+        joinLobby1.setStyle(
+                "-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black'; -fx-background-color: #100000; -fx-background-radius: 30;");
+        joinLobby1.setMaxWidth(Double.MAX_VALUE);
+        joinLobby1.setOnAction(e -> {
+            client.joinLobby("Lobby 1");
+            GameScreen gameScreen = new GameScreen();
+            if (client != null) {
+                ;
+                CarColorSelectionScreen carColorSelectionScreen = new CarColorSelectionScreen();
+                carColorSelectionScreen.showCarColorSelection(primaryStage, () -> {
+                    // Callback to navigate to the game screen
+                    gameScreen.playGameSound();
+                    primaryStage.setScene(CodeRacersGUI.gamePlayScene);
+                });
+            }
+        });
+        Button joinLobby2 = new Button("Join Lobby 2");
+        joinLobby2.setStyle(
+                "-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black'; -fx-background-color: #100000; -fx-background-radius: 30;");
+        joinLobby2.setMaxWidth(Double.MAX_VALUE);
+        joinLobby2.setOnAction(e -> {
+            client.joinLobby("Lobby 2");
+            GameScreen gameScreen = new GameScreen();
+            if (client != null) {
+                ;
+                CarColorSelectionScreen carColorSelectionScreen = new CarColorSelectionScreen();
+                carColorSelectionScreen.showCarColorSelection(primaryStage, () -> {
+                    // Callback to navigate to the game screen
+                    gameScreen.playGameSound();
+                    primaryStage.setScene(CodeRacersGUI.gamePlayScene);
+                });
+            }
+        });
+        Button joinLobby3 = new Button("Join Lobby 3");
+        joinLobby3.setStyle(
+                "-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black'; -fx-background-color: #100000; -fx-background-radius: 30;");
+        joinLobby3.setMaxWidth(Double.MAX_VALUE);
+        joinLobby3.setOnAction(e -> {
+            GameScreen gameScreen = new GameScreen();
+            if (client != null) {
+                ;
+                CarColorSelectionScreen carColorSelectionScreen = new CarColorSelectionScreen();
+                carColorSelectionScreen.showCarColorSelection(primaryStage, () -> {
+                    // Callback to navigate to the game screen
+                    gameScreen.playGameSound();
+                    primaryStage.setScene(CodeRacersGUI.gamePlayScene);
+                });
+            }
+        });
+        playerList.getChildren().addAll(requestLobbiesButton,joinLobby1,joinLobby2,joinLobby3);
         scrollPane.getStylesheets().add("Styles/scrollpane-style.css");
         scrollPane.setContent(playerList);
 
