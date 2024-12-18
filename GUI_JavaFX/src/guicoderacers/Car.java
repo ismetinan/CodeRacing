@@ -69,7 +69,7 @@ public class Car {
         return new Insets(YPosition, 0, 0, XPosition); // Adjust the margin as needed
     }
     public Insets setMargin( ){
-        YPosition-=75;
+        YPosition-=125;
         return new Insets(YPosition,0,0,XPosition);
     }
 }

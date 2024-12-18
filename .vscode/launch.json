@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Server",
+            "request": "launch",
+            "mainClass": "controller.Server",
+            "projectName": "CodeRacing_7075d419"
+        },
+        {
+            "type": "java",
             "name": "CodeRacersGUI",
             "request": "launch",
             "mainClass": "guicoderacers.CodeRacersGUI",

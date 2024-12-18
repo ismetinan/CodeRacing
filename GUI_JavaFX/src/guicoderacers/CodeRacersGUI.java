@@ -236,10 +236,15 @@ public class CodeRacersGUI extends Application {
 
     Button reviewButton = new Button("Review");
 
-        // Set button style (optional)
-        reviewButton.setStyle("-fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: seashell; -fx-font-family: 'Arial Black'; -fx-background-radius: 30");
-
-        // Add event handler to the button
+    reviewButton.setStyle(
+        "-fx-font-size: 20px; -fx-background-radius: 15; -fx-background-color: #700000; -fx-text-fill: #ecf0f1;"
+    );
+    reviewButton.setOnMouseEntered(e -> reviewButton.setStyle(
+        "-fx-font-size: 20px; -fx-background-radius: 15; -fx-background-color: #900000; -fx-text-fill: #ecf0f1;"
+    ));
+    reviewButton.setOnMouseExited(e -> reviewButton.setStyle(
+        "-fx-font-size: 20px; -fx-background-radius: 15; -fx-background-color: #700000; -fx-text-fill: #ecf0f1;"
+    ));
         reviewButton.setOnAction(e -> navigateToReviewScreen());
 
     // Incorrect Answers Label

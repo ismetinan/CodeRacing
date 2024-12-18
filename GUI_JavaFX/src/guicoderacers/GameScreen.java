@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -54,7 +55,6 @@ public class GameScreen {
     private MediaPlayer gameSoundPlayer;
     private Label timerLabel;
     private int timeRemaining=60;
-    protected static final int defaultLocx = 540;
     protected static final int defaultLocy = 923; 
     protected static int carCount = 0;
     protected static Car player1Car=new Car(null, carCount,"Red");
@@ -68,6 +68,11 @@ public class GameScreen {
     private static int incorrectAnswersNumber=0;
     private StackPane overlayPane;
     private static ArrayList<Integer> incorrectId = new ArrayList<>();
+    private static int curPosX = 540;
+    private static int counter2 = 1;
+    private static int counter3 = 1;
+    private static int counter4 = 1;
+    private static int counter5 = 1;
 
 
 
@@ -156,9 +161,9 @@ public class GameScreen {
 
         
         StackPane.setMargin(player2Car.getCar(), new Insets(540,708, 0, 0)); // Adjust the margin as needed
-        StackPane.setMargin(player3Car.getCar(), new Insets(540,493 , 0, 0)); // Adjust the margin as needed
-        StackPane.setMargin(player4Car.getCar(), new Insets(540, 278, 0, 0)); // Adjust the margin as needed
-        StackPane.setMargin(player5Car.getCar(), new Insets(540, 63, 0, 0)); // Adjust the margin as needed      
+        StackPane.setMargin(player3Car.getCar(), new Insets(curPosX,493 , 0, 0)); // Adjust the margin as needed
+        StackPane.setMargin(player4Car.getCar(), new Insets(curPosX, 278, 0, 0)); // Adjust the margin as needed
+        StackPane.setMargin(player5Car.getCar(), new Insets(curPosX, 63, 0, 0)); // Adjust the margin as needed      
 
         
 
@@ -272,8 +277,8 @@ public class GameScreen {
                 for (int i = 0; i < multipleChoiceQuestion.getOptions().size(); i++) {
                     String optionText = multipleChoiceQuestion.getOptions().get(i);
                     Button optionButton = new Button(optionText);
-                    optionButton.setMaxWidth(450);
-                    optionButton.setMinHeight(50);
+                    optionButton.setMaxWidth(480);
+                    optionButton.setMinHeight(55);
                     optionButton.setWrapText(true);
                     optionButton.setStyle("-fx-font-size: 12px; -fx-padding: 10px; -fx-background-color: darkred; -fx-text-fill: white; -fx-background-radius: 30; -fx-border-radius: 30;");
 
@@ -288,8 +293,8 @@ public class GameScreen {
                 } else if (selectedQuestion instanceof CodeDebuggingQuestion debuggingQuestion) {
                 for (String option : debuggingQuestion.getOptions()) {
                     Button optionButton = new Button(option);
-                    optionButton.setMaxWidth(450);
-                    optionButton.setMinHeight(50);
+                    optionButton.setMaxWidth(480);
+                    optionButton.setMinHeight(55);
                     optionButton.setWrapText(true);
                     optionButton.setStyle("-fx-font-size: 12px; -fx-padding: 10px; -fx-background-color: darkred; -fx-text-fill: white; -fx-background-radius: 30; -fx-border-radius: 30;");
 
@@ -303,8 +308,8 @@ public class GameScreen {
                 } else if (selectedQuestion instanceof AlgorithmTracingQuestion tracingQuestion) {
                 for (String option : tracingQuestion.getOptions()) {
                     Button optionButton = new Button(option);
-                    optionButton.setMaxWidth(450);
-                    optionButton.setMinHeight(50);
+                    optionButton.setMaxWidth(480);
+                    optionButton.setMinHeight(55);
                     optionButton.setWrapText(true);
                     optionButton.setStyle("-fx-font-size: 12px; -fx-padding: 10px; -fx-background-color: darkred; -fx-text-fill: white; -fx-background-radius: 30; -fx-border-radius: 30;");
 
@@ -327,7 +332,7 @@ public class GameScreen {
             }
 
             private VBox createDragAndDropScene(DragAndDrop question) {
-                VBox dragAndDropArea = new VBox(10);
+                VBox dragAndDropArea = new VBox(6);
                 dragAndDropArea.setAlignment(Pos.CENTER);
             
                 
@@ -336,17 +341,20 @@ public class GameScreen {
                 Collections.shuffle(draggableItems); // Only shuffle draggable items
             
                 // Droppable Targets
-                VBox targetArea = new VBox(10);
+                VBox targetArea = new VBox(6);
                 targetArea.setAlignment(Pos.CENTER);
                 targetArea.setPadding(new Insets(10)); // Add padding to prevent overflow
             
                 // Create 4 target areas
                 for (int i = 0; i < correctAnswers.size(); i++) {
                     Label targetLabel = new Label("Drop here");
-                    targetLabel.setPrefSize(200, 100);
+                    targetLabel.setMinWidth(230);
+                    targetLabel.setMaxWidth(230);
+                    targetLabel.setMinHeight(60);
+                    targetLabel.setMaxHeight(60);
                     targetLabel.setAlignment(Pos.CENTER);
                     targetLabel.setWrapText(true);
-                    targetLabel.setStyle("-fx-background-color: lightblue; -fx-border-color: black; -fx-font-size: 14; -fx-background-radius: 30; -fx-border-radius: 30;");
+                    targetLabel.setStyle("-fx-background-color: lightblue; -fx-border-color: black; -fx-font-size: 14; -fx-background-radius: 10; -fx-border-radius: 10;");
                     targetLabel.setUserData(correctAnswers.get(i)); // Store correct answer
             
                     targetLabel.setOnDragOver(event -> {
@@ -372,17 +380,20 @@ public class GameScreen {
                 }
             
                 // Draggable Items Area
-                VBox draggableArea = new VBox(10);
+                VBox draggableArea = new VBox(6);
                 draggableArea.setAlignment(Pos.CENTER);
                 draggableArea.setPadding(new Insets(10)); // Add padding to prevent overflow
             
                 // Create 4 draggable items
                 for (String item : draggableItems) {
                     Label draggableLabel = new Label(item);
-                    draggableLabel.setPrefSize(200, 100);
+                    draggableLabel.setMinWidth(230);
+                    draggableLabel.setMaxWidth(230);
+                    draggableLabel.setMinHeight(60);
+                    draggableLabel.setMaxHeight(60);
                     draggableLabel.setAlignment(Pos.CENTER);
                     draggableLabel.setWrapText(true);
-                    draggableLabel.setStyle("-fx-background-color: darkred; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 30; -fx-border-radius: 30;");
+                    draggableLabel.setStyle("-fx-background-color: darkred; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 10; -fx-border-radius: 10;");
             
                     draggableLabel.setOnDragDetected(event -> {
                         Dragboard dragboard = draggableLabel.startDragAndDrop(TransferMode.MOVE);
@@ -403,13 +414,13 @@ public class GameScreen {
                 }
             
                 // Layout with draggable items on left, targets on right
-                HBox dragDropLayout = new HBox(50, draggableArea, targetArea);
+                HBox dragDropLayout = new HBox(17, draggableArea, targetArea);
                 dragDropLayout.setAlignment(Pos.CENTER);
                 dragAndDropArea.getChildren().add(dragDropLayout);
             
                 // Submit button
                 Button submitButton = new Button("Submit");
-                submitButton.setStyle("-fx-background-color: darkgreen; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 30; -fx-border-radius: 30;");
+                submitButton.setStyle("-fx-background-color: darkgreen; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10; -fx-border-radius: 10;");
                 
                 submitButton.setOnAction(event -> {
                     List<String> userAnswers = new ArrayList<>();
@@ -422,7 +433,7 @@ public class GameScreen {
                         
                         if (answer.equals("Drop here")) {
                             allAnswered = false;
-                            targetLabel.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 30; -fx-border-radius: 30;");
+                            targetLabel.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 10; -fx-border-radius: 10;");
                         } else {
                             userAnswers.add(answer);
                         }
@@ -439,9 +450,9 @@ public class GameScreen {
                         for (Node node : targetArea.getChildren()) {
                             Label targetLabel = (Label) node;
                             if (isCorrect) {
-                                targetLabel.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 30; -fx-border-radius: 30;");
+                                targetLabel.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 10; -fx-border-radius: 10;");
                             } else {
-                                targetLabel.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 30; -fx-border-radius: 30;");
+                                targetLabel.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: black; -fx-font-size: 12; -fx-background-radius: 10; -fx-border-radius: 10;");
                             }
                         }
             
@@ -473,6 +484,8 @@ public class GameScreen {
 
 
     private void handleAnswer(boolean isCorrect, Button clickedButton) {
+
+        
         // Highlight the button
         clickedButton.setStyle(isCorrect
                 ? "-fx-background-color: green; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 30; -fx-border-radius: 30;"
@@ -483,12 +496,164 @@ public class GameScreen {
             System.out.println("Correct Answers: " + correctAnswersNumber);
             setCorrectAnswers(correctAnswersNumber);
             StackPane.setMargin(player1Car.getCar(), player1Car.setMargin()); 
+
+            Random rand = new Random();
+            int randomNum = rand.nextInt(9) + 1;
+            switch (randomNum) {
+                case 1:                    
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter4++;
+                    counter5++;
+                    break;
+                case 2:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 638, 0, 0));
+                    counter2++;
+                    counter3++;
+                    counter4++;
+                    counter5++;
+                    break;
+                case 3:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    counter2++;
+                    counter3++;
+                    counter4++;
+                    break;
+                case 4:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter2++;
+                    counter3++;
+                    counter5++;
+                    break;
+                case 5:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter2++;
+                    counter4++;
+                    counter5++;
+                    break;
+                case 6:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    counter2++;
+                    counter3++;
+                    break;
+                case 7:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    counter2++;
+                    counter4++;
+                    break;
+                case 8:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter2++;
+                    counter5++;
+                    break;
+                case 9:
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    counter3++;
+                    counter4++;
+                    break;
+                case 10:
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter3++;
+                    counter5++;
+                    break;
+            }
+
+
             updateQuestionInstance();
         } else {
             
             incorrectAnswersNumber++;
             System.out.println("Incorrect Answers: " + incorrectAnswersNumber);
             setIncorrectAnswers(incorrectAnswersNumber);
+
+            Random rand = new Random();
+            int randomNum = rand.nextInt(9) + 1;
+            switch (randomNum) {
+                case 1:                    
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter4++;
+                    counter5++;
+                    break;
+                case 2:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 638, 0, 0));
+                    counter2++;
+                    counter3++;
+                    counter4++;
+                    counter5++;
+                    break;
+                case 3:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    counter2++;
+                    counter3++;
+                    counter4++;
+                    break;
+                case 4:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter2++;
+                    counter3++;
+                    counter5++;
+                    break;
+                case 5:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter2++;
+                    counter4++;
+                    counter5++;
+                    break;
+                case 6:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    counter2++;
+                    counter3++;
+                    break;
+                case 7:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    counter2++;
+                    counter4++;
+                    break;
+                case 8:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter2++;
+                    counter5++;
+                    break;
+                case 9:
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    counter3++;
+                    counter4++;
+                    break;
+                case 10:
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter3++;
+                    counter5++;
+                    break;
+            }
         updateQuestionInstance();
         incorrectId.add(selectedQuestion.getId());
         for(int i : incorrectId){
