@@ -1,9 +1,13 @@
 package guicoderacers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import controller.Database;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -14,10 +18,20 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ProfileScreen {
-
+    static List<String> rankingL;
     protected static void showProfile(Stage primaryStage) {
         Stage profileStage = new Stage();
         String username = Database.getLatestUsername();
+        rankingL = Database.getLeaderboard();
+        List<String> userRanking = new ArrayList<String>();
+        for (int i = 0; i < rankingL.size();i++) {
+            String tmp = rankingL.get(i);
+            
+            userRanking.add(tmp.substring(0,tmp.indexOf("-") - 1));
+        }
+
+        int ranking = userRanking.indexOf(username);
+
         profileStage.initModality(Modality.APPLICATION_MODAL);
         profileStage.initOwner(primaryStage);
 
@@ -35,7 +49,7 @@ public class ProfileScreen {
         Label usernameLabel = new Label("\s\sUsername:\s\s"+ username+"\s\s");
         usernameLabel.setStyle("-fx-font-size: 18px; -fx-font-family: 'Arial Black';-fx-text-fill: seashell;-fx-background-color:  #700000;-fx-background-radius: 30");
         usernameLabel.setMinSize(-1, 40);
-        Label rankingLabel = new Label("\s\sCurrent Ranking: 1\s\s");
+        Label rankingLabel = new Label("\s\sCurrent Ranking: "+ (ranking + 1) + "\s\s");
         rankingLabel.setStyle("-fx-font-size: 18px; -fx-font-family: 'Arial Black';-fx-text-fill: seashell;-fx-background-color:  #700000;-fx-background-radius: 30");
         rankingLabel.setMinSize(-1, 40);
 

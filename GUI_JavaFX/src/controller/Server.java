@@ -21,7 +21,7 @@ public class Server {
     public static void main(String[] args) {
         initializeLobbies(); // Predefined lobbies
         initializePasswords(); // Initialize predefined passwords for clients
-        try (ServerSocket serverSocket = new ServerSocket(PORT, 50, InetAddress.getByName("139.179.134.156"))) {
+        try (ServerSocket serverSocket = new ServerSocket(PORT, 50, InetAddress.getByName("192.168.103.155"))) {
             System.out.println("Server started on port " + PORT);
 
             while (true) {

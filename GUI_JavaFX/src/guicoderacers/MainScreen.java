@@ -28,7 +28,9 @@ public class MainScreen {
         Button profileButton = new Button();
         profileButton.setGraphic(profileIcon);
         profileButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
-        profileButton.setOnMouseClicked(e -> ProfileScreen.showProfile(primaryStage));        ;
+        profileButton.setOnMouseClicked(e -> {
+            ProfileScreen.showProfile(primaryStage);
+        });        
         topIcons.getChildren().addAll(profileButton);
 
 
