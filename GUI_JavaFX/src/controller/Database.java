@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Database {
 
@@ -27,11 +29,19 @@ public class Database {
                 + " id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + " username TEXT NOT NULL "
                 + ");";
-
+        String sql2 = "CREATE TABLE IF NOT EXISTS leaderboard (" + 
+                        "    id INTEGER PRIMARY KEY AUTOINCREMENT," + 
+                        "    username TEXT NOT NULL," + 
+                        "    score INTEGER NOT NULL" + 
+                        ");";
         try (Connection conn = connect();
                 Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
+            
             System.out.println("Users table has been initialized.");
+
+            stmt.execute(sql2);
+            System.out.println("LeaderBoard init");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -75,6 +85,23 @@ public class Database {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+        public static List<String> getLeaderboard() {
+        String sql = "SELECT username, score FROM leaderboard ORDER BY score DESC LIMIT 10";
+        List<String> leaderboard = new ArrayList<>();
+
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                String nickname = rs.getString("username");
+                int score = rs.getInt("score");
+                leaderboard.add(nickname + " - " + score);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving leaderboard: " + e.getMessage());
+        }
+        return leaderboard;
     }
 
 }

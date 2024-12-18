@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+import controller.Database;
 import controller.Server;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -23,6 +24,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart.Data;
 import javafx.util.Duration;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -182,7 +184,7 @@ public class GameScreen {
         }
 
         public static void connectToServer() {
-        try (Socket socket = new Socket("localhost", 12345);
+        try (Socket socket = new Socket("139.179.135.253", 12345);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
             // Read JSON data from the server
@@ -509,7 +511,9 @@ public class GameScreen {
             currentQuestionIndex = 0; // Reset index
         }
         if (questionNumber >= 10) {
+            endGame(Database.getLatestUsername(), correctAnswersNumber);
             CodeRacersGUI.navigateToEndGameScreen(); // Navigate to the end game screen
+            
             return;
         }
         currentQuestionIndex = (currentQuestionIndex + 1) % questions.size();
@@ -565,8 +569,15 @@ private void resetTimer() {
         HBox newTrueFalseDisplay = createTrueandFalseDisplay(correctAnswersNumber, incorrectAnswersNumber);
         trueFalseArea.getChildren().addAll(newTrueFalseDisplay.getChildren());
     }
+
     public static ArrayList<Integer> getIncorrectId() {
         return incorrectId;
     }
-    
+
+    public void endGame(String nickname, int score) {
+        
+        Database.addScore(nickname, score);
+        
+        System.out.println("Game ended. Score saved for: " + nickname);
+    }
 }

@@ -25,7 +25,7 @@ public class LobbiesScreen {
     private Client client;
 
     public LobbiesScreen() {
-        client = Client.getInstance("139.179.135.253", 12345);
+        client = Client.getInstance("10.204.113.233", 12345);
     }
     public StackPane createLobbiesPane(Stage primaryStage) {
         StackPane lobbiesPane = new StackPane();
@@ -81,10 +81,10 @@ public class LobbiesScreen {
                 "-fx-text-fill: seashell; -fx-font-size: 18px; -fx-font-family: 'Arial Black'; -fx-background-color: #100000; -fx-background-radius: 30;");
         joinLobby1.setMaxWidth(Double.MAX_VALUE);
         joinLobby1.setOnAction(e -> {
-            client.joinLobby("Lobby 1");
+            GameScreen.connectToServer();
             GameScreen gameScreen = new GameScreen();
             if (client != null) {
-                ;
+                
                 CarColorSelectionScreen carColorSelectionScreen = new CarColorSelectionScreen();
                 carColorSelectionScreen.showCarColorSelection(primaryStage, () -> {
                     // Callback to navigate to the game screen

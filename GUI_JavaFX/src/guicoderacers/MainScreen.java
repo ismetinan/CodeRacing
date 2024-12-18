@@ -40,7 +40,15 @@ public class MainScreen {
         fullThrottleButton.setMinSize(375, 90);
         leaderboardButton.setMinSize(375, 90);
         settingsButton.setMinSize(375, 90);
-        leaderboardButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.leaderboardScene));
+        leaderboardButton.setOnAction(e -> {
+            primaryStage.setScene(CodeRacersGUI.leaderboardScene); // Switch to leaderboard scene
+            LeaderboardScreen leaderboardScreen = new LeaderboardScreen();
+            StackPane leaderboardPane = leaderboardScreen.createLeaderboardPane(primaryStage);
+            Scene leaderboardScene = new Scene(leaderboardPane,CodeRacersGUI.defaultWidth, CodeRacersGUI.defaultHeight);
+            CodeRacersGUI.leaderboardScene = leaderboardScene;
+            primaryStage.setScene(leaderboardScene);
+        });
+
         settingsButton.setOnAction(e -> primaryStage.setScene(CodeRacersGUI.settingsScene));
         fullThrottleButton.setOnAction(e -> {
             // Create a new server instance dynamically for a new lobby

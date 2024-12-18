@@ -7,11 +7,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import java.util.List;
+
+import controller.Database;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
 public class LeaderboardScreen {
-
+    List<String> leaderboard = Database.getLeaderboard();
     public StackPane createLeaderboardPane(Stage primaryStage) {
         StackPane leaderboardPane = new StackPane();
         leaderboardPane.setStyle("-fx-background-color: seashell;");
@@ -50,7 +54,7 @@ public class LeaderboardScreen {
         playerList.setStyle("-fx-background-color: #700000; -fx-background-radius: 30;");
         playerList.setPadding(new Insets(10));
 
-        String[] players = { "Ege Hamilton", "Vettel Emre", "Eren Uçak", "İsmet Skywalker", "Aybüke Leclerc"};
+        List<String> players = Database.getLeaderboard();
         int rank = 1;
         for (String player : players) {
             Label playerLabel = new Label(rank + ". " + player);

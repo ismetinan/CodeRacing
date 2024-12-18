@@ -21,7 +21,7 @@ public class Server {
     public static void main(String[] args) {
         initializeLobbies(); // Predefined lobbies
         initializePasswords(); // Initialize predefined passwords for clients
-        try (ServerSocket serverSocket = new ServerSocket(PORT, 50, InetAddress.getByName("139.179.135.253"))) {
+        try (ServerSocket serverSocket = new ServerSocket(PORT, 50, InetAddress.getByName("10.204.113.233"))) {
             System.out.println("Server started on port " + PORT);
 
             while (true) {
@@ -105,6 +105,7 @@ public class Server {
         response.addProperty("client_number", clientNum);
         response.addProperty("password", password);
         out.println(gson.toJson(response));
+        System.out.println("Sent JSON: " + gson.toJson(response));
 
         System.out.println("Assigned password '" + password + "' to client " + clientNum);
     }
