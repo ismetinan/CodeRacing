@@ -25,7 +25,7 @@ public class LobbiesScreen {
     private Client client;
 
     public LobbiesScreen() {
-        client = Client.getInstance("172.20.10.2", 12345);
+        client = Client.getInstance("139.179.134.156", 12345);
     }
     public StackPane createLobbiesPane(Stage primaryStage) {
         StackPane lobbiesPane = new StackPane();

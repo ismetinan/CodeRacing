@@ -459,12 +459,160 @@ public class GameScreen {
                         if (isCorrect) {
                             correctAnswersNumber++;
                             setCorrectAnswers(correctAnswersNumber);
+                            Random rand = new Random();
+            int randomNum = rand.nextInt(9) + 1;
+            switch (randomNum) {
+                case 1:                    
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter4++;
+                    counter5++;
+                    break;
+                case 2:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter2++;
+                    counter3++;
+                    counter4++;
+                    counter5++;
+                    break;
+                case 3:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    counter2++;
+                    counter3++;
+                    counter4++;
+                    break;
+                case 4:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter2++;
+                    counter3++;
+                    counter5++;
+                    break;
+                case 5:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter2++;
+                    counter4++;
+                    counter5++;
+                    break;
+                case 6:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    counter2++;
+                    counter3++;
+                    break;
+                case 7:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    counter2++;
+                    counter4++;
+                    break;
+                case 8:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter2++;
+                    counter5++;
+                    break;
+                case 9:
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    counter3++;
+                    counter4++;
+                    break;
+                case 10:
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter3++;
+                    counter5++;
+                    break;
+            }
                             updateQuestionInstance();
                            
                         }
                         else {
                             incorrectAnswersNumber++;
                             setIncorrectAnswers(incorrectAnswersNumber);
+                            Random rand = new Random();
+            int randomNum = rand.nextInt(9) + 1;
+            switch (randomNum) {
+                case 1:                    
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter4++;
+                    counter5++;
+                    break;
+                case 2:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter2++;
+                    counter3++;
+                    counter4++;
+                    counter5++;
+                    break;
+                case 3:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    counter2++;
+                    counter3++;
+                    counter4++;
+                    break;
+                case 4:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter2++;
+                    counter3++;
+                    counter5++;
+                    break;
+                case 5:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter2++;
+                    counter4++;
+                    counter5++;
+                    break;
+                case 6:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    counter2++;
+                    counter3++;
+                    break;
+                case 7:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    counter2++;
+                    counter4++;
+                    break;
+                case 8:
+                    StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter2++;
+                    counter5++;
+                    break;
+                case 9:
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
+                    StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
+                    counter3++;
+                    counter4++;
+                    break;
+                case 10:
+                    StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 278, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
+                    counter3++;
+                    counter5++;
+                    break;
+            }
                             updateQuestionInstance();
                             incorrectId.add(question.getId());
                         }
@@ -510,7 +658,7 @@ public class GameScreen {
                     StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
                     StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
                     StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
-                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 638, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
                     counter2++;
                     counter3++;
                     counter4++;
@@ -593,7 +741,7 @@ public class GameScreen {
                     StackPane.setMargin(player2Car.getCar(), new Insets(540-counter2*125, 708, 0, 0));
                     StackPane.setMargin(player3Car.getCar(), new Insets(540-counter3*125, 493, 0, 0));
                     StackPane.setMargin(player4Car.getCar(), new Insets(540-counter4*125, 278, 0, 0));
-                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 638, 0, 0));
+                    StackPane.setMargin(player5Car.getCar(), new Insets(540-counter5*125, 63, 0, 0));
                     counter2++;
                     counter3++;
                     counter4++;

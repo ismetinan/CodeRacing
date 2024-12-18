@@ -17,8 +17,10 @@ import javafx.geometry.Pos;
 public class LeaderboardScreen {
     List<String> leaderboard = Database.getLeaderboard();
     public StackPane createLeaderboardPane(Stage primaryStage) {
+
+
         StackPane leaderboardPane = new StackPane();
-        leaderboardPane.setStyle("-fx-background-color: seashell;");
+        leaderboardPane.setStyle("-fx-background-color: lightblue;");
 
         ImageView homeIcon = CodeRacersGUI.createImageView(CodeRacersGUI.homeIconImage, 50, 50);
         ImageView roadView = CodeRacersGUI.createImageView(CodeRacersGUI.roadIconImage, CodeRacersGUI.defaultWidth, 500);
