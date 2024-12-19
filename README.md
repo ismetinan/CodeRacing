@@ -1,4 +1,4 @@
-# # CodeRacing #
+# CodeRacing 
 Multiplayer Code-Questions based racing game
 
 # Execution Instructions
