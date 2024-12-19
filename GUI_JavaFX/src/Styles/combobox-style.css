@@ -1,0 +1,44 @@
+/* Style the ComboBox */
+.combo-box {
+    -fx-background-color: #700000; /* Background color for the ComboBox */
+    -fx-border-color: #000000;    /* Border color */
+    -fx-border-radius: 15px;      /* Rounded edges for the border */
+    -fx-background-radius: 15px;  /* Rounded background edges */
+    -fx-padding: 5px;             /* Padding inside the ComboBox */
+    -fx-font-family: 'Arial Black'; /* Font for the ComboBox text */
+    -fx-font-size: 14px;          /* Font size for the text */
+    -fx-text-fill: seashell;      /* Text color */
+}
+
+/* Style the ComboBox dropdown */
+.combo-box-popup {
+    -fx-background-color: #700000; /* Background color for the dropdown */
+    -fx-background-radius: 15px;   /* Rounded edges for the dropdown */
+    -fx-border-color: #000000;     /* Border color for the dropdown */
+    -fx-border-radius: 15px;       /* Rounded border edges */
+}
+
+/* Style the ComboBox items */
+.combo-box .list-cell {
+    -fx-background-color: #700000; /* Background for each item */
+    -fx-text-fill: seashell;       /* Text color for items */
+    -fx-font-family: 'Arial Black'; /* Font for item text */
+    -fx-font-size: 14px;           /* Font size for item text */
+    -fx-border-color: transparent; /* Remove lines between cells */
+    -fx-border-width: 0;           /* Ensure no border appears */
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: #900000; /* Highlight color on hover */
+    -fx-text-fill: lightyellow;    /* Text color when hovered */
+}
+
+/* Style the arrow button */
+.combo-box .arrow-button {
+    -fx-background-color: #000000; /* Background for the arrow button */
+    -fx-background-radius: 15px;   /* Rounded edges for the button */
+}
+
+.combo-box .arrow {
+    -fx-background-color: seashell; /* Arrow icon color */
+}

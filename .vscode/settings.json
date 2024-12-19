@@ -1,7 +1,36 @@
 {
     "java.project.referencedLibraries": [
-        "/Users/azizemreayan/Desktop/javafx-sdk-23.0.1/lib/*.jar",
-        "/Users/azizemreayan/Desktop/**/*.jar"
+        "lib/**/*.jar",
+        "javafx-sdk-23.0.1\\lib\\javafx.base.jar",
+        "javafx-sdk-23.0.1\\lib\\javafx.controls.jar",
+        "javafx-sdk-23.0.1\\lib\\javafx.fxml.jar",
+        "javafx-sdk-23.0.1\\lib\\javafx.graphics.jar",
+        "javafx-sdk-23.0.1\\lib\\javafx.media.jar",
+        "javafx-sdk-23.0.1\\lib\\javafx.swing.jar",
+        "javafx-sdk-23.0.1\\lib\\javafx.web.jar",
+        "javafx-sdk-23.0.1\\lib\\javafx-swt.jar",
+        "javafx-sdk-23.0.1/lib/javafx.base.jar",
+        "javafx-sdk-23.0.1/lib/javafx.controls.jar",
+        "javafx-sdk-23.0.1/lib/javafx.fxml.jar",
+        "javafx-sdk-23.0.1/lib/javafx.graphics.jar",
+        "javafx-sdk-23.0.1/lib/javafx.media.jar",
+        "javafx-sdk-23.0.1/lib/javafx.swing.jar",
+        "javafx-sdk-23.0.1/lib/javafx.web.jar",
+        "javafx-sdk-23.0.1/lib/javafx-swt.jar",
+        "GUI_JavaFX/libs/sqlite-jdbc-3.47.0.0.jar",
+        "GUI_JavaFX/libs/gson-2.8.2.jar"
     ],
-    "java.debug.settings.onBuildFailureProceed": true
+    "cSpell.words": [
+        "Aybüke",
+        "Emre",
+        "Eren",
+        "guicoderacers",
+        "İsmet",
+        "Leclerc",
+        "lightgray",
+        "scrollpane",
+        "Skywalker",
+        "Uçak",
+        "Vettel"
+    ]
 }

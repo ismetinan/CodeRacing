@@ -1,0 +1,110 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Server",
+            "request": "launch",
+            "mainClass": "controller.Server",
+            "projectName": "CodeRacing_7075d419"
+        },
+        {
+            "type": "java",
+            "name": "CodeRacersGUI",
+            "request": "launch",
+            "mainClass": "guicoderacers.CodeRacersGUI",
+            "projectName": "CodeRacing_d9fb6c8f"
+        },
+        {
+            "type": "java",
+            "name": "Server",
+            "request": "launch",
+            "mainClass": "controller.Server",
+            "projectName": "CodeRacing_d251d95a"
+        },
+        {
+            "type": "java",
+            "name": "Client",
+            "request": "launch",
+            "mainClass": "guicoderacers.Client",
+            "projectName": "CodeRacing_d251d95a"
+        },
+        {
+            "type": "java",
+            "name": "Server",
+            "request": "launch",
+            "mainClass": "guicoderacers.Server",
+            "projectName": "CodeRacing_d251d95a"
+        },
+        {
+            "type": "java",
+            "name": "CodeRacersGUI",
+            "request": "launch",
+            "mainClass": "guicoderacers.CodeRacersGUI",
+            "projectName": "CodeRacing_d251d95a"
+        },
+        {
+            "type": "java",
+            "name": "GamePlayFx",
+            "request": "launch",
+            "mainClass": "guicoderacers.GamePlayFx",
+            "projectName": "CodeRacing_7075d419"
+        },
+        {
+            "type": "java",
+            "name": "RandomGameGenerator",
+            "request": "launch",
+            "mainClass": "RandomGameGenerator",
+            "projectName": "CodeRacing_7075d419"
+        },
+        {
+            "type": "java",
+            "name": "LogInScreen",
+            "request": "launch",
+            "mainClass": "guicoderacers.LogInScreen",
+            "projectName": "CodeRacing_7075d419"
+        },
+        {
+            "type": "java",
+            "name": "CodeRacersGUI",
+            "request": "launch",
+            "mainClass": "guicoderacers.CodeRacersGUI",
+            "projectName": "CodeRacing_7075d419",
+            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media"
+        },
+        {
+            "type": "java",
+            "name": "CodeRacersGUI",
+            "request": "launch",
+            "mainClass": "CodeRacersGUI",
+            "projectName": "CodeRacing_7075d419",
+            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media"
+        },
+        {
+            "type": "java",
+            "name": "x",
+            "request": "launch",
+            "mainClass": "x",
+            "projectName": "CodeRacing_d9fb6c8f",
+            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media"
+        },
+        {
+            "type": "java",
+            "name": "CodeRacersGUI",
+            "request": "launch",
+            "mainClass": "CodeRacersGUI",
+            "projectName": "CodeRacing_d9fb6c8f",
+            "vmArgs": "--module-path \"javafx-sdk-23.0.1\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media"
+        }
+    ]
+}

@@ -1,0 +1,34 @@
+/* Style the slider track */
+.slider .track {
+    -fx-background-color: #100000; /* Track color */
+    -fx-background-radius: 15px;  /* Rounded edges for the track */
+    -fx-pref-height: 8px;         /* Track height */
+}
+
+/* Style the slider thumb (draggable part) */
+.slider .thumb {
+    -fx-background-color: seashell; /* Thumb color */
+    -fx-background-radius: 50%;     /* Fully round thumb */
+    -fx-pref-width: 20px;           /* Thumb width */
+    -fx-pref-height: 20px;          /* Thumb height */
+    -fx-effect: dropshadow(gaussian, #000000, 4, 0.5, 0, 0); /* Shadow for depth */
+}
+
+/* Style the slider tick marks */
+.slider .tick-mark {
+    -fx-stroke: seashell; /* Tick color */
+}
+
+/* Style the slider minor tick marks */
+.slider .minor-tick-mark {
+    -fx-stroke: lightgray; /* Minor tick color */
+}
+
+/* Style the slider labels */
+.slider .label {
+    -fx-text-fill: #700000; /* Text color */
+    -fx-font-family: 'Arial Black'; /* Font family */
+    -fx-font-size: 12px;           /* Font size */
+}
+
+
